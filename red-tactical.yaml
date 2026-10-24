@@ -29,7 +29,7 @@ format: 2
 face:
   id: 4daede36-300e-45d7-839e-a562422ae5ae
   name: Red Tactical
-  version: 1.4.1
+  version: 1.4.2
 
 defaults:
   aod:
@@ -214,42 +214,16 @@ elements:
     label: none
     short: true
   
-  clock_hour:
+
+  clock_digital:
     type: text
-    text: "{time.clock:%h}"
+    text: "{time.clock:%h%M}"
     font: FONT_NUMBER_MILD
     at: { anchor: center, dx: -1.5%r, dy: -55%r }
-    align: right
-    color: color.fg
-    aod: { color: color.black, outline: { color: color.red, width: 2 } }
-  clock_hour_copy:
-    type: text
-    text: "{time.clock:%h}"
-    font: FONT_NUMBER_MILD
-    at: { anchor: center, dx: -1.5%r, dy: -55%r }
-    align: right
     color: color.accent
     aod: { color: color.black, outline: { color: color.red, width: 2 } }
 
-  clock_minute:
-    type: text
-    text: "{time.clock:%M}"
-    font: FONT_NUMBER_MILD
-    at: { anchor: center, dx: 1.5%r, dy: -55%r }
-    align: left
-    color: color.bg
-    outline: { color: color.accent, width: 2 }
-    lint: { allow: [text-outline-interior], reason: "hollow digits on the plain background; the interior is the background colour" }
-    aod: { outline: { color: color.red, width: 2 } }
-  clock_minute_copy:
-    type: text
-    text: "{time.clock:%M}"
-    font: FONT_NUMBER_MILD
-    at: { anchor: center, dx: 1.5%r, dy: -55%r }
-    align: left
-    color: color.accent
-    lint: { allow: [text-outline-interior], reason: "hollow digits on the plain background; the interior is the background colour" }
-    aod: { outline: { color: color.red, width: 2 }, color: color.black }
+
 
   date:
     type: text
