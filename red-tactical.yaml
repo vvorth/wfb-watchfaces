@@ -1,0 +1,400 @@
+# Red Tactical: a hybrid tactical dial. Analog hands over a digital hour
+# (white) and minute (hollow), a segmented arc down the left half of the
+# bezel, minute-scale ticks down the right half, and three ringed subdials.
+#
+# Four things are the wearer's to choose, each a `config: slots:` slot on the
+# Data axis offering every data type the watch supports (`choices: any`):
+# the bezel arc and its reading (steps by default) and the three subdials
+# (VO2 max, battery and altitude). Each is a slot's gauge and its `type:
+# data` reading, so a pick changes the icon, the number and the fill
+# together. A gauge fills against the picked metric's own scale (battery
+# 0-100, steps to the step goal, VO2 max across the wearer's own rating row,
+# heart rate across their zones); a pick with no scale (altitude, weather,
+# calories, the date) leaves the gauge empty: the bezel's twelve hollow cells
+# and the subdials' dim rings are drawn whatever is picked. The fenix 8 and
+# fenix 9 choose them in the watch's own face editor, the fr955 from the
+# face's settings menu. Touch and hold a reading to open that metric's widget.
+#
+# Two colour settings, each from colours the 64-colour MIP palette shows
+# without dithering: the accent colour for the hollow digital minutes and the
+# second hand, and the data colour for every gauge, the bezel cells and the
+# right-hand ticks.
+#
+# Preview the picture's time with:  wfb preview <file> --time 10:10:30
+#
+# yaml-language-server: $schema=https://raw.githubusercontent.com/vvorth/garmin-wf-builder/main/schema/wfb-face-2.schema.json
+
+format: 2
+
+face:
+  id: 4daede36-300e-45d7-839e-a562422ae5ae
+  name: Red Tactical
+  version: 1.4.1
+
+defaults:
+  aod:
+    dim: 0.6
+
+build:
+  targets: [fenix8solar47mm, fenix8solar51mm, fr955, fenix947mm]
+
+config:
+  accent_color:
+    default: color.amber
+    choices: [color.red, color.orange, color.amber, color.yellow, color.green, color.cyan, color.sky_blue, color.magenta]
+  data_color:
+    default: color.red
+    choices: [color.red, color.orange, color.amber, color.yellow, color.lime_green, color.green, color.cyan, color.sky_blue, color.magenta]
+  style:
+    default: Dark
+    choices:
+      Dark: { scheme: dark, label: Dark }
+      Light: { scheme: light, label: Light }
+  slots:
+    left_bezel:
+      label: Bezel left
+      default: steps
+      choices: any
+    right_bezel:
+      label: Bezel right
+      default: heart_rate
+      choices: any
+    left:
+      label: Left dial
+      default: body_battery
+      choices: any
+    right:
+      label: Right dial
+      default: floors_climbed
+      choices: any
+    bottom:
+      label: Bottom dial
+      default: notification_count
+      choices: any
+
+theme:
+  schemes:
+    dark:
+      label: Dark
+      colors: { bg: color.black, fg: color.white, track: color.dark_gray }
+    light:
+      label: Light
+      colors: { bg: color.white, fg: color.black, track: color.light_gray }
+
+resources:
+  palette:
+    black: { value: "#000000", label: "Black" }
+    white: { value: "#FFFFFF", label: "White" }
+    light_gray: { value: "#AAAAAA", label: "Light Gray" }
+    dark_gray: { value: "#555555", label: "Dark Gray" }
+    darkest_blue: { value: "#000055", label: "Midnight" }
+    red: { value: "#FF0000", label: "Red" }
+    orange: { value: "#FF5500", label: "Orange" }
+    amber: { value: "#FFAA00", label: "Amber" }
+    yellow: { value: "#FFFF00", label: "Yellow" }
+    green: { value: "#00FF00", label: "Green" }
+    lime_green: { value: "#AAFF00", label: "Lime Green" }
+    cyan: { value: "#00FFFF", label: "Cyan" }
+    sky_blue: { value: "#00AAFF", label: "Sky Blue" }
+    light_blue: { value: "#55FFFF", label: "Light Blue" }
+    magenta: { value: "#FF00FF", label: "Magenta" }
+    dark_green: { value: "#005500", label: "Dark Green" }
+    dark_red: { value: "#550000", label: "Dark Red" }
+
+  fonts:
+    steps: { face: [RobotoCondensedBold], size: 16%r }
+    label: { face: [RobotoCondensedRegular], size: 14%r }
+    bold: { face: [RobotoCondensedBold], size: 16%r }
+    small: { face: [RobotoCondensedBold], size: 12%r }
+
+  hand_sets:
+    minutes:
+      minute:
+        color: color.fg
+        parts:
+          blade: { type: rectangle, at: { dy: -33%r, dx: 0%r }, size: { width: 5%r, height: 90%r } }
+          tip:   { type: circle, at: { dy: -78%r }, radius: 2.5%r }
+          tail:  { type: circle, at: { dy: 12%r }, radius: 2.5%r }
+    hours:
+      hour:
+        color: color.bg
+        parts:
+          blade_bg: { type: rectangle, at: { dy: -22%r }, size: { width: 10%r, height: 61%r }, color: color.fg }
+          tip_bg:   { type: circle, at: { dy: -52.5%r }, radius: 5%r, color: color.fg }
+          tail_bg:  { type: circle, at: { dy: 8.5%r }, radius: 5%r, color: color.fg }
+
+          blade: { type: rectangle, at: { dy: -22%r }, size: { width: 6.5%r, height: 61%r } }
+          tip:   { type: circle, at: { dy: -52.5%r }, radius: 3.25%r }
+          tail:  { type: circle, at: { dy: 8.5%r }, radius: 3.25%r }
+    sweep:
+      second:
+        color: color.accent
+        parts:
+          needle: { type: line, at: { dy: 13%r }, to: { dy: -84%r }, thickness: 2px }
+          hub:    { type: circle, radius: 3%r }
+
+static:
+  background:
+    type: rectangle
+    at: { anchor: center }
+    size: { width: 100%, height: 100% }
+    color: color.bg
+
+  # Right half: a tick every 5 degrees from 5 to 175.
+  minute_ticks:
+    type: pattern
+    pattern: radial
+    at: { anchor: center }
+    count: 30
+    start: 0deg
+    step_angle: 6deg
+    color: color.data
+    parts:
+      tick: { type: line, at: { dy: -97%r }, to: { dy: -89%r }, thickness: 1px }
+    skip: [0]
+
+  # Left half: twelve hollow cells laid exactly under the bezel gauge's own
+  # cells, drawn whatever the bezel slot shows ((180 - 11 x 3) / 12 = 12.25 degrees each, 3 degrees apart).
+  bezel_cells:
+    type: pattern
+    pattern: radial
+    at: { anchor: center }
+    count: 12
+    step_angle: -15.27deg
+    color: color.bg
+    outline: { color: color.data, width: 1 }
+    parts:
+      cell: { type: arc, radius: 93%r, thickness: 8%r, start_angle: 360deg, sweep: -12deg }
+
+
+
+
+elements:
+  # -- the bezel: the `bezel` slot's segments, and its icon over its value --
+
+  left_bezel_gauge:
+    type: gauge
+    slot: left_bezel
+    style: segments
+    at: { anchor: center }
+    radius: 93%r
+    thickness: 8%r
+    start_angle: 360deg
+    sweep: -180deg
+    count: 12
+    gap: 3deg
+    color: color.data
+    absent: hide
+
+  left_bezel_value:
+    type: data
+    slot: left_bezel
+    font: font.steps
+    at: { anchor: center }
+    curve: { style: radial, angle: -50deg, radius: 78%r }
+    align: center                  # the run starts at 150deg ...
+    icon: { size: 12%r, position: left, color: color.fg }   # ... and the icon stands just before it, turned to match
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
+    label: none
+    short: true
+
+  right_bezel_value:
+    type: data
+    slot: right_bezel
+    font: font.steps
+    at: { anchor: center }
+    curve: { style: radial, angle: 50deg, radius: 78%r }
+    align: center                  # the run starts at 150deg ...
+    icon: { size: 12%r, position: left, color: color.fg }   # ... and the icon stands just before it, turned to match
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
+    label: none
+    short: true
+  
+  clock_hour:
+    type: text
+    text: "{time.clock:%h}"
+    font: FONT_NUMBER_MILD
+    at: { anchor: center, dx: -1.5%r, dy: -55%r }
+    align: right
+    color: color.fg
+    aod: { color: color.black, outline: { color: color.red, width: 2 } }
+  clock_hour_copy:
+    type: text
+    text: "{time.clock:%h}"
+    font: FONT_NUMBER_MILD
+    at: { anchor: center, dx: -1.5%r, dy: -55%r }
+    align: right
+    color: color.accent
+    aod: { color: color.black, outline: { color: color.red, width: 2 } }
+
+  clock_minute:
+    type: text
+    text: "{time.clock:%M}"
+    font: FONT_NUMBER_MILD
+    at: { anchor: center, dx: 1.5%r, dy: -55%r }
+    align: left
+    color: color.bg
+    outline: { color: color.accent, width: 2 }
+    lint: { allow: [text-outline-interior], reason: "hollow digits on the plain background; the interior is the background colour" }
+    aod: { outline: { color: color.red, width: 2 } }
+  clock_minute_copy:
+    type: text
+    text: "{time.clock:%M}"
+    font: FONT_NUMBER_MILD
+    at: { anchor: center, dx: 1.5%r, dy: -55%r }
+    align: left
+    color: color.accent
+    lint: { allow: [text-outline-interior], reason: "hollow digits on the plain background; the interior is the background colour" }
+    aod: { outline: { color: color.red, width: 2 }, color: color.black }
+
+  date:
+    type: text
+    text: "{date.today:%b %e}"
+    font: font.bold
+    at: { anchor: center, dy: -32.5%r }
+    color: color.fg
+
+  # -- the left subdial: the `left` slot's arc, and its icon over its value --
+
+  left_slot:
+    type: group
+    size: { width: 52%r, height: 52%r }   # the right half: its left edge is the dial's centre
+    at: { anchor: center, dx: -52%r, dy: 0px }
+    align: center
+    on_hold: auto
+    children:
+      # The three subdials' dim rings: drawn whatever is picked, so a pick with
+      # no scale (its arc hidden) still sits in a ringed dial.
+      left_track:
+        type: circle
+        at: { anchor: center }
+        radius: 49%
+        filled: false
+        thickness: 4%
+        color: color.track
+        lint: { allow: [contrast], reason: "a deliberately dim track; the lit arc drawn over it carries the reading" }
+      left_gauge:
+        type: gauge
+        slot: left
+        style: arc
+        at: { anchor: center }
+        radius: 50%
+        thickness: 8%
+        start_angle: 180deg
+        sweep: 360deg
+        color: color.data
+        absent: hide
+
+      left_reading:
+        type: data
+        slot: left
+        at: { anchor: center, dy: -5% }
+        font: font.bold        # a data element takes a system or baked font, not a face: one
+        short: true
+        icon: { size: 16%r, position: top, gap: 0%r, color: color.fg }
+        color: color.fg
+        absent: { text: "--" }
+        on_hold: auto
+
+  # -- the right subdial --
+
+  right_slot:
+    type: group
+    size: { width: 52%r, height: 52%r }   # the right half: its left edge is the dial's centre
+    at: { anchor: center, dx: 52%r }
+    align: center
+    on_hold: auto
+    children:
+      right_track:
+        type: circle
+        at: { anchor: center }
+        radius: 49%
+        filled: false
+        thickness: 4%
+        color: color.track
+        lint: { allow: [contrast], reason: "a deliberately dim track; the lit arc drawn over it carries the reading" }
+      right_gauge:
+        type: gauge
+        slot: right
+        style: arc
+        at: { anchor: center }
+        radius: 50%
+        thickness: 8%
+        start_angle: 180deg
+        sweep: 360deg
+        color: color.data
+        absent: hide
+      right_reading:
+        type: data
+        slot: right
+        at: { anchor: center, dy: -5% }
+        font: font.bold        # a data element takes a system or baked font, not a face: one
+        short: true
+        icon: { size: 16%r, position: top, gap: 0%r, color: color.fg }
+        color: color.fg
+        absent: { text: "--" }
+        on_hold: auto
+
+  # -- the bottom subdial --
+
+  bottom_slot:
+    type: group
+    size: { width: 52%r, height: 52%r }   # the right half: its left edge is the dial's centre
+    at: { anchor: center, dy: 50%r }
+    align: center
+    on_hold: auto
+    children:
+      bottom_track:
+        type: circle
+        at: { anchor: center }
+        radius: 49%
+        filled: false
+        thickness: 4%
+        color: color.track
+        lint: { allow: [contrast], reason: "a deliberately dim track; the lit arc drawn over it carries the reading" }
+      bottom_gauge:
+        type: gauge
+        slot: bottom
+        style: arc
+        at: { anchor: center }
+        radius: 50%
+        thickness: 8%
+        start_angle: 180deg
+        sweep: 360deg
+        color: color.data
+        absent: hide
+      bottom_reading:
+        type: data
+        slot: bottom
+        at: { anchor: center, dy: -5% }
+        font: font.bold        # a data element takes a system or baked font, not a face: one
+        short: true
+        icon: { size: 16%r, position: top, gap: 0%r, color: color.fg }
+        color: color.fg
+        absent: { text: "--" }
+        on_hold: auto
+
+  minute_hand:
+    type: hands
+    set: minutes
+    at: { anchor: center }
+    outline: { color: color.bg, width: 1 }
+    lint: { allow: [contrast], reason: "a solid white hand: the ring only widens it, while the hour hand's ring makes it hollow" }
+    aod: { visible: true }
+
+  hour_hand:
+    type: hands
+    set: hours
+    at: { anchor: center }
+    outline: { color: color.bg, width: 1 }
+    aod: { visible: true }
+
+  second_hand:
+    type: hands
+    set: sweep
+    at: { anchor: center }
+    seconds: awake

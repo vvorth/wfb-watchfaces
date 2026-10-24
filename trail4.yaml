@@ -1,0 +1,418 @@
+# Trail Slots: a rugged digital face rebuilt from a photo.
+#
+# Seven wearer-picked data slots (Data axis), one of them the bottom bar
+# graph with its reading, hours in white and minutes in the accent colour.
+# The bar row's cells lean like the photo's: seven 2 px strips of the same
+# segments gauge, each shifted 1 px left of the one above, so every cell is
+# a parallelogram that still fills against the wearer's pick.
+# Fonts are the watch's own: Bionic for the clock, Roboto Condensed for
+# readings (fr955 has no Bionic: it draws a smaller Roboto Condensed clock).
+#
+# yaml-language-server: $schema=../../../schema/wfb-face-2.schema.json
+
+format: 2
+
+face:
+  id: 442515d2-9c24-4531-9c09-0aacda9450e7
+  name: Trail4
+  version: 2.2.2
+
+build:
+  targets: [fenix8solar47mm, fenix8solar51mm, fr955]
+
+resources:
+  palette:
+    bg: "#000000"
+    fg: "#FFFFFF"
+    line: "#AAAAAA"
+    track: "#555555"
+    orange: "#FFAA00"
+    blue: "#00AAFF"
+  fonts:
+    clock:   { face: [BionicSemiBold, RobotoBlack], size: 80%r, unsupported: hide }
+    seconds: { face: [BionicSemiBold, RobotoBlack], size: 41%r, unsupported: hide }
+    clock_narrow:   { face: [RobotoCondensedBold], size: 64%r }
+    seconds_narrow: { face: [RobotoCondensedBold], size: 32%r }
+    reading: { face: [RobotoCondensedBold], size: 16%r }
+    #enduro:  { face: [PridiSemiBoldGarmin], size: 20%r }
+    enduro:  { face: [NanumGothicExtraBold, BionicSemiBold, RobotoBlack], size: 18%r }
+    #enduro:  { face: [RobotoBlack], size: 20%r }
+    date:    { face: [RobotoCondensedBold], size: 16%r }
+
+config:
+  accent_color: { default: color.orange, choices: any }
+  data_color:   { default: color.blue, choices: any }
+  slots:
+    top:      { label: "Top",          default: current_temperature,  choices: [current_temperature, calories, floors_climbed, intensity_minutes, steps, weekly_bike_distance, weekly_run_distance, body_battery, heart_rate, pulse_ox, respiration_rate, sleep_score, stress, recovery_time, vo2max_bike, vo2max_run, altitude, sea_level_pressure, sunrise, sunset, battery, notification_count, solar_input] }
+    second:   { label: "Second row",   default: high_low_temperature, choices: [high_low_temperature, calories, steps, floors_climbed, intensity_minutes, weekly_bike_distance, weekly_run_distance, body_battery, heart_rate, pulse_ox, respiration_rate, sleep_score, stress, race_pace_predictor_10k, race_pace_predictor_5k, race_pace_predictor_half_marathon, race_pace_predictor_marathon, race_predictor_10k, race_predictor_5k, race_predictor_half_marathon, race_predictor_marathon, recovery_time, training_status, vo2max_bike, vo2max_run, altitude, current_temperature, current_weather, sea_level_pressure, calendar_events, date, sunrise, sunset, weekday_monthday, battery, notification_count, solar_input] }
+    bar:
+      label: "Bar"
+      default: battery
+      choices: &progress [battery, body_battery, stress, steps, floors_climbed,
+                          intensity_minutes, pulse_ox, solar_input, heart_rate]
+    corner:
+      label: "Top right"
+      default: altitude
+      choices: [altitude, current_temperature, heart_rate, body_battery, stress, steps, calories, floors_climbed, intensity_minutes, pulse_ox, respiration_rate, notification_count, battery, sleep_score, solar_input]
+    left:     { label: "Left",         default: body_battery, choices: *progress }
+    right:    { label: "Right",        default: steps, choices: *progress }
+    graph:
+      label: "Graph"
+      default: heart_rate
+      choices: [heart_rate, steps, calories, floors_climbed, intensity_minutes, current_temperature]
+
+static:
+  background:
+    type: rectangle
+    at: { anchor: center }
+    size: { width: 100%, height: 100% }
+    color: color.bg
+
+  TRAIL:
+    type: text
+    text: ENDURO
+    font: font.enduro
+    at:
+      anchor: center
+      dy: -26%r
+    color: color.line
+  # -- separators: straight runs joined by small arcs ------------------
+  sep1_1:
+    type: line
+    lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
+    at: { anchor: center, dx: -82%r, dy: -61.5%r }
+    to: { anchor: center, dx: 51.5%r, dy: -61.5%r }
+    thickness: 2px
+    color: color.line
+  sep1_bend1:
+    type: arc
+    at: { anchor: center, dx: 51.5%r, dy: -70.5%r }
+    radius: 9%r
+    thickness: 2px
+    start_angle: 180deg
+    sweep: -42.9deg
+    color: color.line
+  sep1_2:
+    type: line
+    lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
+    at: { anchor: center, dx: 57.6%r, dy: -63.9%r }
+    to: { anchor: center, dx: 69%r, dy: -74.5%r }
+    thickness: 2px
+    color: color.line
+  sep2_1:
+    type: line
+    lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
+    at: { anchor: center, dx: -93%r, dy: -41%r }
+    to: { anchor: center, dx: 33%r, dy: -41%r }
+    thickness: 2px
+    color: color.line
+  sep2_bend1:
+    type: arc
+    at: { anchor: center, dx: 33%r, dy: -50%r }
+    radius: 9%r
+    thickness: 2px
+    start_angle: 180deg
+    sweep: -48.2deg
+    color: color.line
+  sep2_2:
+    type: line
+    at: { anchor: center, dx: 39.7%r, dy: -44%r }
+    to: { anchor: center, dx: 57.1%r, dy: -63.5%r }
+    thickness: 2px
+    color: color.line
+  box_1:
+    type: line
+    lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
+    at: { anchor: center, dx: 74%r, dy: -69%r }
+    to: { anchor: center, dx: 47.8%r, dy: -42.8%r }
+    thickness: 2px
+    color: color.line
+  box_bend1:
+    type: arc
+    at: { anchor: center, dx: 52%r, dy: -38.5%r }
+    radius: 6%r
+    thickness: 2px
+    start_angle: 315deg
+    sweep: -45deg
+    color: color.line
+  box_2:
+    type: line
+    at: { anchor: center, dx: 46%r, dy: -38.5%r }
+    to: { anchor: center, dx: 46%r, dy: -36.5%r }
+    thickness: 2px
+    color: color.line
+  box_bend2:
+    type: arc
+    at: { anchor: center, dx: 52%r, dy: -36.5%r }
+    radius: 6%r
+    thickness: 2px
+    start_angle: 270deg
+    sweep: -45deg
+    color: color.line
+  box_3:
+    type: line
+    at: { anchor: center, dx: 47.8%r, dy: -32.2%r }
+    to: { anchor: center, dx: 67.2%r, dy: -12.8%r }
+    thickness: 2px
+    color: color.line
+  box_bend3:
+    type: arc
+    at: { anchor: center, dx: 71.5%r, dy: -17%r }
+    radius: 6%r
+    thickness: 2px
+    start_angle: 225deg
+    sweep: -45deg
+    color: color.line
+  box_4:
+    type: line
+    lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
+    at: { anchor: center, dx: 71.5%r, dy: -11%r }
+    to: { anchor: center, dx: 98.5%r, dy: -11%r }
+    thickness: 2px
+    color: color.line
+  bot_1:
+    type: line
+    lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
+    at: { anchor: center, dx: -71%r, dy: 72%r }
+    to: { anchor: center, dx: -61.4%r, dy: 62%r }
+    thickness: 2px
+    color: color.line
+  bot_bend1:
+    type: arc
+    at: { anchor: center, dx: -55.6%r, dy: 67.5%r }
+    radius: 8%r
+    thickness: 2px
+    start_angle: 313.8deg
+    sweep: 46.2deg
+    color: color.line
+  bot_2:
+    type: line
+    at: { anchor: center, dx: -55.6%r, dy: 59.5%r }
+    to: { anchor: center, dx: 55%r, dy: 59.5%r }
+    thickness: 2px
+    color: color.line
+  bot_bend2:
+    type: arc
+    at: { anchor: center, dx: 55%r, dy: 67.5%r }
+    radius: 8%r
+    thickness: 2px
+    start_angle: 0deg
+    sweep: 41.6deg
+    color: color.line
+  bot_3:
+    type: line
+    lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
+    at: { anchor: center, dx: 60.3%r, dy: 61.5%r }
+    to: { anchor: center, dx: 71.5%r, dy: 71.5%r }
+    thickness: 2px
+    color: color.line
+
+elements:
+  # -- top rows ---------------------------------------------------------------
+  top_reading:
+    type: data
+    slot: top
+    at: { anchor: center, dy: -89%r }
+    font: font.reading
+    icon: { size: 16%r, gap: 4%r, color: color.fg }
+    color: color.fg
+    short: true
+    absent: { text: "--" }
+    on_hold: auto
+
+  second_reading:
+    type: data
+    slot: second
+    at: { anchor: center, dy: -71%r }
+    font: font.reading
+    icon: { size: 16%r, gap: 4%r, color: color.fg }
+    color: color.fg
+    short: false
+    absent: { text: "--" }
+    on_hold: auto
+    unit: true
+
+  # -- the segmented bar row -----------------------------------------------------
+  bar_reading:
+    type: data
+    slot: bar
+    at: { anchor: center, dx: -78%r, dy: -51%r }
+    align: left
+    font: font.reading
+    icon: { size: 16%r, gap: 4%r, color: color.fg }
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
+  # Eight leaning cells: the same gauge in seven 2 px strips, each 1 px left
+  # of the one above. Every strip fills against the same pick, so a cell is
+  # lit or unlit as a whole parallelogram.
+  bar_gauge:
+    type: group
+    at: { anchor: center, dx: -2.9%r, dy: -50.7%r }
+    size: { width: 64%r, height: 14px }
+    children:
+      strip0: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 3px, dy: -6px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
+      strip1: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 2px, dy: -4px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
+      strip2: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 1px, dy: -2px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
+      strip3: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 0px, dy: 0px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
+      strip4: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: -1px, dy: 2px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
+      strip5: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: -2px, dy: 4px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
+      strip6: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: -3px, dy: 6px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
+
+  # -- top right ---------------------------------------------------------------
+  corner_reading:
+    type: data
+    slot: corner
+    at: { anchor: center, dx: 76%r, dy: -38%r }
+    font: font.reading
+    icon: { size: 16%r, position: top, gap: 0%r, color: color.fg }
+    color: color.fg
+    short: true
+    absent: { text: "--" }
+    on_hold: auto
+
+  # -- date and time --------------------------------------------------------
+  date:
+    type: text
+    text: "{date.today:%a %e}"
+    font: font.date
+    at: { anchor: center, dx: -70%r, dy: -25%r }
+    color: color.fg
+
+  clock:
+    type: group
+    at: { anchor: center }
+    size: { width: 100%, height: 100% }
+    overrides:
+      fr955: { visible: false }        # no Bionic there: clock_narrow below
+    children:
+      hours:
+        type: text
+        text: "{time.clock:%h}"
+        font: font.clock
+        at: { anchor: center, dx: -17%r, dy: 10.5%r }
+        align: right
+        color: color.fg
+        outline: { color: color.fg, width: 1 }
+      minutes:
+        type: text
+        text: "{time.clock:%M}"
+        font: font.clock
+        at: { anchor: center, dx: -16%r, dy: 10.5%r }
+        align: left
+        color: color.accent
+        outline: { color: color.accent, width: 1 }
+      seconds:
+        type: text
+        text: "{time.clock:%S}"
+        font: font.seconds
+        at: { anchor: center, dx: 48%r, dy: 39%r }
+        align: bottom_left
+        color: color.line
+        sleep_update: false
+        visible: system.awake
+
+  # The same clock in Roboto Condensed, which is wider than Bionic, so
+  # smaller: fr955 only.
+  clock_narrow:
+    type: group
+    at: { anchor: center }
+    size: { width: 100%, height: 100% }
+    overrides:
+      fenix8solar47mm: { visible: false }
+      fenix8solar51mm: { visible: false }
+    children:
+      hours_narrow:
+        type: text
+        text: "{time.clock:%h}"
+        font: font.clock_narrow
+        at: { anchor: center, dx: -15%r, dy: 10.5%r }
+        align: right
+        color: color.fg
+      minutes_narrow:
+        type: text
+        text: "{time.clock:%M}"
+        font: font.clock_narrow
+        at: { anchor: center, dx: -13%r, dy: 10.5%r }
+        align: left
+        color: color.accent
+      seconds_narrow:
+        type: text
+        text: "{time.clock:%S}"
+        font: font.seconds_narrow
+        at: { anchor: center, dx: 50%r, dy: 36%r }
+        align: bottom_left
+        color: color.fg
+        sleep_update: true
+
+  # -- left and right slots with their edge arcs ----------------------------
+  left_arc:
+    type: gauge
+    slot: left
+    style: arc
+    at: { anchor: center }
+    radius: 92%r
+    thickness: 5.5%r
+    start_angle: 228deg
+    sweep: 45deg
+    color: color.data
+    track_color: color.track
+    absent: hide
+  left_reading:
+    type: data
+    slot: left
+    at: { anchor: center, dx: -64%r, dy: 48%r }
+    align: left
+    font: font.reading
+    icon: { size: 16%r, gap: 4%r, color: color.fg }
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
+
+  right_arc:
+    type: gauge
+    slot: right
+    style: arc
+    at: { anchor: center }
+    radius: 92%r
+    thickness: 5.5%r
+    start_angle: 133deg
+    sweep: -45deg
+    color: color.data
+    track_color: color.track
+    absent: hide
+  right_reading:
+    type: data
+    slot: right
+    at: { anchor: center, dx: 63%r, dy: 48%r }
+    align: right
+    font: font.reading
+    icon: { size: 16%r, position: right, gap: 4%r, color: color.fg }
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
+
+  # -- bottom: the picked metric's history and reading ---------------------
+  graph_slot:
+    type: group
+    at: { anchor: center, dy: 79%r }
+    size: { width: 108%r, height: 30%r }
+    on_hold: auto
+    children:
+      graph_bars:
+        type: graph
+        slot: graph
+        style: bars
+        bar_width: 3.4%r
+        buckets: 20
+        at: { anchor: center, dy: -9%r }
+        size: { width: 100%r, height: 15%r }
+        color: color.data
+      graph_reading:
+        type: data
+        slot: graph
+        at: { anchor: center, dy: 9%r }
+        font: font.reading
+        icon: { size: 14%r, gap: 4%r, color: color.fg }
+        color: color.fg
+        absent: { text: "--" }

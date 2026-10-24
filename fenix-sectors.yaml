@@ -1,0 +1,335 @@
+# Fenix Sectors: six readings round the rim, each with its own arc.
+#
+# Six Data-axis slots sit in 60-degree sectors between accent ticks, each
+# reading curved along the bezel with its tag in front (ALT, STEPS, NOW,
+# BATT, INT MIN, BODY) and an accent arc inside it that fills from where the
+# reading starts, against the pick's own scale. Two more slots sit in the
+# pockets above and below the clock as an icon with a short reading.
+# Styles: a digital and an analog layout, each black on white or white on
+# black; the accent colour recolours the ticks, pockets and arcs.
+#
+# yaml-language-server: $schema=../../../schema/wfb-face-2.schema.json
+
+format: 2
+
+face:
+  id: 792c1231-a2a1-4490-ab0a-bfbb062de150
+  name: Fenix Sectors
+  version: 1.2.1
+
+build:
+  targets: [fenix8solar47mm, fenix8solar51mm, fr955]
+
+resources:
+  palette:
+    white: "#FFFFFF"
+    black: "#000000"
+    orange: "#FF5500"
+  fonts:
+    rim:     { face: [RobotoCondensedBold], size: 17.4%r }
+    small:   { face: [RobotoCondensedBold], size: 21.5%r }
+    pocket:  { face: [RobotoCondensedBold], size: 16%r }
+    label:   { face: [NanumGothicExtraBold, RobotoCondensedBold], size: 13.1%r }
+    clock:   { face: [BionicSemiBold], size: 96%r, unsupported: hide }
+    clock_bold: { face: [BionicBold], size: 101.3%r, unsupported: hide }
+  hand_sets:
+    sword:
+      hour:
+        color: color.fg
+        parts:
+          blade:  { type: polygon, mirror: x, points: [{ dx: -2.5%r, dy: 10%r }, { dx: -5.5%r, dy: -4%r }, { dx: -4.5%r, dy: -40%r }, { dx: 0%r, dy: -49%r }] }
+          window: { type: polygon, mirror: x, color: color.bg, points: [{ dx: -2%r, dy: -14%r }, { dx: -1.8%r, dy: -38%r }] }
+      minute:
+        color: color.fg
+        parts:
+          blade:  { type: polygon, mirror: x, points: [{ dx: -2.5%r, dy: 10%r }, { dx: -5%r, dy: -4%r }, { dx: -3.8%r, dy: -68%r }, { dx: 0%r, dy: -77%r }] }
+          window: { type: polygon, mirror: x, color: color.bg, points: [{ dx: -1.8%r, dy: -16%r }, { dx: -1.5%r, dy: -64%r }] }
+      second:
+        color: color.accent
+        parts:
+          needle: { type: line, at: { dy: 16%r }, to: { dy: -80%r }, thickness: 2px }
+
+theme:
+  schemes:
+    light: { label: "Black on white", colors: { bg: color.white, fg: color.black } }
+    dark:  { label: "White on black", colors: { bg: color.black, fg: color.white } }
+
+config:
+  accent_color: { default: color.orange, choices: any }
+  slots:
+    top:
+      label: "Top"
+      default: altitude
+      choices: &rim [altitude, steps, current_temperature, battery, intensity_minutes, body_battery, heart_rate, stress, pulse_ox, respiration_rate, calories, floors_climbed, sea_level_pressure, solar_input, notification_count, sunrise, sunset, vo2max_run, vo2max_bike, weekly_run_distance, weekly_bike_distance, recovery_time]
+    upper_right: { label: "Upper right", default: steps, choices: *rim }
+    lower_right: { label: "Lower right", default: current_temperature, choices: *rim }
+    bottom: { label: "Bottom", default: battery, choices: *rim }
+    lower_left: { label: "Lower left", default: intensity_minutes, choices: *rim }
+    upper_left: { label: "Upper left", default: body_battery, choices: *rim }
+    pocket_top:    { label: "Above the clock", default: solar_input, choices: *rim }
+    pocket_bottom: { label: "Below the clock", default: notification_count, choices: *rim }
+  style:
+    default: digital_light
+    choices:
+      digital_light: { label: "Digital, black on white", layout: digital, scheme: light }
+      digital_dark:  { label: "Digital, white on black", layout: digital, scheme: dark }
+      analog_light:  { label: "Analog, black on white",  layout: analog,  scheme: light }
+      analog_dark:   { label: "Analog, white on black",  layout: analog,  scheme: dark }
+
+static:
+  background:
+    type: rectangle
+    at: { anchor: center }
+    size: { width: 100%, height: 100% }
+    color: color.bg
+
+  # -- sector furniture: ticks between sectors, a hairline track per arc ----
+  ticks:
+    type: pattern
+    pattern: radial
+    at: { anchor: center }
+    count: 6
+    start: 30deg
+    color: color.accent
+    lint: { allow: [safe-area], reason: "the ticks run out to the screen's edge, as in the design" }
+    parts:
+      tick: { type: rectangle, at: { dy: -94%r }, size: { width: 4.9%r, height: 12%r } }
+  tracks:
+    type: pattern
+    pattern: radial
+    at: { anchor: center }
+    count: 6
+    color: color.accent
+    parts:
+      track: { type: arc, radius: 83.4%r, thickness: 1.2%r, start_angle: -25.75deg, sweep: 51.5deg, min_1px: true }
+
+  # -- the pockets above and below the clock --------------------------------
+  pocket_top_l: { type: line, at: { anchor: center, angle: -30deg, radius: 82%r }, to: { anchor: center, angle: -30deg, radius: 62%r }, thickness: 2px, color: color.accent }
+  pocket_top_m: { type: line, at: { anchor: center, angle: -30deg, radius: 62%r  }, to: { anchor: center, angle: 30deg, radius: 62%r  }, thickness: 2px, color: color.accent }
+  pocket_top_r: { type: line, at: { anchor: center, angle: 30deg, radius: 82%r  }, to: { anchor: center, angle: 30deg, radius: 62%r  }, thickness: 2px, color: color.accent }
+  pocket_bot_l: { type: line, at: { anchor: center, angle: 210deg, radius: 82%r }, to: { anchor: center, angle: 210deg, radius: 62%r }, thickness: 2px, color: color.accent }
+  pocket_bot_m: { type: line, at: { anchor: center, angle: 210deg, radius: 62%r  }, to: { anchor: center, angle: 150deg, radius: 62%r  }, thickness: 2px, color: color.accent }
+  pocket_bot_r: { type: line, at: { anchor: center, angle: 150deg, radius: 82%r }, to: { anchor: center, angle: 150deg, radius: 62%r }, thickness: 2px, color: color.accent }
+
+  # The label, letter-spaced and drawn twice 1 px apart for its weight;
+  # the macron over the E is a bar, so no glyph outside Latin-1 is needed.
+  label:
+    type: group
+    at: { anchor: center, dx: -1px, dy: -39.8%r }
+    size: { width: 52%r, height: 12%r }
+    children:
+      label_f: { type: text, text: "F", font: font.label, at: { anchor: center, dx: -20.4%r }, color: color.fg }
+      label_e: { type: text, text: "E", font: font.label, at: { anchor: center, dx: -10.7%r }, color: color.fg }
+      label_n: { type: text, text: "N", font: font.label, at: { anchor: center, dx: 1.2%r }, color: color.fg }
+      label_i: { type: text, text: "I", font: font.label, at: { anchor: center, dx: 10.5%r }, color: color.fg }
+      label_x: { type: text, text: "X", font: font.label, at: { anchor: center, dx: 19.2%r }, color: color.fg }
+  label_wide:
+    type: group
+    at: { anchor: center, dx: 0px, dy: -39.8%r }
+    size: { width: 52%r, height: 12%r }
+    children:
+      label_wide_f: { type: text, text: "F", font: font.label, at: { anchor: center, dx: -20.4%r }, color: color.fg }
+      label_wide_e: { type: text, text: "E", font: font.label, at: { anchor: center, dx: -10.7%r }, color: color.fg }
+      label_wide_n: { type: text, text: "N", font: font.label, at: { anchor: center, dx: 1.2%r }, color: color.fg }
+      label_wide_i: { type: text, text: "I", font: font.label, at: { anchor: center, dx: 10.5%r }, color: color.fg }
+      label_wide_x: { type: text, text: "X", font: font.label, at: { anchor: center, dx: 19.2%r }, color: color.fg }
+  label_macron: { type: rectangle, at: { anchor: center, dx: -11%r, dy: -46.4%r }, size: { width: 7.8%r, height: 1.5%r }, color: color.fg }
+
+layouts:
+  digital:
+    label: "Digital"
+    elements:
+      clock:
+        type: group
+        at: { anchor: center }
+        size: { width: 100%, height: 100% }
+        overrides:
+          fr955: { visible: false }        # no Bionic SemiBold there: clock_bold below
+        children:
+          hours:   { type: text, text: "{time.clock:%h%M}", font: font.clock, at: { anchor: center, dx: 0%r, dy: 0%r }, align: center, color: color.fg }
+      clock_bold:
+        type: group
+        at: { anchor: center }
+        size: { width: 100%, height: 100% }
+        overrides:
+          fenix8solar47mm: { visible: false }
+          fenix8solar51mm: { visible: false }
+        children:
+          hours_bold:   { type: text, text: "{time.clock:%h%M}", font: font.clock_bold, at: { anchor: center, dx: 0.9%r, dy: -0.3%r }, align: center, color: color.fg }
+      seconds:
+        type: text
+        text: "{time.clock:%S}"
+        font: font.small
+        at: { anchor: center, dx: 37.5%r, dy: 37.4%r }
+        color: color.fg
+        sleep_update: false
+        visible: system.awake
+  analog:
+    label: "Analog"
+    elements:
+      hands:
+        type: hands
+        set: sword
+        at: { anchor: center }
+        seconds: awake
+      hub:      { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.fg }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 3%r, color: color.bg }
+      hub_pin:  { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.fg }
+
+elements:
+  date:
+    type: text
+    text: "{date.today:%a %d}"
+    font: font.small
+    at: { anchor: center, dx: -37.2%r, dy: 37.2%r }
+    color: color.fg
+
+  # -- six rim sectors: an arc that fills from where its reading starts ----
+  top_arc:
+    type: gauge
+    slot: top
+    style: arc
+    at: { anchor: center }
+    radius: 81.4%r
+    thickness: 3.6%r
+    start_angle: -25.75deg
+    sweep: 51.5deg
+    color: color.accent
+    absent: hide
+  top_value:
+    type: data
+    slot: top
+    prefix: true
+    font: font.rim
+    at: { anchor: center }
+    lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
+    curve: { style: radial, angle: 0deg, radius: 92.5%r, direction: clockwise }
+    color: color.fg
+    absent: { text: "--" }
+  upper_right_arc:
+    type: gauge
+    slot: upper_right
+    style: arc
+    at: { anchor: center }
+    radius: 81.4%r
+    thickness: 3.6%r
+    start_angle: 34.25deg
+    sweep: 51.5deg
+    color: color.accent
+    absent: hide
+  upper_right_value:
+    type: data
+    slot: upper_right
+    prefix: true
+    font: font.rim
+    at: { anchor: center }
+    lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
+    curve: { style: radial, angle: 60deg, radius: 92.5%r, direction: clockwise }
+    color: color.fg
+    absent: { text: "--" }
+  lower_right_arc:
+    type: gauge
+    slot: lower_right
+    style: arc
+    at: { anchor: center }
+    radius: 81.4%r
+    thickness: 3.6%r
+    start_angle: 145.75deg
+    sweep: -51.5deg
+    color: color.accent
+    absent: hide
+  lower_right_value:
+    type: data
+    slot: lower_right
+    prefix: true
+    font: font.rim
+    at: { anchor: center }
+    lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
+    curve: { style: radial, angle: 120deg, radius: 92.5%r, direction: counter_clockwise }
+    color: color.fg
+    absent: { text: "--" }
+  bottom_arc:
+    type: gauge
+    slot: bottom
+    style: arc
+    at: { anchor: center }
+    radius: 81.4%r
+    thickness: 3.6%r
+    start_angle: 205.75deg
+    sweep: -51.5deg
+    color: color.accent
+    absent: hide
+  bottom_value:
+    type: data
+    slot: bottom
+    prefix: true
+    font: font.rim
+    at: { anchor: center }
+    lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
+    curve: { style: radial, angle: 180deg, radius: 92.5%r, direction: counter_clockwise }
+    color: color.fg
+    absent: { text: "--" }
+  lower_left_arc:
+    type: gauge
+    slot: lower_left
+    style: arc
+    at: { anchor: center }
+    radius: 81.4%r
+    thickness: 3.6%r
+    start_angle: 265.75deg
+    sweep: -51.5deg
+    color: color.accent
+    absent: hide
+  lower_left_value:
+    type: data
+    slot: lower_left
+    prefix: true
+    font: font.rim
+    at: { anchor: center }
+    lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
+    curve: { style: radial, angle: 240deg, radius: 92.5%r, direction: counter_clockwise }
+    color: color.fg
+    absent: { text: "--" }
+  upper_left_arc:
+    type: gauge
+    slot: upper_left
+    style: arc
+    at: { anchor: center }
+    radius: 81.4%r
+    thickness: 3.6%r
+    start_angle: 274.25deg
+    sweep: 51.5deg
+    color: color.accent
+    absent: hide
+  upper_left_value:
+    type: data
+    slot: upper_left
+    prefix: true
+    font: font.rim
+    at: { anchor: center }
+    lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
+    curve: { style: radial, angle: 300deg, radius: 92.5%r, direction: clockwise }
+    color: color.fg
+    absent: { text: "--" }
+
+  # -- the pockets: the pick's icon and a short reading ---------------------
+  pocket_top:
+    type: data
+    slot: pocket_top
+    short: true
+    font: font.pocket
+    icon: { size: 16%r, gap: 4%r, color: color.fg }
+    at: { anchor: center, dy: -67%r }
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
+  pocket_bottom:
+    type: data
+    slot: pocket_bottom
+    short: true
+    font: font.pocket
+    icon: { size: 16%r, gap: 4%r, color: color.fg }
+    at: { anchor: center, dy: 67%r }
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto

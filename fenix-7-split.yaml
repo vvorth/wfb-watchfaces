@@ -1,0 +1,225 @@
+format: 2
+
+face:
+  id: e6390983-5f1c-4f57-ad95-d203f1c55cf5
+  name: Fenix-ish
+  version: 1.3.0
+
+build:
+  targets: [fenix8solar47mm, fenix8solar51mm, fr955]
+
+resources:
+  palette:
+    bg: "#000000"
+    fg: "#FFFFFF"
+  fonts:
+    clock: { face: [BionicBold, BionicSemiBold], size: 102%r }
+    reading: { face: [BionicBold, BionicSemiBold], size: 24%r }
+    top: { face: [BionicBold, BionicSemiBold], size: 20%r }
+
+config:
+  slots:
+    top_left: { label: "Top left", default: steps, choices: [steps, calories, floors_climbed, intensity_minutes, weekly_run_distance, weekly_bike_distance, body_battery, heart_rate, pulse_ox, respiration_rate, sleep_score, stress, recovery_time, vo2max_bike, vo2max_run, altitude, current_temperature, high_low_temperature, sea_level_pressure, battery, notification_count, solar_input] }
+    top_right: { label: "Top right", default: high_low_temperature, choices: [high_low_temperature, calories, floors_climbed, intensity_minutes, steps, weekly_bike_distance, weekly_run_distance, body_battery, heart_rate, pulse_ox, sleep_score, stress, respiration_rate, recovery_time, vo2max_run, vo2max_bike, altitude, current_temperature, sea_level_pressure, battery, notification_count, solar_input] }
+    bottom_left: { label: "Bottom left", default: body_battery, choices: [body_battery, calories, floors_climbed, intensity_minutes, steps, weekly_bike_distance, weekly_run_distance, heart_rate, pulse_ox, respiration_rate, sleep_score, stress, recovery_time, vo2max_bike, vo2max_run, altitude, current_temperature, sea_level_pressure, battery, notification_count, solar_input] }
+    bottom_right:
+      label: "Bottom right"
+      default: current_temperature
+      choices:
+        - { type: heart_rate, icon: { codepoint: U+F004 } }
+        - body_battery
+        - stress
+        - pulse_ox
+        - steps
+        - calories
+        - floors_climbed
+        - intensity_minutes
+        - current_temperature
+        - notification_count
+        - battery
+        - solar_input
+        - sunset
+        - sunrise
+        - high_low_temperature
+        - recovery_time
+        - weekly_bike_distance
+        - weekly_run_distance
+        - sleep_score
+        - altitude
+        - respiration_rate
+        - vo2max_bike
+        - vo2max_run
+    bottom:
+      label: "Bottom"
+      default: notification_count
+      choices:
+        - { type: battery, icon: { codepoint: U+F240 } }
+        - solar_input
+        - body_battery
+        - current_temperature
+        - altitude
+        - recovery_time
+        - notification_count
+        - heart_rate
+        - calories
+        - floors_climbed
+        - intensity_minutes
+        - steps
+        - weekly_bike_distance
+        - weekly_run_distance
+        - pulse_ox
+        - respiration_rate
+        - sleep_score
+        - stress
+        - vo2max_bike
+        - vo2max_run
+
+static:
+  background:
+    type: rectangle
+    at: { anchor: center }
+    size: { width: 100%, height: 100% }
+    color: color.bg
+  divider:
+    type: rectangle
+    at: { anchor: center, dx: 0%r, dy: 0%r }
+    size: { width: 184%r, height: 3%r }
+    color: color.fg
+  minute_box:
+    type: rectangle
+    at: { anchor: center, dx: 0%r, dy: 40%r }
+    size: { width: 92%r, height: 62%r }
+    corner_radius: 7%r
+    color: color.fg
+
+elements:
+  date_top:
+    type: text
+    text: "{date.today:%a %e %b}"
+    font: font.top
+    at: { anchor: center, dy: -82%r }
+    color: color.fg
+
+  hour:
+    type: text
+    text: "{time.clock:%h}"
+    font: font.clock
+    at: { anchor: center, dx: 0%r, dy: -38%r }
+    color: color.fg
+    lint: { allow: [safe-area, text-overflow], reason: "the line box reaches the rim; the digits' ink fits on every target, checked at 23:59" }
+
+  minute:
+    type: text
+    text: "{time.clock:%M}"
+    font: font.clock
+    at: { anchor: center, dx: 0%r, dy: 42%r }
+    color: color.bg
+    lint: { allow: [safe-area, text-overflow, contrast], reason: "drawn on the white minute box, not the background; the ink fits the box at 59" }
+
+  top_left:
+    type: group
+    at: { anchor: center, dx: -70%r, dy: -30%r }
+    size: { width: 30%r, height: 36%r }
+    on_hold: auto
+    children:
+      top_left_icon:
+        type: icon
+        slot: top_left
+        size: 20%r
+        at: { anchor: center, dx: 0%r, dy: -14%r }
+        color: color.fg
+      top_left_value:
+        type: data
+        slot: top_left
+        font: font.reading
+        at: { anchor: center, dx: 0.0%r, dy: 10%r }
+        color: color.fg
+        short: true
+        absent: { text: "--" }
+        lint: { allow: [off-screen, safe-area], reason: "sized for the widest seven-character pick; typical readings fit, as the picture shows" }
+
+  top_right:
+    type: group
+    at: { anchor: center, dx: 70%r, dy: -30%r }
+    size: { width: 30%r, height: 36%r }
+    on_hold: auto
+    children:
+      top_right_icon:
+        type: icon
+        slot: top_right
+        size: 20%r
+        at: { anchor: center, dx: 0%r, dy: -14%r }
+        color: color.fg
+      top_right_value:
+        type: data
+        slot: top_right
+        font: font.reading
+        at: { anchor: center, dx: 0.0%r, dy: 10%r }
+        color: color.fg
+        short: true
+        absent: { text: "--" }
+        lint: { allow: [off-screen, safe-area], reason: "sized for the widest seven-character pick; typical readings fit, as the picture shows" }
+
+  bottom_left:
+    type: group
+    at: { anchor: center, dx: -70%r, dy: 30%r }
+    size: { width: 40%r, height: 44%r }
+    on_hold: auto
+    children:
+      bottom_left_icon:
+        type: icon
+        slot: bottom_left
+        size: 20%r
+        at: { anchor: center, dx: 0%r, dy: 14%r }
+        color: color.fg
+      bottom_left_value:
+        type: data
+        slot: bottom_left
+        font: font.reading
+        at: { anchor: center, dx: 0%r, dy: -10%r }
+        color: color.fg
+        short: true
+        absent: { text: "--" }
+        lint: { allow: [off-screen, safe-area], reason: "sized for the widest seven-character pick; typical readings fit, as the picture shows" }
+
+  bottom_right:
+    type: group
+    at: { anchor: center, dx: 70%r, dy: 30%r }
+    size: { width: 30%r, height: 40%r }
+    on_hold: auto
+    children:
+      bottom_right_icon:
+        type: icon
+        slot: bottom_right
+        size: 20%r
+        at: { anchor: center, dx: 0%r, dy: 14%r }
+        color: color.fg
+      bottom_right_value:
+        type: data
+        slot: bottom_right
+        font: font.reading
+        at: { anchor: center, dx: 0%r, dy: -10%r }
+        color: color.fg
+        short: true
+        absent: { text: "--" }
+        lint: { allow: [off-screen, safe-area], reason: "sized for the widest seven-character pick; typical readings fit, as the picture shows" }
+
+  bottom:
+    type: group
+    at: { anchor: center, dx: 0%r, dy: 85%r }
+    size: { width: 60%r, height: 20%r }
+    on_hold: auto
+    children:
+      bottom_value:
+        type: data
+        slot: bottom
+        font: font.reading
+        at: { anchor: center, dx: 0%r, dy: 0%r }
+        icon: { size: 20%r, position: left, gap: 5%r, color: color.fg }
+        align: center
+        unit: false
+        color: color.fg
+        short: true
+        absent: { text: "--" }
+        lint: { allow: [off-screen, safe-area], reason: "sized for the widest seven-character pick; typical readings fit, as the picture shows" }
+
