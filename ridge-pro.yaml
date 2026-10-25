@@ -1,0 +1,184 @@
+format: 2
+# Reproduced from a photo of a fēnix 8 Pro face (perspective-corrected, measured in %r).
+# The Garmin "FĒNIX PRO" wordmark is replaced by the face's own name.
+face:
+  id: 7b3c08d1-4074-4cfa-a187-e0e0025e7d31
+  name: Ridgeline
+  version: 0.1.0
+
+build:
+  targets: [fenix8solar47mm, fenix8solar51mm]
+
+resources:
+  palette:
+    bg:     "#000000"
+    fg:     "#FFFFFF"
+    dim:    "#AAAAAA"          # wordmark, badge, date
+    rule:   "#555555"          # the double bracket lines
+    accent: "#FF5500"          # orange ticks
+  fonts:
+    clock: { face: [BionicSemiBold, RobotoCondensedBold], size: 87%r }   # big hour / minute digits
+    ring:  { face: [RobotoCondensedBold], size: 16%r }                   # readings along the bezel
+    side:  { face: [BionicSemiBold, RobotoCondensedBold], size: 20%r }   # left / right readings
+    label: { face: [BionicSemiBold, RobotoCondensedBold], size: 18%r }   # wordmark, date
+    badge: { face: [BionicSemiBold, RobotoCondensedBold], size: 14%r }   # text inside the badge
+
+config:
+  slots:
+    top_left:     { label: "Top left",     default: steps,                choices: [steps, calories, floors_climbed, heart_rate, body_battery, stress] }
+    top_right:    { label: "Top right",    default: high_low_temperature, choices: [high_low_temperature, current_temperature, sunrise, sunset, sea_level_pressure] }
+    bottom_left:  { label: "Bottom left",  default: altitude,             choices: [altitude, sea_level_pressure, steps, calories, body_battery] }
+    left:         { label: "Left",         default: recovery_time,        choices: [recovery_time, body_battery, stress, heart_rate, intensity_minutes] }
+    right:        { label: "Right",        default: vo2max_run,           choices: [vo2max_run, vo2max_bike, body_battery, heart_rate, stress] }
+
+static:
+  background:
+    type: rectangle
+    at: { anchor: center }
+    size: { width: 100%, height: 100% }
+    color: color.bg
+
+  # Orange batons at 2, 4, 8, 10 o'clock (60/120/240/300deg), r 87.5..99%r
+  diag_ticks:
+    type: pattern
+    pattern: radial
+    at: { anchor: center }
+    count: 6
+    skip: [0, 3]
+    color: color.accent
+    parts:
+      tick: { type: rectangle, at: { dy: -93.25%r }, size: { width: 2.6%r, height: 11.5%r } }
+
+  # Double orange ticks at 12 and 6
+  double_ticks:
+    type: pattern
+    pattern: radial
+    at: { anchor: center }
+    count: 2
+    color: color.accent
+    parts:
+      left:  { type: rectangle, at: { dx: -1.55%r, dy: -92.5%r }, size: { width: 1.1%r, height: 10%r } }
+      right: { type: rectangle, at: { dx: 1.55%r,  dy: -92.5%r }, size: { width: 1.1%r, height: 10%r } }
+
+  # Double-line brackets framing the side readings; copy 0 is the left one, copy 1 (180deg) the right
+  brackets:
+    type: pattern
+    pattern: radial
+    at: { anchor: center }
+    count: 2
+    color: color.rule
+    parts:
+      outer_top: { type: line, at: { dx: -74.2%r, dy: -41.3%r }, to: { dx: -54.8%r, dy: -31.0%r }, thickness: 1px }
+      outer_mid: { type: line, at: { dx: -54.8%r, dy: -31.0%r }, to: { dx: -54.8%r, dy: 31.0%r },  thickness: 1px }
+      outer_bot: { type: line, at: { dx: -54.8%r, dy: 31.0%r },  to: { dx: -74.2%r, dy: 41.3%r },  thickness: 1px }
+      inner_top: { type: line, at: { dx: -73.1%r, dy: -43.4%r }, to: { dx: -52.7%r, dy: -32.4%r }, thickness: 1px }
+      inner_mid: { type: line, at: { dx: -52.7%r, dy: -32.4%r }, to: { dx: -52.7%r, dy: 32.4%r },  thickness: 1px }
+      inner_bot: { type: line, at: { dx: -52.7%r, dy: 32.4%r },  to: { dx: -73.1%r, dy: 43.4%r },  thickness: 1px }
+
+  # Wordmark: name + grey "PRO"-style badge (stands in for the Garmin logo)
+  wordmark:
+    type: text
+    text: "RIDGE"
+    font: font.label
+    at: { anchor: center, dx: -1%r, dy: -63.3%r }
+    align: right
+    color: color.dim
+  badge:
+    type: rectangle
+    at: { anchor: center, dx: 19.2%r, dy: -62.5%r }
+    size: { width: 31%r, height: 9.2%r }
+    corner_radius: 1.5%r
+    color: color.dim
+  badge_text:
+    type: text
+    text: "PRO"
+    font: font.badge
+    at: { anchor: center, dx: 19.2%r, dy: -62.5%r }
+    color: color.bg
+
+elements:
+  # ---- time -------------------------------------------------------------
+  hours:                                   # hollow digits
+    type: text
+    text: "{time.clock:%h}"
+    font: font.clock
+    at: { anchor: center, dx: -2%r, dy: -22%r }
+    color: color.bg
+    outline: { color: color.fg, width: 2 }
+  minutes:                                 # solid digits
+    type: text
+    text: "{time.clock:%M}"
+    font: font.clock
+    at: { anchor: center, dy: 30%r }
+    color: color.fg
+
+  date:
+    type: text
+    text: "{date.today:%a %e}"
+    font: font.label
+    at: { anchor: center, dy: 68.4%r }
+    color: color.dim
+
+  # ---- bezel readings (r ~89%r, glyph band 83..95%r) ----------------------
+  top_left_value:
+    type: data
+    slot: top_left
+    prefix: true                            # STEPS 8544
+    font: font.ring
+    at: { anchor: center }
+    curve: { style: radial, angle: 330deg, radius: 90%r, direction: clockwise }
+    align: center
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
+  top_right_value:
+    type: data
+    slot: top_right                         # device text: H 73 / L 60
+    font: font.ring
+    at: { anchor: center }
+    curve: { style: radial, angle: 30deg, radius: 90%r, direction: clockwise }
+    align: center
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
+  bottom_left_value:
+    type: data
+    slot: bottom_left
+    prefix: true                            # ALT 3428
+    font: font.ring
+    at: { anchor: center }
+    curve: { style: radial, angle: 210deg, radius: 90%r, direction: counter_clockwise }
+    align: center
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
+  battery_days:                             # BATT 22d
+    type: text
+    text: "BATT {system.battery_in_days:d}d"
+    font: font.ring
+    at: { anchor: center }
+    curve: { style: radial, angle: 150deg, radius: 90%r, direction: counter_clockwise }
+    align: center
+    color: color.fg
+    absent: { text: "BATT --" }
+    on_hold: battery
+
+  # ---- side readings: icon over value ------------------------------------
+  left_value:
+    type: data
+    slot: left
+    font: font.side
+    at: { anchor: center, dx: -76.8%r, dy: 1.2%r }
+    icon: { size: 15%r, position: top, gap: 0.5%r }
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
+  right_value:
+    type: data
+    slot: right
+    font: font.side
+    at: { anchor: center, dx: 75.5%r, dy: 1.2%r }
+    icon: { size: 15%r, position: top, gap: 0.5%r }
+    color: color.fg
+    absent: { text: "--" }
+    on_hold: auto
