@@ -15,7 +15,7 @@ format: 2
 face:
   id: 792c1231-a2a1-4490-ab0a-bfbb062de150
   name: Fenix Sectors
-  version: 1.2.1
+  version: 1.2.2
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955]
@@ -26,10 +26,10 @@ resources:
     black: "#000000"
     orange: "#FF5500"
   fonts:
-    rim:     { face: [RobotoCondensedBold], size: 17.4%r }
+    rim:     { face: [RobotoCondensedBold], size: 18%r }
     small:   { face: [RobotoCondensedBold], size: 21.5%r }
-    pocket:  { face: [RobotoCondensedBold], size: 16%r }
-    label:   { face: [NanumGothicExtraBold, RobotoCondensedBold], size: 13.1%r }
+    pocket:  { face: [RobotoCondensedBold], size: 18%r }
+    label:   { face: [NanumGothicExtraBold, RobotoCondensedBold, BionicSemiBold], size: 13.1%r }
     clock:   { face: [BionicSemiBold], size: 96%r, unsupported: hide }
     clock_bold: { face: [BionicBold], size: 101.3%r, unsupported: hide }
   hand_sets:
@@ -318,7 +318,7 @@ elements:
     slot: pocket_top
     short: true
     font: font.pocket
-    icon: { size: 16%r, gap: 4%r, color: color.fg }
+    icon: { size: 18%r, gap: 4%r, color: color.fg }
     at: { anchor: center, dy: -67%r }
     color: color.fg
     absent: { text: "--" }
@@ -328,7 +328,7 @@ elements:
     slot: pocket_bottom
     short: true
     font: font.pocket
-    icon: { size: 16%r, gap: 4%r, color: color.fg }
+    icon: { size: 18%r, gap: 4%r, color: color.fg }
     at: { anchor: center, dy: 67%r }
     color: color.fg
     absent: { text: "--" }
