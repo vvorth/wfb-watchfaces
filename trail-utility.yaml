@@ -25,7 +25,7 @@ format: 2
 face:
   id: ffbf5db6-078b-43c7-9eb7-ed4e4750bcf8
   name: Trail Utility
-  version: 2.0.0
+  version: 2.1.0
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955]
@@ -34,8 +34,8 @@ resources:
   fonts:
     clock: { face: [BionicSemiBold, BionicBold, RobotoCondensedBold], size: 66%r }
     seconds: { face: [BionicSemiBold, BionicBold, RobotoCondensedBold], size: 20%r }
-    small: { face: [RobotoCondensedRegular], size: 14.5%r }
-    label: { face: [RobotoCondensedBold], size: 13%r }
+    small: { face: [BionicSemiBold, RobotoCondensedBold], size: 18%r }
+    label: { face: [RobotoCondensedBold, BionicSemiBold, RobotoCondensedBold], size: 18%r }
   palette:                          # every channel 00 / 55 / AA / FF
     bg: "#000000"
     fg: "#AAAAAA"
@@ -79,13 +79,13 @@ static:
     size: { width: 100%, height: 100% }
     color: color.bg
 
-  divider: { type: line, at: { anchor: center, dx: -1%r, dy: -80%r }, to: { anchor: center, dx: -1%r, dy: -59%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast], reason: "a dim divider, decoration only" } }
+  divider: { type: line, at: { anchor: center, dx: 0%r, dy: -82%r }, to: { anchor: center, dx: 0%r, dy: -61%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast], reason: "a dim divider, decoration only" } }
   frame_top:
     type: group
     children:
-      ft1: { type: line, at: { anchor: center, dx: -71.8%r, dy: -69.4%r }, to: { anchor: center, dx: -56.3%r, dy: -55.1%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast, safe-area], reason: "dim frame line, decoration only; it ends at the screen edge on purpose" } }
-      ft2: { type: line, at: { anchor: center, dx: -56.3%r, dy: -55.1%r }, to: { anchor: center, dx: 56.8%r, dy: -55.1%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast], reason: "dim frame line, decoration only" } }
-      ft3: { type: line, at: { anchor: center, dx: 56.8%r, dy: -55.1%r }, to: { anchor: center, dx: 73%r, dy: -69.4%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast, safe-area], reason: "dim frame line, decoration only; it ends at the screen edge on purpose" } }
+      ft1: { type: line, at: { anchor: center, angle: -45deg, radius: 78%r }, to: { anchor: center, angle: -45deg, radius: 100%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast, safe-area], reason: "dim frame line, decoration only; it ends at the screen edge on purpose" } }
+      ft2: { type: line, at: { anchor: center, angle: -45deg, radius: 78%r }, to: { anchor: center, angle: 45deg, radius: 78%r  }, thickness: 2px, color: color.frame, lint: { allow: [contrast], reason: "dim frame line, decoration only" } }
+      ft3: { type: line, at: { anchor: center, angle:  45deg, radius: 78%r }, to: { anchor: center, angle:  45deg, radius: 100%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast, safe-area], reason: "dim frame line, decoration only; it ends at the screen edge on purpose" } }
   frame_sun:
     type: group
     children:
@@ -101,12 +101,12 @@ static:
   frame_graph:
     type: group
     children:
-      fg1: { type: line, at: { anchor: center, dx: -73%r, dy: 68%r }, to: { anchor: center, dx: -61%r, dy: 52%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast, safe-area], reason: "dim frame line, decoration only; it ends at the screen edge on purpose" } }
-      fg2: { type: line, at: { anchor: center, dx: -61%r, dy: 52%r }, to: { anchor: center, dx: 61%r, dy: 52%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast], reason: "dim frame line, decoration only" } }
-      fg3: { type: line, at: { anchor: center, dx: 61%r, dy: 52%r }, to: { anchor: center, dx: 73%r, dy: 68%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast, safe-area], reason: "dim frame line, decoration only; it ends at the screen edge on purpose" } }
-  ring_outer: { type: circle, filled: false, at: { anchor: center, dx: 67%r, dy: 3%r }, radius: 29%r, thickness: 3px, color: color.frame, lint: { allow: [contrast], reason: "dim bezel round the ring, decoration only" } }
-  name_label: { type: text, text: "TRAIL", font: font.label, at: { anchor: center, dx: 6%r, dy: 35.5%r }, color: color.fg }
-  sunrise_icon: { type: icon, icon: sunrise, size: 14%r, at: { anchor: center, dx: -40.5%r, dy: -37%r }, color: color.fg }
+      fg1: { type: line, at: { anchor: center, angle: 225deg, radius: 78%r }, to: { anchor: center, angle: 225deg, radius: 100%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast, safe-area], reason: "dim frame line, decoration only; it ends at the screen edge on purpose" } }
+      fg2: { type: line, at: { anchor: center, angle: 225deg, radius: 78%r }, to: { anchor: center, angle: 135deg, radius:  78%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast], reason: "dim frame line, decoration only" } }
+      fg3: { type: line, at: { anchor: center, angle: 135deg, radius: 78%r }, to: { anchor: center, angle: 135deg, radius: 100%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast, safe-area], reason: "dim frame line, decoration only; it ends at the screen edge on purpose" } }
+  ring_outer: { type: circle, filled: false, at: { anchor: center, dx: 67%r, dy: 3%r }, radius: 28%r, thickness: 1.5%r, color: color.frame, lint: { allow: [contrast], reason: "dim bezel round the ring, decoration only" } }
+  name_label: { type: text, text: "T R A I L", font: font.label, at: { anchor: center, dx: 6%r, dy: 35.5%r }, color: color.fg }
+  sunrise_icon: { type: icon, icon: sunrise, size: 16%r, at: { anchor: center, dx: -40.5%r, dy: -37%r }, color: color.fg }
 
 elements:
   # --- top: two arcs that fill toward 12 o'clock, each a slot ---
@@ -118,11 +118,11 @@ elements:
         type: gauge
         slot: top_left
         style: arc
-        at: { anchor: center }
-        radius: 94%r
-        thickness: 6%r
-        start_angle: 316deg
-        sweep: 43deg
+        at: { anchor: center, dy: -8%r, dx: -3%r }
+        radius: 88%r
+        thickness: 4%r
+        start_angle: 315deg
+        sweep: 45deg
         color: color.accent
         track_color: color.track
         absent: hide
@@ -130,12 +130,13 @@ elements:
         type: data
         slot: top_left
         font: font.small
-        icon: { size: 18%r, gap: 2%r, color: color.fg }
-        at: { anchor: center, dx: -50%r, dy: -68%r }
-        align: left
+        icon: { size: 16%r, gap: 2%r, color: color.fg }
+        at: { anchor: center, dx: -30%r, dy: -68%r }
+        align: center
         color: color.fg
         absent: { text: "--" }
         on_hold: auto
+        short: true
   top_right_slot:
     type: group
     children:
@@ -144,11 +145,11 @@ elements:
         type: gauge
         slot: top_right
         style: arc
-        at: { anchor: center }
-        radius: 94%r
-        thickness: 6%r
-        start_angle: 44deg
-        sweep: -43deg
+        at: { anchor: center, dx: 3%r, dy: -8%r }
+        radius: 88%r
+        thickness: 4%r
+        start_angle: 45deg
+        sweep: -45deg
         color: color.accent
         track_color: color.track
         absent: hide
@@ -156,19 +157,20 @@ elements:
         type: data
         slot: top_right
         font: font.small
-        icon: { size: 15%r, gap: 3%r, color: color.fg }
-        at: { anchor: center, dx: 5%r, dy: -68%r }
-        align: left
+        icon: { size: 16%r, gap: 3%r, color: color.fg }
+        at: { anchor: center, dx: 30%r, dy: -68%r }
+        align: center
         color: color.fg
         absent: { text: "--" }
         on_hold: auto
+        short: true
 
   # --- sunrise / sunset ---
   sunrise:
     type: text
     text: "{complication.sunrise:%H:%M}"
     font: font.small
-    at: { anchor: center, dx: -49%r, dy: -36.5%r }
+    at: { anchor: center, dx: -54%r, dy: -36.5%r }
     align: right
     color: color.fg
     absent: { text: "--:--" }
@@ -176,7 +178,7 @@ elements:
     type: text
     text: "{complication.sunset:%H:%M}"
     font: font.small
-    at: { anchor: center, dx: -30%r, dy: -36.5%r }
+    at: { anchor: center, dx: -28%r, dy: -36.5%r }
     align: left
     color: color.fg
     absent: { text: "--:--" }
@@ -187,9 +189,9 @@ elements:
     slot: weather
     font: font.small
     short: true
-    icon: { size: 17%r, gap: 5%r, color: color.fg }
-    at: { anchor: center, dx: 70%r, dy: -37%r }
-    align: right
+    icon: { size: 16%r, gap: 5%r, color: color.fg }
+    at: { anchor: center, dx: 55%r, dy: -37%r }
+    align: center
     color: color.fg
     absent: { text: "--" }
     on_hold: auto
@@ -206,7 +208,7 @@ elements:
     at: { anchor: center, dx: -34%r, dy: -1.5%r }
     align: right
     color: color.fg
-    outline: { color: color.fg }
+    outline: { color: color.fg, width: 1 }
   minutes:
     lint: { allow: [text-outline-interior], reason: "the outline is the digit's own colour on purpose: it emboldens the glyph rather than ringing it" }
     type: text
@@ -236,14 +238,14 @@ elements:
         slot: ring
         style: arc
         at: { anchor: center }
-        radius: 25.5%r
+        radius: 24%r
         thickness: 3%r
         start_angle: 0deg
         sweep: 360deg
         color: color.accent
         track_color: color.track
         absent: hide
-      ring_icon: { type: icon, slot: ring, size: 14%r, at: { anchor: center, dy: -7%r }, color: color.fg }
+      ring_icon: { type: icon, slot: ring, size: 18%r, at: { anchor: center, dy: -7%r }, color: color.fg }
       ring_value:
         type: data
         slot: ring
@@ -252,13 +254,14 @@ elements:
         at: { anchor: center, dy: 9%r }
         color: color.fg
         absent: { text: "--" }
+        short: true
 
   # --- date ---
   date:
     type: text
     text: "{(date.weekday == 1 ? \"SUN\" : (date.weekday == 2 ? \"MON\" : (date.weekday == 3 ? \"TUE\" : (date.weekday == 4 ? \"WED\" : (date.weekday == 5 ? \"THU\" : (date.weekday == 6 ? \"FRI\" : \"SAT\"))))))} {date.today:%d}"
     font: font.small
-    at: { anchor: center, dx: -59%r, dy: 34.5%r }
+    at: { anchor: center, dx: -61%r, dy: 34.5%r }
     color: color.fg
 
   # --- graph slot ---
@@ -268,8 +271,8 @@ elements:
     style: bars
     buckets: 48
     bar_width: 2px
-    at: { anchor: center, dy: 67%r }
-    size: { width: 116%r, height: 20%r }
+    at: { anchor: center, dy: 68%r }
+    size: { width: 110%r, height: 20%r }
     color: color.accent
     on_hold: auto
 
@@ -278,8 +281,8 @@ elements:
     type: data
     slot: bottom
     font: font.small
-    icon: { size: 13%r, gap: 3%r, color: color.fg }
-    at: { anchor: center, dx: -1%r, dy: 86.5%r }
+    icon: { size: 18%r, gap: 3%r, color: color.fg }
+    at: { anchor: center, dx: -1%r, dy: 89%r }
     color: color.fg
     absent: { text: "--" }
     on_hold: auto
