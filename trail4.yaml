@@ -15,7 +15,7 @@ format: 2
 face:
   id: 442515d2-9c24-4531-9c09-0aacda9450e7
   name: Trail4
-  version: 2.2.2
+  version: 2.2.4
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955]
@@ -48,13 +48,12 @@ config:
     bar:
       label: "Bar"
       default: battery
-      choices: &progress [battery, body_battery, stress, steps, floors_climbed,
-                          intensity_minutes, pulse_ox, solar_input, heart_rate]
+      choices: [battery, body_battery, stress, pulse_ox, solar_input, heart_rate, intensity_minutes, floors_climbed]
     corner:
       label: "Top right"
-      default: altitude
-      choices: [altitude, current_temperature, heart_rate, body_battery, stress, steps, calories, floors_climbed, intensity_minutes, pulse_ox, respiration_rate, notification_count, battery, sleep_score, solar_input]
-    left:     { label: "Left",         default: body_battery, choices: *progress }
+      default: notification_count
+      choices: [altitude, current_temperature, heart_rate, body_battery, stress, steps, calories, floors_climbed, intensity_minutes, pulse_ox, respiration_rate, notification_count, battery, sleep_score, solar_input, weekly_bike_distance, weekly_run_distance, sea_level_pressure, high_low_temperature, recovery_time]
+    left:     { label: "Left",         default: intensity_minutes, choices: &progress [battery, body_battery, stress, steps, floors_climbed, intensity_minutes, pulse_ox, solar_input, heart_rate] }
     right:    { label: "Right",        default: steps, choices: *progress }
     graph:
       label: "Graph"
@@ -81,22 +80,14 @@ static:
     type: line
     lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
     at: { anchor: center, dx: -82%r, dy: -61.5%r }
-    to: { anchor: center, dx: 51.5%r, dy: -61.5%r }
+    to: { anchor: center, dx: 56%r, dy: -61.5%r }
     thickness: 2px
-    color: color.line
-  sep1_bend1:
-    type: arc
-    at: { anchor: center, dx: 51.5%r, dy: -70.5%r }
-    radius: 9%r
-    thickness: 2px
-    start_angle: 180deg
-    sweep: -42.9deg
     color: color.line
   sep1_2:
     type: line
     lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
-    at: { anchor: center, dx: 57.6%r, dy: -63.9%r }
-    to: { anchor: center, dx: 69%r, dy: -74.5%r }
+    at: { anchor: center, dx: 39.7%r, dy: -44%r }
+    to: { anchor: center, dx: 70%r, dy: -75%r }
     thickness: 2px
     color: color.line
   sep2_1:
@@ -113,12 +104,6 @@ static:
     thickness: 2px
     start_angle: 180deg
     sweep: -48.2deg
-    color: color.line
-  sep2_2:
-    type: line
-    at: { anchor: center, dx: 39.7%r, dy: -44%r }
-    to: { anchor: center, dx: 57.1%r, dy: -63.5%r }
-    thickness: 2px
     color: color.line
   box_1:
     type: line
@@ -174,7 +159,7 @@ static:
     type: line
     lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
     at: { anchor: center, dx: -71%r, dy: 72%r }
-    to: { anchor: center, dx: -61.4%r, dy: 62%r }
+    to: { anchor: center, dx: -60.3%r, dy: 62%r }
     thickness: 2px
     color: color.line
   bot_bend1:
@@ -203,7 +188,7 @@ static:
     type: line
     lint: { allow: [safe-area], reason: "the separator runs on under the bezel, as in the design" }
     at: { anchor: center, dx: 60.3%r, dy: 61.5%r }
-    to: { anchor: center, dx: 71.5%r, dy: 71.5%r }
+    to: { anchor: center, dx: 71%r, dy: 71.5%r }
     thickness: 2px
     color: color.line
 
@@ -236,28 +221,30 @@ elements:
   bar_reading:
     type: data
     slot: bar
-    at: { anchor: center, dx: -78%r, dy: -51%r }
-    align: left
+    at: { anchor: center, dx: -42%r, dy: -51%r }
+    align: right
     font: font.reading
-    icon: { size: 16%r, gap: 4%r, color: color.fg }
+    icon: { size: 16%r, gap: 2%r, color: color.fg }
     color: color.fg
     absent: { text: "--" }
     on_hold: auto
+    short: true
   # Eight leaning cells: the same gauge in seven 2 px strips, each 1 px left
   # of the one above. Every strip fills against the same pick, so a cell is
   # lit or unlit as a whole parallelogram.
   bar_gauge:
     type: group
-    at: { anchor: center, dx: -2.9%r, dy: -50.7%r }
-    size: { width: 64%r, height: 14px }
+    at: { anchor: center, dx: -36%r, dy: -50.7%r }
+    size: { width: 76%r, height: 14px }
     children:
-      strip0: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 3px, dy: -6px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
-      strip1: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 2px, dy: -4px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
-      strip2: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 1px, dy: -2px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
-      strip3: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 0px, dy: 0px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
-      strip4: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: -1px, dy: 2px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
-      strip5: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: -2px, dy: 4px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
-      strip6: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: -3px, dy: 6px }, size: { width: 60%r, height: 2px }, count: 8, gap: 2%r, color: color.data, track_color: color.track, absent: hide }
+      strip0: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 6px, dy: -6px }, size: { width: 100%, height: 2px }, count: 8, gap: 3%r, color: color.data, track_color: color.track, absent: hide }
+      strip1: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 4px, dy: -4px }, size: { width: 100%, height: 2px }, count: 8, gap: 3%r, color: color.data, track_color: color.track, absent: hide }
+      strip2: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 2px, dy: -2px }, size: { width: 100%, height: 2px }, count: 8, gap: 3%r, color: color.data, track_color: color.track, absent: hide }
+      strip3: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: 0px, dy: 0px },  size: { width: 100%, height: 2px }, count: 8, gap: 3%r, color: color.data, track_color: color.track, absent: hide }
+      strip4: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: -2px, dy: 2px }, size: { width: 100%, height: 2px }, count: 8, gap: 3%r, color: color.data, track_color: color.track, absent: hide }
+      strip5: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: -4px, dy: 4px }, size: { width: 100%, height: 2px }, count: 8, gap: 3%r, color: color.data, track_color: color.track, absent: hide }
+      strip6: { type: gauge, slot: bar, style: segments, at: { anchor: center, dx: -6px, dy: 6px }, size: { width: 100%, height: 2px }, count: 8, gap: 3%r, color: color.data, track_color: color.track, absent: hide }
+    align: left
 
   # -- top right ---------------------------------------------------------------
   corner_reading:
