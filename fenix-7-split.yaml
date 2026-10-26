@@ -3,7 +3,7 @@ format: 2
 face:
   id: e6390983-5f1c-4f57-ad95-d203f1c55cf5
   name: Fenix-ish
-  version: 1.4.0
+  version: 1.4.1
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955]
@@ -19,60 +19,12 @@ resources:
 
 config:
   slots:
-    top_left: { label: "Top left", default: steps, choices: [steps, calories, floors_climbed, intensity_minutes, weekly_run_distance, weekly_bike_distance, body_battery, heart_rate, pulse_ox, respiration_rate, sleep_score, stress, recovery_time, vo2max_bike, vo2max_run, altitude, current_temperature, high_low_temperature, sea_level_pressure, battery, notification_count, solar_input] }
-    top_right: { label: "Top right", default: high_low_temperature, choices: [high_low_temperature, calories, floors_climbed, intensity_minutes, steps, weekly_bike_distance, weekly_run_distance, body_battery, heart_rate, pulse_ox, sleep_score, stress, respiration_rate, recovery_time, vo2max_run, vo2max_bike, altitude, current_temperature, sea_level_pressure, battery, notification_count, solar_input] }
-    bottom_left: { label: "Bottom left", default: body_battery, choices: [body_battery, calories, floors_climbed, intensity_minutes, steps, weekly_bike_distance, weekly_run_distance, heart_rate, pulse_ox, respiration_rate, sleep_score, stress, recovery_time, vo2max_bike, vo2max_run, altitude, current_temperature, sea_level_pressure, battery, notification_count, solar_input] }
-    bottom_right:
-      label: "Bottom right"
-      default: current_temperature
-      choices:
-        - { type: heart_rate, icon: { codepoint: U+F004 } }
-        - body_battery
-        - stress
-        - pulse_ox
-        - steps
-        - calories
-        - floors_climbed
-        - intensity_minutes
-        - current_temperature
-        - notification_count
-        - battery
-        - solar_input
-        - sunset
-        - sunrise
-        - high_low_temperature
-        - recovery_time
-        - weekly_bike_distance
-        - weekly_run_distance
-        - sleep_score
-        - altitude
-        - respiration_rate
-        - vo2max_bike
-        - vo2max_run
-    bottom:
-      label: "Bottom"
-      default: notification_count
-      choices:
-        - { type: battery, icon: { codepoint: U+F240 } }
-        - solar_input
-        - body_battery
-        - current_temperature
-        - altitude
-        - recovery_time
-        - notification_count
-        - heart_rate
-        - calories
-        - floors_climbed
-        - intensity_minutes
-        - steps
-        - weekly_bike_distance
-        - weekly_run_distance
-        - pulse_ox
-        - respiration_rate
-        - sleep_score
-        - stress
-        - vo2max_bike
-        - vo2max_run
+    top_left: { label: "Top left", default: steps, choices: &slots_shared [high_low_temperature, calories, floors_climbed, intensity_minutes, steps, weekly_bike_distance, weekly_run_distance, body_battery, heart_rate, pulse_ox, sleep_score, stress, respiration_rate, recovery_time, vo2max_run, vo2max_bike, altitude, current_temperature, sea_level_pressure, battery, notification_count, solar_input] }
+    top_right: { label: "Top right", default: high_low_temperature, choices: *slots_shared }
+    bottom_left: { label: "Bottom left", default: body_battery, choices: [high_low_temperature, calories, floors_climbed, intensity_minutes, steps, weekly_bike_distance, weekly_run_distance, body_battery, heart_rate, pulse_ox, sleep_score, stress, respiration_rate, recovery_time, vo2max_run, vo2max_bike, altitude, current_temperature, sea_level_pressure, battery, notification_count, solar_input, sunrise, sunset] }
+    bottom_right: { label: "Bottom right", default: current_temperature, choices: *slots_shared }
+    bottom: { label: "Bottom", default: notification_count, choices: *slots_shared }
+
   accent_color: { default: color.fg, choices: any }
 
 static:

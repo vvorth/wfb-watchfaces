@@ -15,7 +15,7 @@ format: 2
 face:
   id: 792c1231-a2a1-4490-ab0a-bfbb062de150
   name: Fenix Sectors
-  version: 1.2.2
+  version: 1.2.3
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955]
@@ -27,11 +27,11 @@ resources:
     orange: "#FF5500"
   fonts:
     rim:     { face: [RobotoCondensedBold], size: 18%r }
-    small:   { face: [RobotoCondensedBold], size: 21.5%r }
-    pocket:  { face: [RobotoCondensedBold], size: 18%r }
-    label:   { face: [NanumGothicExtraBold, RobotoCondensedBold, BionicSemiBold], size: 13.1%r }
-    clock:   { face: [BionicSemiBold], size: 96%r, unsupported: hide }
-    clock_bold: { face: [BionicBold], size: 101.3%r, unsupported: hide }
+    small:   { face: [RobotoCondensedBold, FONT_TINY], size: 21.5%r }
+    pocket:  { face: [RobotoCondensedBold, FONT_TINY], size: 20%r }
+    label:   { face: [NanumGothicExtraBold, RobotoCondensedBold, BionicSemiBold, FONT_XTINY], size: 13.1%r }
+    clock:   { face: [BionicSemiBold], size: 92%r, unsupported: hide }
+    clock_bold: { face: [BionicBold], size: 90%r, unsupported: hide }
   hand_sets:
     sword:
       hour:
@@ -59,13 +59,13 @@ config:
   slots:
     top:
       label: "Top"
-      default: altitude
-      choices: &rim [altitude, steps, current_temperature, battery, intensity_minutes, body_battery, heart_rate, stress, pulse_ox, respiration_rate, calories, floors_climbed, sea_level_pressure, solar_input, notification_count, sunrise, sunset, vo2max_run, vo2max_bike, weekly_run_distance, weekly_bike_distance, recovery_time]
-    upper_right: { label: "Upper right", default: steps, choices: *rim }
-    lower_right: { label: "Lower right", default: current_temperature, choices: *rim }
+      default: high_low_temperature
+      choices: &rim [altitude, steps, current_temperature, battery, intensity_minutes, body_battery, heart_rate, stress, pulse_ox, respiration_rate, calories, floors_climbed, sea_level_pressure, solar_input, notification_count, sunrise, sunset, vo2max_run, vo2max_bike, weekly_run_distance, weekly_bike_distance, recovery_time, sleep_score, high_low_temperature, training_status]
+    upper_right: { label: "Upper right", default: steps, choices: *rim  }
+    lower_right: { label: "Lower right", default: calories, choices: *rim }
     bottom: { label: "Bottom", default: battery, choices: *rim }
-    lower_left: { label: "Lower left", default: intensity_minutes, choices: *rim }
-    upper_left: { label: "Upper left", default: body_battery, choices: *rim }
+    lower_left: { label: "Lower left", default: body_battery, choices: *rim }
+    upper_left: { label: "Upper left", default: current_temperature, choices: *rim }
     pocket_top:    { label: "Above the clock", default: solar_input, choices: *rim }
     pocket_bottom: { label: "Below the clock", default: notification_count, choices: *rim }
   style:
@@ -146,7 +146,7 @@ layouts:
         overrides:
           fr955: { visible: false }        # no Bionic SemiBold there: clock_bold below
         children:
-          hours:   { type: text, text: "{time.clock:%h%M}", font: font.clock, at: { anchor: center, dx: 0%r, dy: 0%r }, align: center, color: color.fg }
+          hours:   { type: text, text: "{time.clock:%h%M}", font: font.clock, at: { anchor: center, dx: 0%r, dy: 0%r }, align: center, color: color.fg, outline: { color: color.fg, width: 1 } }
       clock_bold:
         type: group
         at: { anchor: center }
@@ -203,7 +203,7 @@ elements:
     font: font.rim
     at: { anchor: center }
     lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
-    curve: { style: radial, angle: 0deg, radius: 92.5%r, direction: clockwise }
+    curve: { style: radial, angle: 0deg, radius: 92%r, direction: clockwise }
     color: color.fg
     absent: { text: "--" }
   upper_right_arc:
@@ -224,7 +224,7 @@ elements:
     font: font.rim
     at: { anchor: center }
     lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
-    curve: { style: radial, angle: 60deg, radius: 92.5%r, direction: clockwise }
+    curve: { style: radial, angle: 60deg, radius: 92%r, direction: clockwise }
     color: color.fg
     absent: { text: "--" }
   lower_right_arc:
@@ -245,7 +245,7 @@ elements:
     font: font.rim
     at: { anchor: center }
     lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
-    curve: { style: radial, angle: 120deg, radius: 92.5%r, direction: counter_clockwise }
+    curve: { style: radial, angle: 120deg, radius: 92%r, direction: counter_clockwise }
     color: color.fg
     absent: { text: "--" }
   bottom_arc:
@@ -266,7 +266,7 @@ elements:
     font: font.rim
     at: { anchor: center }
     lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
-    curve: { style: radial, angle: 180deg, radius: 92.5%r, direction: counter_clockwise }
+    curve: { style: radial, angle: 180deg, radius: 92%r, direction: counter_clockwise }
     color: color.fg
     absent: { text: "--" }
   lower_left_arc:
@@ -287,7 +287,7 @@ elements:
     font: font.rim
     at: { anchor: center }
     lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
-    curve: { style: radial, angle: 240deg, radius: 92.5%r, direction: counter_clockwise }
+    curve: { style: radial, angle: 240deg, radius: 92%r, direction: counter_clockwise }
     color: color.fg
     absent: { text: "--" }
   upper_left_arc:
@@ -308,7 +308,7 @@ elements:
     font: font.rim
     at: { anchor: center }
     lint: { allow: [off-screen, safe-area], reason: "only the line box above the capitals crosses the edge; the ink stays inside, as in the design" }
-    curve: { style: radial, angle: 300deg, radius: 92.5%r, direction: clockwise }
+    curve: { style: radial, angle: 300deg, radius: 92%r, direction: clockwise }
     color: color.fg
     absent: { text: "--" }
 
@@ -318,7 +318,7 @@ elements:
     slot: pocket_top
     short: true
     font: font.pocket
-    icon: { size: 18%r, gap: 4%r, color: color.fg }
+    icon: { size: 20%r, gap: 4%r, color: color.fg }
     at: { anchor: center, dy: -67%r }
     color: color.fg
     absent: { text: "--" }
@@ -328,7 +328,7 @@ elements:
     slot: pocket_bottom
     short: true
     font: font.pocket
-    icon: { size: 18%r, gap: 4%r, color: color.fg }
+    icon: { size: 20%r, gap: 4%r, color: color.fg }
     at: { anchor: center, dy: 67%r }
     color: color.fg
     absent: { text: "--" }
