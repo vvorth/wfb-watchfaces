@@ -25,7 +25,7 @@ format: 2
 face:
   id: ffbf5db6-078b-43c7-9eb7-ed4e4750bcf8
   name: Trail Utility
-  version: 2.1.0
+  version: 2.1.1
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955]
@@ -225,6 +225,8 @@ elements:
     at: { anchor: center, dx: 21.5%r, dy: -12.5%r }
     align: left
     color: color.fg
+    sleep_update: false
+    visible: system.awake
 
   # --- the ring slot ---
   ring_slot:
