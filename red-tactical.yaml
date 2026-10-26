@@ -29,7 +29,7 @@ format: 2
 face:
   id: 4daede36-300e-45d7-839e-a562422ae5ae
   name: Red Tactical
-  version: 1.4.2
+  version: 1.4.3
 
 defaults:
   aod:
@@ -51,27 +51,27 @@ config:
       Dark: { scheme: dark, label: Dark }
       Light: { scheme: light, label: Light }
   slots:
-    left_bezel:
-      label: Bezel left
-      default: steps
-      choices: any
-    right_bezel:
-      label: Bezel right
-      default: heart_rate
-      choices: any
     left:
       label: Left dial
       default: body_battery
-      choices: any
+      choices: &short [body_battery, calories, floors_climbed, intensity_minutes, steps, weekly_bike_distance, weekly_run_distance, heart_rate, pulse_ox, sleep_score, respiration_rate, stress, vo2max_bike, vo2max_run, recovery_time, altitude, current_temperature, sea_level_pressure, high_low_temperature, battery, notification_count, solar_input]
     right:
       label: Right dial
       default: floors_climbed
-      choices: any
+      choices: *short
     bottom:
       label: Bottom dial
       default: notification_count
-      choices: any
-
+      choices: *short
+    left_bezel:
+      label: Bezel left
+      default: steps
+      choices: [steps, floors_climbed, intensity_minutes, wheelchair_pushes, body_battery, heart_rate, sleep_score, stress, pulse_ox, vo2max_bike, vo2max_run, battery, solar_input]
+    right_bezel:
+      label: Bezel right
+      default: heart_rate
+      choices: *short
+      
 theme:
   schemes:
     dark:
@@ -364,7 +364,7 @@ elements:
     type: hands
     set: hours
     at: { anchor: center }
-    outline: { color: color.bg, width: 1 }
+    outline: { color: color.black, width: 1 }
     aod: { visible: true }
 
   second_hand:
