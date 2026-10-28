@@ -25,7 +25,7 @@ format: 2
 face:
   id: ffbf5db6-078b-43c7-9eb7-ed4e4750bcf8
   name: Trail Utility
-  version: 2.1.1
+  version: 2.1.2
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955]
@@ -38,9 +38,10 @@ resources:
     label: { face: [RobotoCondensedBold, BionicSemiBold, RobotoCondensedBold], size: 18%r }
   palette:                          # every channel 00 / 55 / AA / FF
     bg: "#000000"
-    fg: "#AAAAAA"
+    fg: "#FFFFFF"
     track: "#555555"
     frame: "#555555"
+    dim: { value: "#AAAAAA", label: Silver Chalice }
 
 config:
   accent_color:
@@ -105,7 +106,7 @@ static:
       fg2: { type: line, at: { anchor: center, angle: 225deg, radius: 78%r }, to: { anchor: center, angle: 135deg, radius:  78%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast], reason: "dim frame line, decoration only" } }
       fg3: { type: line, at: { anchor: center, angle: 135deg, radius: 78%r }, to: { anchor: center, angle: 135deg, radius: 100%r }, thickness: 2px, color: color.frame, lint: { allow: [contrast, safe-area], reason: "dim frame line, decoration only; it ends at the screen edge on purpose" } }
   ring_outer: { type: circle, filled: false, at: { anchor: center, dx: 67%r, dy: 3%r }, radius: 28%r, thickness: 1.5%r, color: color.frame, lint: { allow: [contrast], reason: "dim bezel round the ring, decoration only" } }
-  name_label: { type: text, text: "T R A I L", font: font.label, at: { anchor: center, dx: 6%r, dy: 35.5%r }, color: color.fg }
+  name_label: { type: text, text: "T R A I L", font: font.label, at: { anchor: center, dx: 6%r, dy: 35.5%r }, color: color.dim }
   sunrise_icon: { type: icon, icon: sunrise, size: 16%r, at: { anchor: center, dx: -40.5%r, dy: -37%r }, color: color.fg }
 
 elements:
@@ -224,7 +225,7 @@ elements:
     font: font.seconds
     at: { anchor: center, dx: 21.5%r, dy: -12.5%r }
     align: left
-    color: color.fg
+    color: color.dim
     sleep_update: false
     visible: system.awake
 
