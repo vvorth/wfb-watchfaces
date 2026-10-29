@@ -13,7 +13,7 @@ format: 2
 face:
   id: 7eacd6b4-4002-419b-a30c-c657db09743c
   name: Solaria
-  version: 1.1.0
+  version: 1.2.0
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm]
@@ -174,7 +174,7 @@ static:
   # -- 3 o'clock: second time zone, 24 h, midnight at the top ------------------
   tz_static:
     type: group
-    at: { anchor: center, dx: 43.5%r, dy: -10%r }
+    at: { anchor: center, dx: 50%r, dy: -10%r }
     children:
       tz_night:
         type: arc
@@ -282,14 +282,7 @@ static:
     font: font.t9
     at: { anchor: center, dy: 44%r, dx: 3%r }
     color: color.grey
-    curve: { style: radial, angle: 97deg, radius: 29.5%r, direction: clockwise }
-  culm_label:
-    type: text
-    text: "CULM"
-    font: font.t9
-    at: { anchor: center, dy: 44%r }
-    color: color.grey
-    curve: { style: radial, angle: 232deg, radius: 30.5%r, direction: counter_clockwise }
+    curve: { style: radial, angle: 95deg, radius: 29.5%r, direction: clockwise }
   res_label: { type: text, text: "RESERVE", font: font.t9, at: { anchor: center, dx: 58%r, dy: 27%r }, color: color.grey }
 
 # ----------------------------------------------------------------------------
@@ -894,7 +887,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 0) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 43.5%r, dy: -10%r }
+        at: { anchor: center, dx: 50%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 0) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 0) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -905,7 +898,7 @@ layouts:
         type: text
         text: "UTC"
         font: font.t9
-        at: { anchor: center, dx: 43.5%r, dy: 0%r }
+        at: { anchor: center, dx: 50%r, dy: 0%r }
         color: color.grey
   tz_par:
     label: "Paris +1 (standard time)"
