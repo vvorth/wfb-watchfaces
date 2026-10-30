@@ -13,7 +13,7 @@ format: 2
 face:
   id: 7eacd6b4-4002-419b-a30c-c657db09743c
   name: Solaria
-  version: 1.2.3
+  version: 1.4.0
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm]
@@ -33,50 +33,76 @@ resources:
     t7: { face: [RobotoCondensedBold], size: 7%r }
     t8: { face: [RobotoCondensedBold], size: 8%r }
     t9: { face: [RobotoCondensedBold], size: 9%r }
+    t10: { face: [RobotoCondensedBold], size: 10%r }
+    t11: { face: [RobotoCondensedBold], size: 11%r }
 
   hand_sets:
     main:
       hour:
         color: color.white
         parts:
-          blade:
+          blade_l:
             # a baton: a slim stem, then a parallel blade to a pointed tip
             type: polygon
-            mirror: x
+            #mirror: x
             points:
-              - { dx: -1.3%r, dy: 8%r }
-              - { dx: -1.3%r, dy: -12%r }
-              - { dx: -2.8%r, dy: -17%r }
-              - { dx: -2.8%r, dy: -50%r }
+              - { dx: -1.5%r, dy: 8%r }
+              - { dx: -1.5%r, dy: -12%r }
+              - { dx: -3.5%r, dy: -17%r }
+              - { dx: -3.5%r, dy: -50%r }
               - { dy: -58%r }
-          facet:
-            type: polygon
-            mirror: x
-            color: color.dim
-            points:
-              - { dx: -0.9%r, dy: -18%r }
-              - { dx: -0.9%r, dy: -49%r }
               - { dy: -53%r }
+              - { dx: -2%r, dy: -49%r }
+              - { dx: -2%r, dy: -18%r }
+              - { dy: -13%r }
+              - { dy: 8%r }
+          blade_r:
+            # a baton: a slim stem, then a parallel blade to a pointed tip
+            type: polygon
+            #mirror: x
+            points:
+              - { dx: 1.5%r, dy: 8%r }
+              - { dx: 1.5%r, dy: -12%r }
+              - { dx: 4%r, dy: -17%r }
+              - { dx: 4%r, dy: -50%r }
+              - { dy: -58%r }
+              - { dy: -53%r }
+              - { dx: 2.5%r, dy: -49%r }
+              - { dx: 2.5%r, dy: -18%r }
+              - { dy: -13%r }
+              - { dy: 8%r }
+              
       minute:
         color: color.white
         parts:
-          blade:
+          blade_l:
             type: polygon
-            mirror: x
+            #mirror: x
             points:
               - { dx: -1.2%r, dy: 8%r }
               - { dx: -1.2%r, dy: -14%r }
-              - { dx: -2.5%r, dy: -19%r }
-              - { dx: -2.5%r, dy: -78%r }
+              - { dx: -3%r, dy: -19%r }
+              - { dx: -3%r, dy: -78%r }
               - { dy: -86%r }
-          facet:
-            type: polygon
-            mirror: x
-            color: color.dim
-            points:
-              - { dx: -0.8%r, dy: -20%r }
-              - { dx: -0.8%r, dy: -77%r }
               - { dy: -81%r }
+              - { dx: -2%r, dy: -77%r }
+              - { dx: -2%r, dy: -20%r }
+              - { dy: -16%r }
+              - { dy: 8%r }
+          blade_r:
+            type: polygon
+            #mirror: x
+            points:
+              - { dx: 1.2%r, dy: 8%r }
+              - { dx: 1.2%r, dy: -14%r }
+              - { dx: 3%r, dy: -19%r }
+              - { dx: 3%r, dy: -78%r }
+              - { dy: -86%r }
+              - { dy: -81%r }
+              - { dx: 2%r, dy: -77%r }
+              - { dx: 2%r, dy: -20%r }
+              - { dy: -16%r }
+              - { dy: 8%r }
 
 # ----------------------------------------------------------------------------
 # Fixed furniture: drawn once into the static buffer.
@@ -95,16 +121,17 @@ static:
     start: 0deg
     color: color.grey
     parts:
-      tick: { type: rectangle, at: { dy: -88%r }, size: { width: 3%r, height: 8%r } }
+      tick: { type: rectangle, at: { dy: -92%r }, size: { width: 3%r, height: 8%r } }
     skip: [0, 6]
   # -- periphery: a 24-hour sun dial, midnight at the bottom, noon at the top --
   rim_ring:
     type: circle
     at: { anchor: center }
-    radius: 95%r
+    radius: 98%r
     filled: false
     thickness: 5.5%r
     color: color.white
+    lint: { allow: [off-screen],  reason: "To avoid black rim" }
   sun_rim_hours:
     type: pattern
     pattern: radial
@@ -113,85 +140,89 @@ static:
     start: 195deg
     color: color.bg
     parts:
-      tick: { type: line, at: { dy: -95%r }, to: { dy: -92%r }, thickness: 1px }
+      tick: { type: line, at: { dy: -98%r }, to: { dy: -93%r }, thickness: 1px }
   rim_numerals:
     type: pattern
     pattern: radial
     at: { anchor: center }
     count: 12
     start: 180deg
-    skip: [0]
     color: color.bg
     lint: { allow: [contrast, safe-area, off-screen], reason: "black on the white ring beneath, which the lint does not see; the numerals' box corners cross the rim, their ink does not" }
     parts:
       numeral:
         type: text
         text: "{copy * 2}"
-        font: font.t7
-        at: { dy: -95%r }
+        font: font.t8
+        at: { dy: -97.5%r }
 
   # -- 12 o'clock: perpetual calendar ------------------------------------------
-  cal_ring:
-    type: circle
-    at: { anchor: center, dy: -57%r }
-    radius: 25.5%r
-    filled: false
-    thickness: 8.5%r
-    color: color.white
-  cal_week_ring:
-    type: circle
-    at: { anchor: center, dy: -57%r }
-    radius: 31.5%r
-    filled: false
-    thickness: 1px
-    color: color.dim
-    lint: { allow: [contrast], reason: "subdued by design: a night tone, not a reading" }
-  cal_week_marks:
-    type: pattern
-    pattern: radial
-    at: { anchor: center, dy: -57%r }
-    count: 4
-    color: color.green
-    parts:
-      tick: { type: line, at: { dy: -30.5%r }, to: { dy: -32.5%r }, thickness: 2px }
-  cal_ticks:
-    type: pattern
-    pattern: radial
-    at: { anchor: center, dy: -57%r }
-    count: 31
-    step_angle: 11.6129deg
-    color: color.bg
-    parts:
-      tick: { type: line, at: { dy: -29.75%r }, to: { dy: -27.5%r }, thickness: 1px }
-  cal_numerals:
-    type: pattern
-    pattern: radial
-    at: { anchor: center, dy: -57%r }
-    count: 6
-    start: 46.4516deg
-    step_angle: 58.0645deg
-    color: color.bg
-    lint: { allow: [contrast], reason: "black on the white ring beneath, which the lint does not see" }
-    parts:
-      numeral: { type: text, text: "{copy * 5 + 5}", font: font.t7, at: { dy: -24.5%r } }
-  cal_one:
-    type: text
-    text: "1"
-    font: font.t7
-    at: { anchor: center, dy: -81.5%r }
-    color: color.bg
-    lint: { allow: [contrast], reason: "black on the white ring beneath, which the lint does not see" }
+  cal_static:
+    type: group
+    at: { anchor: center, dy: -58%r }
+    children:
+      cal_ring:
+        type: circle
+        at: { anchor: center }
+        radius: 41%
+        filled: false
+        thickness: 8.5%r
+        color: color.white
+      cal_week_ring:
+        type: circle
+        at: { anchor: center }
+        radius: 50%
+        filled: false
+        thickness: 1px
+        color: color.dim
+        lint: { allow: [contrast], reason: "subdued by design: a night tone, not a reading" }
+      cal_week_marks:
+        type: pattern
+        pattern: radial
+        at: { anchor: center }
+        count: 12
+        color: color.green
+        parts:
+          tick: { type: line, at: { dy: -35%r }, to: { dy: -33.5%r }, thickness: 2px }
+      cal_ticks:
+        type: pattern
+        pattern: radial
+        at: { anchor: center }
+        count: 31
+        step_angle: 11.6129deg
+        color: color.bg
+        parts:
+          tick: { type: line, at: { dy: -33%r }, to: { dy: -31%r }, thickness: 1px }
+      cal_numerals:
+        type: pattern
+        pattern: radial
+        at: { anchor: center }
+        count: 6
+        start: 46.4516deg
+        step_angle: 58.0645deg
+        color: color.bg
+        lint: { allow: [contrast], reason: "black on the white ring beneath, which the lint does not see" }
+        parts:
+          numeral: { type: text, text: "{copy * 5 + 5}", font: font.t8, at: { dy: -28%r } }
+      cal_one:
+        type: text
+        text: "1"
+        font: font.t8
+        at: { anchor: center, dy: -28%r }
+        color: color.bg
+        lint: { allow: [contrast], reason: "black on the white ring beneath, which the lint does not see" }
+    size: { width: 70%r, height: 70%r }
 
   # -- 3 o'clock: second time zone, 24 h, midnight at the top ------------------
   tz_static:
     type: group
-    at: { anchor: center, dx: 50%r, dy: -10%r }
+    at: { anchor: center, dx: 55%r, dy: -10%r }
     children:
       tz_night:
         type: arc
         at: { anchor: center}
-        radius: 23%r
-        thickness: 6.5%r
+        radius: 50%
+        thickness: 15%
         start_angle: 270deg
         sweep: 180deg
         color: color.dim
@@ -199,8 +230,8 @@ static:
       tz_day:
         type: arc
         at: { anchor: center}
-        radius: 23%r
-        thickness: 6.5%r
+        radius: 50%
+        thickness: 15%
         start_angle: 90deg
         sweep: 180deg
         color: color.white
@@ -211,7 +242,7 @@ static:
         count: 12
         color: color.grey
         parts:
-          tick: { type: line, at: { dy: -19%r }, to: { dy: -17%r }, thickness: 1px }
+          tick: { type: line, at: { dy: -21.5%r }, to: { dy: -18%r }, thickness: 1px }
       tz_numerals:
         # even hours on the ring: white over the night half, black over the day half
         type: pattern
@@ -222,9 +253,10 @@ static:
         color: "copy > 3 and copy < 9 ? color.bg : color.white"
         lint: { allow: [contrast], reason: "black on the white ring beneath, which the lint does not see" }
         parts:
-          numeral: { type: text, text: "{(copy == 0 ? 24 : copy * 2)}", font: font.t7, at: { dy: -23%r } }
-      tz_6: { type: text, text: "6", font: font.t7, at: { anchor: center, dx: -23%r,}, color: color.gold }
-      tz_18: { type: text, text: "18", font: font.t7, at: { anchor: center, dx: 23%r }, color: color.gold }
+          numeral: { type: text, text: "{(copy == 0 ? 24 : copy * 2)}", font: font.t9, at: { dy: -26%r } }
+      tz_6: { type: text, text: "6", font: font.t10, at: { anchor: center, dx: 49%,}, color: color.gold }
+      tz_18: { type: text, text: "18", font: font.t10, at: { anchor: center, dx: -49% }, color: color.gold }
+    size: { width: 52%r, height: 52%r }
 
 
   # -- 6 o'clock: solar counter ----------------------------------------------
@@ -235,7 +267,7 @@ static:
     thickness: 1.5%r
     start_angle: 300deg
     sweep: 120deg
-    color: color.white
+    color: color.gold
   eot_ticks:
     type: pattern
     pattern: radial
@@ -243,15 +275,15 @@ static:
     count: 3
     start: 300deg
     step_angle: 60deg
-    color: color.white
+    color: color.gold
     parts:
       tick: { type: line, at: { dy: -27%r }, to: { dy: -24%r }, thickness: 1px }
-  eot_minus: { type: text, text: "-16", font: font.t9, at: { anchor: center, dx: -14%r, dy: 37%r }, color: color.grey }
-  eot_plus: { type: text, text: "+14", font: font.t9, at: { anchor: center, dx: 14.5%r, dy: 37.4%r }, color: color.grey }
+  eot_minus: { type: text, text: "-16", font: font.t10, at: { anchor: center, dx: -14%r, dy: 37%r }, color: color.gold }
+  eot_plus: { type: text, text: "+14", font: font.t10, at: { anchor: center, dx: 14%r, dy: 37%r }, color: color.gold }
   eot_label:
     type: text
     text: "EQUATION"
-    font: font.t9
+    font: font.t10
     at: { anchor: center, dy: 44%r }
     color: color.grey
     curve: { style: radial, angle: 0deg, radius: 30.5%r, direction: clockwise }
@@ -273,8 +305,8 @@ static:
     color: color.red
     parts:
       tick: { type: line, at: { dy: -27%r }, to: { dy: -24%r }, thickness: 1px }
-  dec_s: { type: text, text: "S", font: font.t9, at: { anchor: center, dx: 29.5%r, dy: 30%r }, color: color.red }
-  dec_n: { type: text, text: "N", font: font.t9, at: { anchor: center, dx: 28.8%r, dy: 61.8%r }, color: color.red }
+  dec_s: { type: text, text: "S", font: font.t10, at: { anchor: center, dx: 29.5%r, dy: 30%r }, color: color.red }
+  dec_n: { type: text, text: "N", font: font.t10, at: { anchor: center, dx: 28.8%r, dy: 61.8%r }, color: color.red }
   earth:
     type: circle
     at: { anchor: center, dy: 44%r }
@@ -290,11 +322,11 @@ static:
   dec_label:
     type: text
     text: "DECL"
-    font: font.t9
+    font: font.t10
     at: { anchor: center, dy: 44%r, dx: 3%r }
     color: color.grey
     curve: { style: radial, angle: 95deg, radius: 29.5%r, direction: clockwise }
-  res_label: { type: text, text: "RESERVE", font: font.t9, at: { anchor: center, dx: 54%r, dy: 30%r }, color: color.grey }
+  res_label: { type: text, text: "RESERVE", font: font.t9, at: { anchor: center, dx: 56%r, dy: 30%r }, color: color.grey }
 
 # ----------------------------------------------------------------------------
 elements:
@@ -306,26 +338,26 @@ elements:
     value: complication.sunrise
     max: 86400
     at: { anchor: center }
-    radius: 95%r
+    radius: 98%r
     thickness: 6%r
     start_angle: 180deg
     sweep: 360deg
     color: color.bg
     absent: hide
-    lint: { allow: [contrast], reason: "subdued by design: a night tone, not a reading" }
+    lint: { allow: [contrast, safe-area, off-screen], reason: "subdued by design: a night tone, not a reading" }
   night_after_sunset:
     type: gauge
     style: arc
     value: 86400 - complication.sunset
     max: 86400
     at: { anchor: center }
-    radius: 95%r
+    radius: 98%r
     thickness: 6%r
     start_angle: 180deg
     sweep: -360deg
     color: color.bg
     absent: hide
-    lint: { allow: [contrast], reason: "subdued by design: a night tone, not a reading" }
+    lint: { allow: [contrast, off-screen, safe-area], reason: "subdued by design: a night tone, not a reading" }
   rim_night_numerals:
     # the even hours that fall in the night, white over the grey sector (the
     # static black copies underneath are covered exactly)
@@ -334,16 +366,15 @@ elements:
     at: { anchor: center }
     count: 12
     start: 180deg
-    skip: [0]
     color: color.dim
     absent: hide
-    lint: { allow: [safe-area, off-screen], reason: "the numerals' box corners cross the rim, their ink does not" }
+    lint: { allow: [safe-area, off-screen, safe-area, contrast], reason: "the numerals' box corners cross the rim, their ink does not" }
     parts:
       numeral:
         type: text
         text: "{copy * 2}"
         font: font.t7
-        at: { dy: -95%r }
+        at: { dy: -97.5%r }
         visible: "copy * 7200 < complication.sunrise or copy * 7200 >= complication.sunset"
   sunrise_pointer:
     type: gauge
@@ -358,7 +389,7 @@ elements:
     needle:
       tip:
         type: polygon
-        points: [{ dx: -2.2%r, dy: -85%r }, { dy: -90.5%r }, { dx: 2.2%r, dy: -85%r }]
+        points: [{ dx: -2.2%r, dy: -90%r }, { dy: -95.5%r }, { dx: 2.2%r, dy: -90%r }]
   sunset_pointer:
     type: gauge
     style: needle
@@ -372,7 +403,7 @@ elements:
     needle:
       tip:
         type: polygon
-        points: [{ dx: -2.2%r, dy: -85%r }, { dy: -90.5%r }, { dx: 2.2%r, dy: -85%r }]
+        points: [{ dx: -2.2%r, dy: -90%r }, { dy: -95.5%r }, { dx: 2.2%r, dy: -90%r }]
   sun_position:
     type: gauge
     style: needle
@@ -384,8 +415,9 @@ elements:
     color: color.gold
     needle:
       #sun_rim: { type: circle, at: { dy: -94.5%r }, radius: 3.1%r, filled: true, color: color.bg }
-      sun: { type: circle, at: { dy: -94.5%r }, radius: 2.5%r }
+      sun: { type: circle, at: { dy: -97%r }, radius: 3%r }
     outline: { color: color.bg, width: 1 }
+    lint: { allow: [contrast, off-screen], reason: "subdued by design: a night tone, not a reading" }
   sun_night:
     # painted over the gold sun between sunset and sunrise: day/night for the reference city
     type: gauge
@@ -398,69 +430,71 @@ elements:
     color: color.bg
     visible: 'not (time.hour * 3600 + time.minute * 60 + time.second >= complication.sunrise and time.hour * 3600 + time.minute * 60 + time.second < complication.sunset)'
     needle:
-      sun: { type: circle, at: { dy: -94.5%r }, radius: 2.5%r }
+      sun: { type: circle, at: { dy: -97%r }, radius: 3%r }
       #sun_rim: { type: circle, at: { dy: -94.5%r }, radius: 3.1%r, filled: false, thickness: 1px, color: color.white }
-    lint: { allow: [contrast], reason: "subdued by design: a night tone, not a reading" }
+    lint: { allow: [contrast, off-screen], reason: "subdued by design: a night tone, not a reading" }
     outline: { color: color.white, width: 1 }
 
   # -- 12 o'clock: perpetual calendar ------------------------------------------
   calendar:
     type: group
-    at: { anchor: center, dy: -57%r }
+    at: { anchor: center, dy: -60%r }
     size: { width: 44%r, height: 44%r }
     on_hold: date
     children:
-      year: { type: text, text: "{date.year:d}", font: font.t9, at: { anchor: center, dy: -12%r }, color: color.white }
+      year: { type: text, text: "{date.year:d}", font: font.t11, at: { anchor: center, dy: -14%r }, color: color.white }
       leap:
         type: text
         text: "LY"
         font: font.t7
-        at: { anchor: center, dx: 13%r, dy: -12%r }
+        at: { anchor: center, dx: 14%r, dy: -8.5%r }
         color: color.green
         visible: '((date.year % 4 == 0 and date.year % 100 != 0) or date.year % 400 == 0)'
-      weekday: { type: text, text: "{date.today:%a}", font: font.t9, at: { anchor: center, dx: -10.5%r }, color: color.white }
-      month: { type: text, text: "{date.today:%b}", font: font.t9, at: { anchor: center, dx: 10.5%r }, color: color.white }
+      weekday: { type: text, text: "{date.today:%a}", font: font.t11, at: { anchor: center, dx: -12%r }, color: color.white }
+      month: { type: text, text: "{date.today:%b}", font: font.t11, at: { anchor: center, dx: 12%r }, color: color.white }
       week_day:
         type: text
         text: 'W{(floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7) < 1 ? ((((1 + 5 * ((date.year - 1 - 1) % 4) + 4 * ((date.year - 1 - 1) % 100) + 6 * ((date.year - 1 - 1) % 400)) % 7) == 4 or ((((date.year - 1) % 4 == 0 and (date.year - 1) % 100 != 0) or (date.year - 1) % 400 == 0) and ((1 + 5 * ((date.year - 1 - 1) % 4) + 4 * ((date.year - 1 - 1) % 100) + 6 * ((date.year - 1 - 1) % 400)) % 7) == 3)) ? 53 : 52) : (floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7) == 53 and not (((1 + 5 * ((date.year - 1) % 4) + 4 * ((date.year - 1) % 100) + 6 * ((date.year - 1) % 400)) % 7) == 4 or ((((date.year) % 4 == 0 and (date.year) % 100 != 0) or (date.year) % 400 == 0) and ((1 + 5 * ((date.year - 1) % 4) + 4 * ((date.year - 1) % 100) + 6 * ((date.year - 1) % 400)) % 7) == 3))) ? 1 : floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7)):d} D{((date.weekday + 5) % 7 + 1):d}'
-        font: font.t9
-        at: { anchor: center, dy: 11%r }
+        font: font.t11
+        at: { anchor: center, dy: 14%r }
         color: color.green
-  date_hand:
-    type: gauge
-    style: needle
-    value: date.day - 1
-    max: 30
-    at: { anchor: center, dy: -57%r }
-    start_angle: 0deg
-    sweep: 348.387deg
-    color: color.red
-    needle:
-      blade: { type: line, at: { dy: 4%r }, to: { dy: -23%r }, thickness: 2px }
-      hub: { type: circle, radius: 1.5%r }
-  week_hand:
-    type: gauge
-    style: needle
-    value: '(floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7) < 1 ? ((((1 + 5 * ((date.year - 1 - 1) % 4) + 4 * ((date.year - 1 - 1) % 100) + 6 * ((date.year - 1 - 1) % 400)) % 7) == 4 or ((((date.year - 1) % 4 == 0 and (date.year - 1) % 100 != 0) or (date.year - 1) % 400 == 0) and ((1 + 5 * ((date.year - 1 - 1) % 4) + 4 * ((date.year - 1 - 1) % 100) + 6 * ((date.year - 1 - 1) % 400)) % 7) == 3)) ? 53 : 52) : (floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7) == 53 and not (((1 + 5 * ((date.year - 1) % 4) + 4 * ((date.year - 1) % 100) + 6 * ((date.year - 1) % 400)) % 7) == 4 or ((((date.year) % 4 == 0 and (date.year) % 100 != 0) or (date.year) % 400 == 0) and ((1 + 5 * ((date.year - 1) % 4) + 4 * ((date.year - 1) % 100) + 6 * ((date.year - 1) % 400)) % 7) == 3))) ? 1 : floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7)) - 1'
-    max: 52
-    at: { anchor: center, dy: -57%r }
-    start_angle: 0deg
-    sweep: 360deg
-    color: color.green
-    needle:
-      tip: { type: line, at: { dy: -29.5%r }, to: { dy: -33.5%r }, thickness: 2px }
+      date_hand:
+        type: gauge
+        style: needle
+        value: date.day - 1
+        max: 30
+        at: { anchor: center}
+        start_angle: 0deg
+        sweep: 348.387deg
+        color: color.red
+        needle:
+          blade: { type: line, at: { dy: 4%r }, to: { dy: -26%r }, thickness: 2px }
+          hub: { type: circle, radius: 2%r }
+      week_hand:
+        type: gauge
+        style: needle
+        value: '(floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7) < 1 ? ((((1 + 5 * ((date.year - 1 - 1) % 4) + 4 * ((date.year - 1 - 1) % 100) + 6 * ((date.year - 1 - 1) % 400)) % 7) == 4 or ((((date.year - 1) % 4 == 0 and (date.year - 1) % 100 != 0) or (date.year - 1) % 400 == 0) and ((1 + 5 * ((date.year - 1 - 1) % 4) + 4 * ((date.year - 1 - 1) % 100) + 6 * ((date.year - 1 - 1) % 400)) % 7) == 3)) ? 53 : 52) : (floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7) == 53 and not (((1 + 5 * ((date.year - 1) % 4) + 4 * ((date.year - 1) % 100) + 6 * ((date.year - 1) % 400)) % 7) == 4 or ((((date.year) % 4 == 0 and (date.year) % 100 != 0) or (date.year) % 400 == 0) and ((1 + 5 * ((date.year - 1) % 4) + 4 * ((date.year - 1) % 100) + 6 * ((date.year - 1) % 400)) % 7) == 3))) ? 1 : floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7)) - 1'
+        max: 52
+        at: { anchor: center }
+        start_angle: 0deg
+        sweep: 360deg
+        color: color.green
+        needle:
+          tip: { type: line, at: { dy: -29%r }, to: { dy: -35%r }, thickness: 3px }
+        lint: { allow: [safe-area], reason: "no drawables go outside the screen" }
 
 
   # -- 9 o'clock: moon phase and age, tide, spring/neap -----------------------
-  moon_elements:
+  moon_gauge_elements:
     type: group
-    at: { anchor: center, dx: -50%r, dy: -10%r }
+    at: { anchor: center, dx: -53%r, dy: -5%r }
+    size: { width: 55%r, height: 55%r }
     children:
       moon_scale:
         type: arc
         at: { anchor: center }
-        radius: 24.5%r
-        thickness: 3%r
+        radius: 50%
+        thickness: 7%
         start_angle: 285deg
         sweep: 150deg
         color: color.white
@@ -473,46 +507,10 @@ elements:
         step_angle: 25deg
         color: color.bg
         parts:
-          tick: { type: line, at: { dy: -26%r }, to: { dy: -23%r }, thickness: 1px }
-      moon_0: { type: text, text: "0", font: font.t9, at: { anchor: center, dx: -30%r, dy: -10%r }, color: color.grey }
-      moon_15: { type: text, text: "15", font: font.t9, at: { anchor: center, dx: 0%r, dy: -32%r }, color: color.grey }
-      moon_29: { type: text, text: "29", font: font.t9, at: { anchor: center, dx: 30%r, dy: -10%r }, color: color.grey }
-
-      moon_disc:
-        type: circle
-        at: { anchor: center, dy: -6.5%r }
-        radius: 6.5%r
-        color: color.white
-      # The dark half: a shadow disc swung across the moon by a needle gauge
-      # (the one data-driven position the format has).  Northern-hemisphere
-      # view: waxing, a shadow on an axis 36%r below the moon moves left from
-      # the moon's centre until clear of it over the first half lunation (the
-      # lit side grows from the right); waning, a second one comes in from the
-      # right over the second half.
-      moon_waxing:
-        type: gauge
-        style: needle
-        value: astro.moon_age
-        max: 14.765294
-        at: { anchor: center, dy: 30%r }
-        start_angle: 0deg
-        sweep: -21.2deg
-        color: color.bg
-        visible: 'astro.moon_age < 14.765294'
-        needle:
-          shadow: { type: circle, at: { dy: -36.5%r }, radius: 6.7%r }
-      moon_waning:
-        type: gauge
-        style: needle
-        value: 'astro.moon_age - 14.765294'
-        max: 14.765294
-        at: { anchor: center, dy: 30%r }
-        start_angle: 21.2deg
-        sweep: -21.2deg
-        color: color.bg
-        visible: 'astro.moon_age >= 14.765294'
-        needle:
-          shadow: { type: circle, at: { dy: -36.5%r }, radius: 6.7%r }
+          tick: { type: line, at: { dy: -30%r }, to: { dy: -24%r }, thickness: 1px }
+      moon_0: { type: text, text: "0", font: font.t10, at: { anchor: center, dx: -60%, dy: -20% }, color: color.grey }
+      moon_15: { type: text, text: "15", font: font.t10, at: { anchor: center, dy: -64% }, color: color.grey }
+      moon_29: { type: text, text: "29", font: font.t10, at: { anchor: center, dx: 60%, dy: -20% }, color: color.grey }
       moon_age_hand:
         type: gauge
         style: needle
@@ -524,13 +522,58 @@ elements:
         color: color.gold
         needle:
           tip: { type: line, at: { dy: -21%r }, to: { dy: -27.5%r }, thickness: 2px }
+
+  moon_elements:
+    type: group
+    at: { anchor: center, dx: -53%r, dy: -15%r }
+    size: { width: 15%r, height: 15%r}
+    children:
+        moon_disc:
+          type: circle
+          at: { anchor: center }
+          radius: 7.5%r
+          color: color.white
+      # The dark half: a shadow disc swung across the moon by a needle gauge
+      # (the one data-driven position the format has).  Northern-hemisphere
+      # view: waxing, a shadow on an axis 36%r below the moon moves left from
+      # the moon's centre until clear of it over the first half lunation (the
+      # lit side grows from the right); waning, a second one comes in from the
+      # right over the second half.
+        moon_waxing:
+          type: gauge
+          style: needle
+          value: astro.moon_age
+          max: 14.765294
+          at: { anchor: center, dy: 40%r }
+          start_angle: 0deg
+          sweep: -21.6deg
+          color: color.bg
+          visible: 'astro.moon_age < 14.765294'
+          needle:
+            shadow: { type: circle, at: { dy: -40%r }, radius: 7.5%r }
+          lint: { allow: [off-screen], reason: "no drawables go offscreen" }
+        moon_waning:
+          type: gauge
+          style: needle
+          value: 'astro.moon_age - 14.765294'
+          max: 14.765294
+          at: { anchor: center, dy: 40%r  }
+          start_angle: 21.6deg
+          sweep: -21.6deg
+          color: color.bg
+          visible: 'astro.moon_age >= 14.765294'
+          needle:
+            shadow: { type: circle, at: { dy: -40%r }, radius: 7.5%r }
+          lint: { allow: [off-screen], reason: "no drawables go offscreen" }
+
+
       
   tide_elements:
     type: group
-    at: { anchor: center, dx: -50%r, dy: 12%r }
+    at: { anchor: center, dx: -53%r, dy: 16%r }
     children:
-      tide_high: { type: text, text: "HIGH", font: font.t9, at: { anchor: center, dy: -12%r }, color: color.grey }
-      tide_low: { type: text, text: "LOW", font: font.t9, at: { anchor: center, dy: 12%r }, color: color.grey }
+      tide_high: { type: text, text: "HIGH", font: font.t10, at: { anchor: center, dy: -12%r }, color: color.grey }
+      tide_low: { type: text, text: "LOW", font: font.t10, at: { anchor: center, dy: 12%r }, color: color.grey }
       tide_ring:
         type: circle
         at: { anchor: center }
@@ -555,13 +598,13 @@ elements:
       spring:
         type: text
         text: "ST"
-        font: font.t9
+        font: font.t11
         at: { anchor: center, dx: -14.5%r }
         color: '(abs((astro.moon_age - 14.765294 * floor(astro.moon_age / 14.765294)) - 7.382647) > 4.4) ? color.green : color.dim'
       neap:
         type: text
         text: "NT"
-        font: font.t9
+        font: font.t11
         at: { anchor: center, dx: 15.5%r }
         color: '(abs((astro.moon_age - 14.765294 * floor(astro.moon_age / 14.765294)) - 7.382647) > 4.4) ? color.dim : color.green'
 
@@ -589,7 +632,7 @@ elements:
     color: color.red
     needle:
       blade: { type: line, at: { dy: 0%r }, to: { dy: -25%r }, thickness: 2px }
-  height:
+  sun_height_deg:
     # the sun's height at culmination, 0 .. 90 degrees over the left sector;
     # the whole scale goes with the reading, which needs a position
     type: group
@@ -602,7 +645,7 @@ elements:
         at: { anchor: center }
         radius: 26%r
         thickness: 1.5%r
-        start_angle: 240deg
+        start_angle: 235deg
         sweep: 60deg
         color: color.white
       ticks:
@@ -610,27 +653,27 @@ elements:
         pattern: radial
         at: { anchor: center }
         count: 3
-        start: 240deg
+        start: 235deg
         step_angle: 30deg
         color: color.white
         parts:
           tick: { type: line, at: { dy: -27%r }, to: { dy: -24%r }, thickness: 1px }
-      zero: { type: text, text: "0", font: font.t9, at: { anchor: center, dx: -15.5%r, dy: 6.6%r }, color: color.grey }
-      ninety: { type: text, text: "90", font: font.t9, at: { anchor: center, dx: -27%r, dy: -22%r }, color: color.grey }
+      zero: { type: text, text: "0", font: font.t10, at: { anchor: center, dx: -26%r, dy: 20%r }, color: color.grey }
+      ninety: { type: text, text: "90", font: font.t10, at: { anchor: center, dx: -29.5%r, dy: -15.2%r }, color: color.grey }
       label:
         type: text
         text: "HEIGHT"
         font: font.t9
         at: { anchor: center }
         color: color.grey
-        curve: { style: radial, angle: 275deg, radius: 30.5%r, direction: clockwise }
+        curve: { style: radial, angle: 265deg, radius: 30.5%r, direction: clockwise }
       hand:
         type: gauge
         style: needle
         value: astro.sun_noon_altitude
         max: 90
         at: { anchor: center }
-        start_angle: 240deg
+        start_angle: 235deg
         sweep: 60deg
         color: color.white
         absent: hide
@@ -655,7 +698,7 @@ elements:
     style: arc
     value: system.battery
     max: 100
-    at: { anchor: center, dx: 54%r, dy: 50%r }
+    at: { anchor: center, dx: 56%r, dy: 50%r }
     radius: 12%r
     thickness: 4%r
     start_angle: 265deg
@@ -666,8 +709,8 @@ elements:
   reserve_value:
     type: text
     text: "{system.battery:d}"
-    font: font.t9
-    at: { anchor: center, dx: 54%r, dy: 50%r }
+    font: font.t11
+    at: { anchor: center, dx: 56%r, dy: 50%r }
     color: color.white
   alarm:
     type: icon
@@ -679,8 +722,14 @@ elements:
     type: icon
     icon: dnd
     size: 12%r
-    at: { anchor: center, dx: -46%r, dy: 50%r }
+    at: { anchor: center, dx: -46%r, dy: 42%r }
     color: [{ when: device.do_not_disturb, value: "color.red" }, { else: color.dim }]
+  notifications:
+    type: icon
+    icon: notification 
+    size: 12%r
+    at: { anchor: center, dx: -46%r, dy: 58%r }
+    color: [{ when: "device.notification_count > 0", value: "color.white" }, { else: color.dim }]
   sun_events:
     type: group
     at: { anchor: center, dy: 75.5%r }
@@ -691,11 +740,11 @@ elements:
         type: text
         text: "{complication.sunrise:%H:%M}"
         font: font.t9
-        at: { anchor: center, dx: -20%r }
+        at: { anchor: center, dx: -22%r }
         align: right
         color: color.white
         absent: { text: "--:--" }
-      sunrise_icon: { type: icon, icon: sunrise, size: 7%r, at: { anchor: center, dx: -13%r }, color: color.gold }
+      sunrise_icon: { type: icon, icon: sunrise, size: 8%r, at: { anchor: center, dx: -15%r }, color: color.gold }
       culmination:
         type: text
         text: '{((complication.sunrise + complication.sunset) / 2):%H:%M}'
@@ -703,12 +752,12 @@ elements:
         at: { anchor: center }
         color: color.white
         absent: { text: "--:--" }
-      sunset_icon: { type: icon, icon: sunset, size: 7%r, at: { anchor: center, dx: 13%r }, color: color.gold }
+      sunset_icon: { type: icon, icon: sunset, size: 8%r, at: { anchor: center, dx: 15%r }, color: color.gold }
       sunset_time:
         type: text
         text: "{complication.sunset:%H:%M}"
         font: font.t9
-        at: { anchor: center, dx: 20%r }
+        at: { anchor: center, dx: 22%r }
         align: left
         color: color.white
         absent: { text: "--:--" }
@@ -745,7 +794,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 36000) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 43.5%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 36000) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 36000) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -756,7 +805,7 @@ layouts:
         type: text
         text: "HNL"
         font: font.t7
-        at: { anchor: center, dx: 43.5%r, dy: 1%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_lax:
     label: "Los Angeles -8 (standard time)"
@@ -766,7 +815,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 28800) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 43.5%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 28800) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 28800) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -777,7 +826,7 @@ layouts:
         type: text
         text: "LA"
         font: font.t7
-        at: { anchor: center, dx: 43.5%r, dy: 1%r }
+        at: { anchor: center, dy: 1%r }
         color: color.grey
   tz_den:
     label: "Denver -7 (standard time)"
@@ -787,7 +836,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 25200) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 43.5%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 25200) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 25200) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -798,7 +847,7 @@ layouts:
         type: text
         text: "DEN"
         font: font.t7
-        at: { anchor: center, dx: 43.5%r, dy: 1%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_chi:
     label: "Chicago -6 (standard time)"
@@ -808,7 +857,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 21600) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 43.5%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 21600) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 21600) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -819,7 +868,7 @@ layouts:
         type: text
         text: "CHI"
         font: font.t7
-        at: { anchor: center, dx: 43.5%r, dy: 1%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_nyc:
     label: "New York -5 (standard time)"
@@ -829,7 +878,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 18000) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 43.5%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 18000) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 18000) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -840,7 +889,7 @@ layouts:
         type: text
         text: "NYC"
         font: font.t7
-        at: { anchor: center, dx: 43.5%r, dy: 1%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_sao:
     label: "São Paulo -3 (standard time)"
@@ -850,7 +899,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 10800) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 43.5%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 10800) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 10800) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -861,7 +910,7 @@ layouts:
         type: text
         text: "SAO"
         font: font.t7
-        at: { anchor: center, dx: 43.5%r, dy: 1%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_azo:
     label: "Azores -1 (standard time)"
@@ -871,7 +920,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 3600) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 43.5%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 3600) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset - 3600) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -882,7 +931,7 @@ layouts:
         type: text
         text: "AZO"
         font: font.t7
-        at: { anchor: center, dx: 43.5%r, dy: 1%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_utc:
     label: "UTC +0 (standard time)"
@@ -892,18 +941,18 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 0) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 0) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 0) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
         needle:
-          blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
-          hub: { type: circle, radius: 1.5%r }
+          blade: { type: line, at: { dy: 3%r }, to: { dy: -22%r }, thickness: 2px }
+          hub: { type: circle, radius: 2%r }
       tz_utc_label:
         type: text
         text: "UTC"
-        font: font.t9
-        at: { anchor: center, dx: 50%r }
+        font: font.t11
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_par:
     label: "Paris +1 (standard time)"
@@ -913,7 +962,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 3600) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 3600) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 3600) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -924,7 +973,7 @@ layouts:
         type: text
         text: "PAR"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_cai:
     label: "Cairo +2 (standard time)"
@@ -934,7 +983,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 7200) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 7200) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 7200) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -945,7 +994,7 @@ layouts:
         type: text
         text: "CAI"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_mow:
     label: "Moscow +3 (standard time)"
@@ -955,7 +1004,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 10800) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 10800) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 10800) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -966,7 +1015,7 @@ layouts:
         type: text
         text: "MOW"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_dxb:
     label: "Dubai +4 (standard time)"
@@ -976,7 +1025,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 14400) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 14400) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 14400) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -987,7 +1036,7 @@ layouts:
         type: text
         text: "DXB"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_khi:
     label: "Karachi +5 (standard time)"
@@ -997,7 +1046,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 18000) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 18000) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 18000) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -1008,7 +1057,7 @@ layouts:
         type: text
         text: "KHI"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_bom:
     label: "Mumbai +5:30 (standard time)"
@@ -1018,7 +1067,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 19800) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 19800) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 19800) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -1029,7 +1078,7 @@ layouts:
         type: text
         text: "BOM"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_dac:
     label: "Dhaka +6 (standard time)"
@@ -1039,7 +1088,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 21600) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 21600) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 21600) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -1050,7 +1099,7 @@ layouts:
         type: text
         text: "DAC"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_bkk:
     label: "Bangkok +7 (standard time)"
@@ -1060,7 +1109,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 25200) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 25200) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 25200) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -1071,7 +1120,7 @@ layouts:
         type: text
         text: "BKK"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_hkg:
     label: "Hong Kong +8 (standard time)"
@@ -1081,7 +1130,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 28800) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 28800) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 28800) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -1092,7 +1141,7 @@ layouts:
         type: text
         text: "HKG"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_tokyo:
     label: "Tokyo +9 (standard time)"
@@ -1102,7 +1151,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 32400) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 32400) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 32400) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -1113,7 +1162,7 @@ layouts:
         type: text
         text: "TOKYO"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_syd:
     label: "Sydney +10 (standard time)"
@@ -1123,7 +1172,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 36000) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 36000) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 36000) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -1134,7 +1183,7 @@ layouts:
         type: text
         text: "SYD"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
   tz_akl:
     label: "Auckland +12 (standard time)"
@@ -1144,7 +1193,7 @@ layouts:
         style: needle
         value: '((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 43200) % 86400 + 86400) % 86400) / 60)'
         max: 1440
-        at: { anchor: center, dx: 50%r, dy: -10%r }
+        at: { anchor: center, dx: 55%r, dy: -10%r }
         start_angle: 0deg
         sweep: 360deg
         color: '(((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 43200) % 86400 + 86400) % 86400) / 3600) >= 6 and ((((time.hour * 3600 + time.minute * 60 - time.utc_offset + 43200) % 86400 + 86400) % 86400) / 3600) < 18) ? color.gold : color.grey'
@@ -1155,7 +1204,7 @@ layouts:
         type: text
         text: "AKL"
         font: font.t7
-        at: { anchor: center, dx: 50%r }
+        at: { anchor: center, dx: 55%r }
         color: color.grey
 
 config:
