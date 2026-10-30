@@ -13,7 +13,7 @@ format: 2
 face:
   id: 7eacd6b4-4002-419b-a30c-c657db09743c
   name: Solaria
-  version: 1.4.0
+  version: 1.5.0
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm]
@@ -28,6 +28,7 @@ resources:
     red: "#FF0000"
     green: "#00AA55"
     yellow: { value: "#FFFF00", label: Yellow }
+    green_2: { value: "#00FF00", label: Green }
 
   fonts:
     t7: { face: [RobotoCondensedBold], size: 7%r }
@@ -37,41 +38,7 @@ resources:
     t11: { face: [RobotoCondensedBold], size: 11%r }
 
   hand_sets:
-    main:
-      hour:
-        color: color.white
-        parts:
-          blade_l:
-            # a baton: a slim stem, then a parallel blade to a pointed tip
-            type: polygon
-            #mirror: x
-            points:
-              - { dx: -1.5%r, dy: 8%r }
-              - { dx: -1.5%r, dy: -12%r }
-              - { dx: -3.5%r, dy: -17%r }
-              - { dx: -3.5%r, dy: -50%r }
-              - { dy: -58%r }
-              - { dy: -53%r }
-              - { dx: -2%r, dy: -49%r }
-              - { dx: -2%r, dy: -18%r }
-              - { dy: -13%r }
-              - { dy: 8%r }
-          blade_r:
-            # a baton: a slim stem, then a parallel blade to a pointed tip
-            type: polygon
-            #mirror: x
-            points:
-              - { dx: 1.5%r, dy: 8%r }
-              - { dx: 1.5%r, dy: -12%r }
-              - { dx: 4%r, dy: -17%r }
-              - { dx: 4%r, dy: -50%r }
-              - { dy: -58%r }
-              - { dy: -53%r }
-              - { dx: 2.5%r, dy: -49%r }
-              - { dx: 2.5%r, dy: -18%r }
-              - { dy: -13%r }
-              - { dy: 8%r }
-              
+    main_minute:
       minute:
         color: color.white
         parts:
@@ -81,8 +48,8 @@ resources:
             points:
               - { dx: -1.2%r, dy: 8%r }
               - { dx: -1.2%r, dy: -14%r }
-              - { dx: -3%r, dy: -19%r }
-              - { dx: -3%r, dy: -78%r }
+              - { dx: -4%r, dy: -19%r }
+              - { dx: -4%r, dy: -78%r }
               - { dy: -86%r }
               - { dy: -81%r }
               - { dx: -2%r, dy: -77%r }
@@ -95,15 +62,50 @@ resources:
             points:
               - { dx: 1.2%r, dy: 8%r }
               - { dx: 1.2%r, dy: -14%r }
-              - { dx: 3%r, dy: -19%r }
-              - { dx: 3%r, dy: -78%r }
+              - { dx: 4%r, dy: -19%r }
+              - { dx: 4%r, dy: -78%r }
               - { dy: -86%r }
               - { dy: -81%r }
               - { dx: 2%r, dy: -77%r }
               - { dx: 2%r, dy: -20%r }
               - { dy: -16%r }
               - { dy: 8%r }
-
+              
+    main_hour:
+      hour:
+        color: color.white
+        parts:
+          blade_l:
+            # a baton: a slim stem, then a parallel blade to a pointed tip
+            type: polygon
+            #mirror: x
+            points:
+              - { dx: -1.5%r, dy: 8%r }
+              - { dx: -1.5%r, dy: -12%r }
+              - { dx: -4.5%r, dy: -17%r }
+              - { dx: -4.5%r, dy: -50%r }
+              - { dy: -58%r }
+              - { dy: -53%r }
+              - { dx: -2.5%r, dy: -49%r }
+              - { dx: -2.5%r, dy: -20%r }
+              - { dy: -15%r }
+              - { dy: 8%r }
+          blade_r:
+            # a baton: a slim stem, then a parallel blade to a pointed tip
+            type: polygon
+            #mirror: x
+            points:
+              - { dx: 1.5%r, dy: 8%r }
+              - { dx: 1.5%r, dy: -12%r }
+              - { dx: 4.5%r, dy: -17%r }
+              - { dx: 4.5%r, dy: -50%r }
+              - { dy: -58%r }
+              - { dy: -53%r }
+              - { dx: 2.5%r, dy: -49%r }
+              - { dx: 2.5%r, dy: -20%r }
+              - { dy: -15%r }
+              - { dy: 8%r }
+              
 # ----------------------------------------------------------------------------
 # Fixed furniture: drawn once into the static buffer.
 static:
@@ -130,7 +132,7 @@ static:
     radius: 98%r
     filled: false
     thickness: 5.5%r
-    color: color.white
+    color: color.grey
     lint: { allow: [off-screen],  reason: "To avoid black rim" }
   sun_rim_hours:
     type: pattern
@@ -167,7 +169,7 @@ static:
         radius: 41%
         filled: false
         thickness: 8.5%r
-        color: color.white
+        color: color.grey
       cal_week_ring:
         type: circle
         at: { anchor: center }
@@ -192,24 +194,27 @@ static:
         step_angle: 11.6129deg
         color: color.bg
         parts:
-          tick: { type: line, at: { dy: -33%r }, to: { dy: -31%r }, thickness: 1px }
+          #tick: { type: line, at: { dy: -33%r }, to: { dy: -31%r }, thickness: 1px }
+          dot: { type: circle, at: { dy: -28%r }, radius: 1.5%r }
+        skip: [0,1,3,5,7,9,11,13,15,17,19,21,23,25,27,29]
       cal_numerals:
         type: pattern
         pattern: radial
         at: { anchor: center }
-        count: 6
-        start: 46.4516deg
-        step_angle: 58.0645deg
+        count: 31
+        start: 0deg
+        step_angle: 11.6129deg
         color: color.bg
         lint: { allow: [contrast], reason: "black on the white ring beneath, which the lint does not see" }
         parts:
-          numeral: { type: text, text: "{copy * 5 + 5}", font: font.t8, at: { dy: -28%r } }
+          numeral: { type: text, text: "{copy}", font: font.t9, at: { dy: -28.5%r } }
+        skip_every: 2
       cal_one:
         type: text
-        text: "1"
+        text: "31"
         font: font.t8
         at: { anchor: center, dy: -28%r }
-        color: color.bg
+        color: color.red
         lint: { allow: [contrast], reason: "black on the white ring beneath, which the lint does not see" }
     size: { width: 70%r, height: 70%r }
 
@@ -234,7 +239,7 @@ static:
         thickness: 15%
         start_angle: 90deg
         sweep: 180deg
-        color: color.white
+        color: color.grey
       tz_ticks:
         type: pattern
         pattern: radial
@@ -242,7 +247,7 @@ static:
         count: 12
         color: color.grey
         parts:
-          tick: { type: line, at: { dy: -21.5%r }, to: { dy: -18%r }, thickness: 1px }
+          tick: { type: line, at: { dy: -21.5%r }, to: { dy: -19%r }, thickness: 1px }
       tz_numerals:
         # even hours on the ring: white over the night half, black over the day half
         type: pattern
@@ -250,7 +255,7 @@ static:
         at: { anchor: center}
         count: 12
         skip: [3, 9]
-        color: "copy > 3 and copy < 9 ? color.bg : color.white"
+        color: "copy > 3 and copy < 9 ? color.bg : color.grey"
         lint: { allow: [contrast], reason: "black on the white ring beneath, which the lint does not see" }
         parts:
           numeral: { type: text, text: "{(copy == 0 ? 24 : copy * 2)}", font: font.t9, at: { dy: -26%r } }
@@ -478,9 +483,9 @@ elements:
         at: { anchor: center }
         start_angle: 0deg
         sweep: 360deg
-        color: color.green
+        color: color.green_2
         needle:
-          tip: { type: line, at: { dy: -29%r }, to: { dy: -35%r }, thickness: 3px }
+          tip: { type: line, at: { dy: -32%r }, to: { dy: -36%r }, thickness: 3px }
         lint: { allow: [safe-area], reason: "no drawables go outside the screen" }
 
 
@@ -497,7 +502,7 @@ elements:
         thickness: 7%
         start_angle: 285deg
         sweep: 150deg
-        color: color.white
+        color: color.grey
       moon_scale_ticks:
         type: pattern
         pattern: radial
@@ -647,7 +652,7 @@ elements:
         thickness: 1.5%r
         start_angle: 235deg
         sweep: 60deg
-        color: color.white
+        color: color.grey
       ticks:
         type: pattern
         pattern: radial
@@ -655,7 +660,7 @@ elements:
         count: 3
         start: 235deg
         step_angle: 30deg
-        color: color.white
+        color: color.grey
         parts:
           tick: { type: line, at: { dy: -27%r }, to: { dy: -24%r }, thickness: 1px }
       zero: { type: text, text: "0", font: font.t10, at: { anchor: center, dx: -26%r, dy: 20%r }, color: color.grey }
@@ -675,7 +680,7 @@ elements:
         at: { anchor: center }
         start_angle: 235deg
         sweep: 60deg
-        color: color.white
+        color: color.grey
         absent: hide
         needle:
           blade: { type: line, at: { dy: 0%r }, to: { dy: -25%r }, thickness: 2px }
@@ -691,7 +696,7 @@ elements:
     text: '{(astro.day_of_year < 20 ? "SGR" : astro.day_of_year < 47 ? "CAP" : astro.day_of_year < 70 ? "AQR" : astro.day_of_year < 108 ? "PSC" : astro.day_of_year < 133 ? "ARI" : astro.day_of_year < 172 ? "TAU" : astro.day_of_year < 201 ? "GEM" : astro.day_of_year < 222 ? "CNC" : astro.day_of_year < 259 ? "LEO" : astro.day_of_year < 303 ? "VIR" : astro.day_of_year < 327 ? "LIB" : astro.day_of_year < 333 ? "SCO" : astro.day_of_year < 351 ? "OPH" : "SGR")}'
     font: font.t8
     at: { anchor: center, dy: 65%r }
-    color: color.white
+    color: color.grey
 
   reserve:
     type: gauge
@@ -771,9 +776,16 @@ elements:
         absent: { text: "--" }
 
   # -- the hands -------------------------------------------------------------
-  hands:
+  hands_min:
     type: hands
-    set: main
+    set: main_minute
+    at: { anchor: center }
+    outline: { color: color.bg }
+    lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+    aod: { visible: true }
+  hands_hr:
+    type: hands
+    set: main_hour
     at: { anchor: center }
     outline: { color: color.bg }
     lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
@@ -789,6 +801,12 @@ layouts:
   tz_hnl:
     label: "Honolulu -10 (standard time)"
     elements:
+      tz_hnl_label:
+        type: text
+        text: "HNL"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_hnl_hand:
         type: gauge
         style: needle
@@ -801,15 +819,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_hnl_label:
-        type: text
-        text: "HNL"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_lax:
     label: "Los Angeles -8 (standard time)"
     elements:
+      tz_lax_label:
+        type: text
+        text: "LA"
+        font: font.t7
+        at: { anchor: center, dy: 1%r }
+        color: color.grey
       tz_lax_hand:
         type: gauge
         style: needle
@@ -822,15 +840,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_lax_label:
-        type: text
-        text: "LA"
-        font: font.t7
-        at: { anchor: center, dy: 1%r }
-        color: color.grey
   tz_den:
     label: "Denver -7 (standard time)"
     elements:
+      tz_den_label:
+        type: text
+        text: "DEN"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_den_hand:
         type: gauge
         style: needle
@@ -843,15 +861,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_den_label:
-        type: text
-        text: "DEN"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_chi:
     label: "Chicago -6 (standard time)"
     elements:
+      tz_chi_label:
+        type: text
+        text: "CHI"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_chi_hand:
         type: gauge
         style: needle
@@ -864,15 +882,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_chi_label:
-        type: text
-        text: "CHI"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_nyc:
     label: "New York -5 (standard time)"
     elements:
+      tz_nyc_label:
+        type: text
+        text: "NYC"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_nyc_hand:
         type: gauge
         style: needle
@@ -885,15 +903,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_nyc_label:
-        type: text
-        text: "NYC"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_sao:
     label: "São Paulo -3 (standard time)"
     elements:
+      tz_sao_label:
+        type: text
+        text: "SAO"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_sao_hand:
         type: gauge
         style: needle
@@ -906,15 +924,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_sao_label:
-        type: text
-        text: "SAO"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_azo:
     label: "Azores -1 (standard time)"
     elements:
+      tz_azo_label:
+        type: text
+        text: "AZO"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_azo_hand:
         type: gauge
         style: needle
@@ -927,15 +945,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_azo_label:
-        type: text
-        text: "AZO"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_utc:
     label: "UTC +0 (standard time)"
     elements:
+      tz_utc_label:
+        type: text
+        text: "UTC"
+        font: font.t11
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_utc_hand:
         type: gauge
         style: needle
@@ -948,15 +966,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -22%r }, thickness: 2px }
           hub: { type: circle, radius: 2%r }
-      tz_utc_label:
-        type: text
-        text: "UTC"
-        font: font.t11
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_par:
     label: "Paris +1 (standard time)"
     elements:
+      tz_par_label:
+        type: text
+        text: "PAR"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_par_hand:
         type: gauge
         style: needle
@@ -969,15 +987,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_par_label:
-        type: text
-        text: "PAR"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_cai:
     label: "Cairo +2 (standard time)"
     elements:
+      tz_cai_label:
+        type: text
+        text: "CAI"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_cai_hand:
         type: gauge
         style: needle
@@ -990,15 +1008,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_cai_label:
-        type: text
-        text: "CAI"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_mow:
     label: "Moscow +3 (standard time)"
     elements:
+      tz_mow_label:
+        type: text
+        text: "MOW"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_mow_hand:
         type: gauge
         style: needle
@@ -1011,15 +1029,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_mow_label:
-        type: text
-        text: "MOW"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_dxb:
     label: "Dubai +4 (standard time)"
     elements:
+      tz_dxb_label:
+        type: text
+        text: "DXB"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_dxb_hand:
         type: gauge
         style: needle
@@ -1032,15 +1050,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_dxb_label:
-        type: text
-        text: "DXB"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_khi:
     label: "Karachi +5 (standard time)"
     elements:
+      tz_khi_label:
+        type: text
+        text: "KHI"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_khi_hand:
         type: gauge
         style: needle
@@ -1053,15 +1071,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_khi_label:
-        type: text
-        text: "KHI"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_bom:
     label: "Mumbai +5:30 (standard time)"
     elements:
+      tz_bom_label:
+        type: text
+        text: "BOM"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_bom_hand:
         type: gauge
         style: needle
@@ -1074,15 +1092,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_bom_label:
-        type: text
-        text: "BOM"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_dac:
     label: "Dhaka +6 (standard time)"
     elements:
+      tz_dac_label:
+        type: text
+        text: "DAC"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_dac_hand:
         type: gauge
         style: needle
@@ -1095,15 +1113,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_dac_label:
-        type: text
-        text: "DAC"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_bkk:
     label: "Bangkok +7 (standard time)"
     elements:
+      tz_bkk_label:
+        type: text
+        text: "BKK"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_bkk_hand:
         type: gauge
         style: needle
@@ -1116,15 +1134,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_bkk_label:
-        type: text
-        text: "BKK"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_hkg:
     label: "Hong Kong +8 (standard time)"
     elements:
+      tz_hkg_label:
+        type: text
+        text: "HKG"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_hkg_hand:
         type: gauge
         style: needle
@@ -1137,15 +1155,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_hkg_label:
-        type: text
-        text: "HKG"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_tokyo:
     label: "Tokyo +9 (standard time)"
     elements:
+      tz_tokyo_label:
+        type: text
+        text: "TOKYO"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_tokyo_hand:
         type: gauge
         style: needle
@@ -1158,15 +1176,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_tokyo_label:
-        type: text
-        text: "TOKYO"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_syd:
     label: "Sydney +10 (standard time)"
     elements:
+      tz_syd_label:
+        type: text
+        text: "SYD"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_syd_hand:
         type: gauge
         style: needle
@@ -1179,15 +1197,15 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_syd_label:
-        type: text
-        text: "SYD"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
   tz_akl:
     label: "Auckland +12 (standard time)"
     elements:
+      tz_akl_label:
+        type: text
+        text: "AKL"
+        font: font.t7
+        at: { anchor: center, dx: 55%r }
+        color: color.grey
       tz_akl_hand:
         type: gauge
         style: needle
@@ -1200,12 +1218,6 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
-      tz_akl_label:
-        type: text
-        text: "AKL"
-        font: font.t7
-        at: { anchor: center, dx: 55%r }
-        color: color.grey
 
 config:
   style:
