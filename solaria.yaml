@@ -13,7 +13,7 @@ format: 2
 face:
   id: 7eacd6b4-4002-419b-a30c-c657db09743c
   name: Solaria
-  version: 1.2.0
+  version: 1.2.2
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm]
@@ -27,6 +27,7 @@ resources:
     gold: "#FFAA00"
     red: "#FF0000"
     green: "#00AA55"
+    yellow: { value: "#FFFF00", label: Yellow }
 
   fonts:
     t7: { face: [RobotoCondensedBold], size: 7%r }
@@ -94,15 +95,25 @@ static:
     filled: false
     thickness: 5.5%r
     color: color.white
-  rim_hours:
+  sun_rim_hours:
     type: pattern
     pattern: radial
     at: { anchor: center }
-    count: 24
-    start: 180deg
-    color: color.white
+    count: 12
+    start: 195deg
+    color: color.bg
     parts:
-      tick: { type: line, at: { dy: -93.5%r }, to: { dy: -91%r }, thickness: 1px }
+      tick: { type: line, at: { dy: -95%r }, to: { dy: -92%r }, thickness: 1px }
+  rim_hours_ticks:
+    type: pattern
+    pattern: radial
+    at: { anchor: center }
+    count: 12
+    start: 0deg
+    color: color.grey
+    parts:
+      tick: { type: rectangle, at: { dy: -88%r }, size: { width: 3%r, height: 8%r } }
+    skip: [0, 6]
   rim_numerals:
     type: pattern
     pattern: radial
@@ -117,7 +128,7 @@ static:
         type: text
         text: "{copy * 2}"
         font: font.t7
-        at: { dy: -94%r }
+        at: { dy: -95%r }
 
   # -- 12 o'clock: perpetual calendar ------------------------------------------
   cal_ring:
@@ -283,7 +294,7 @@ static:
     at: { anchor: center, dy: 44%r, dx: 3%r }
     color: color.grey
     curve: { style: radial, angle: 95deg, radius: 29.5%r, direction: clockwise }
-  res_label: { type: text, text: "RESERVE", font: font.t9, at: { anchor: center, dx: 58%r, dy: 27%r }, color: color.grey }
+  res_label: { type: text, text: "RESERVE", font: font.t9, at: { anchor: center, dx: 54%r, dy: 30%r }, color: color.grey }
 
 # ----------------------------------------------------------------------------
 elements:
@@ -299,7 +310,7 @@ elements:
     thickness: 6%r
     start_angle: 180deg
     sweep: 360deg
-    color: color.dim
+    color: color.bg
     absent: hide
     lint: { allow: [contrast], reason: "subdued by design: a night tone, not a reading" }
   night_after_sunset:
@@ -312,7 +323,7 @@ elements:
     thickness: 6%r
     start_angle: 180deg
     sweep: -360deg
-    color: color.dim
+    color: color.bg
     absent: hide
     lint: { allow: [contrast], reason: "subdued by design: a night tone, not a reading" }
   rim_night_numerals:
@@ -324,7 +335,7 @@ elements:
     count: 12
     start: 180deg
     skip: [0]
-    color: color.white
+    color: color.dim
     absent: hide
     lint: { allow: [safe-area, off-screen], reason: "the numerals' box corners cross the rim, their ink does not" }
     parts:
@@ -332,7 +343,7 @@ elements:
         type: text
         text: "{copy * 2}"
         font: font.t7
-        at: { dy: -94%r }
+        at: { dy: -95%r }
         visible: "copy * 7200 < complication.sunrise or copy * 7200 >= complication.sunset"
   sunrise_pointer:
     type: gauge
@@ -516,7 +527,7 @@ elements:
       
   tide_elements:
     type: group
-    at: { anchor: center, dx: -50%r, dy: 10%r }
+    at: { anchor: center, dx: -50%r, dy: 12%r }
     children:
       tide_high: { type: text, text: "HIGH", font: font.t9, at: { anchor: center, dy: -12%r }, color: color.grey }
       tide_low: { type: text, text: "LOW", font: font.t9, at: { anchor: center, dy: 12%r }, color: color.grey }
@@ -651,7 +662,7 @@ elements:
     style: arc
     value: system.battery
     max: 100
-    at: { anchor: center, dx: 58%r, dy: 46%r }
+    at: { anchor: center, dx: 54%r, dy: 50%r }
     radius: 12%r
     thickness: 4%r
     start_angle: 265deg
@@ -663,22 +674,20 @@ elements:
     type: text
     text: "{system.battery:d}"
     font: font.t9
-    at: { anchor: center, dx: 58%r, dy: 46%r }
+    at: { anchor: center, dx: 54%r, dy: 50%r }
     color: color.white
   alarm:
     type: icon
     icon: alarm
     size: 12%r
-    at: { anchor: center, dx: -62%r, dy: 46%r }
-    color: color.grey
-    visible: "device.alarm_count > 0"
+    at: { anchor: center, dx: -62%r, dy: 50%r }
+    color: [{ when: "device.alarm_count > 0", value: "color.yellow" }, { else: color.dim }]
   dnd:
     type: icon
     icon: dnd
     size: 12%r
-    at: { anchor: center, dx: -44%r, dy: 46%r }
-    color: color.grey
-    visible: "device.do_not_disturb"
+    at: { anchor: center, dx: -46%r, dy: 50%r }
+    color: [{ when: device.do_not_disturb, value: "color.red" }, { else: color.dim }]
   sunrise:
     type: group
     at: { anchor: center, dx: -30%r, dy: 75.5%r }
