@@ -13,7 +13,7 @@ format: 2
 face:
   id: 5eb11642-3050-493b-958a-dd82d4a61df4
   name: Navy Classic
-  version: 1.1.0
+  version: 1.1.1
 
 defaults: 
   aod:
@@ -21,10 +21,11 @@ defaults:
 
 
 build:
-  targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm]
+  targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm, fr955, fr255]
 resources:
   fonts:
-    label: { face: [RobotoCondensedBold], size: 10%r }
+    label: { face: [RobotoCondensedBold], size: 10%r, unsupported: hide }
+    notifications: { face: [RobotoCondensedBold], size: 20%r, unsupported: hide }
   palette:                          # every channel 00 / 55 / AA / FF
     dial: "#000055"
     flange: "#000055"
@@ -213,7 +214,7 @@ elements:
     type: text
     visible: "device.notification_count > 0"
     text: "{device.notification_count:d}"
-    font: FONT_TINY
+    font: font.notifications
     at: { anchor: center, dy: 52.5%r }
     color: color.white
   hands:

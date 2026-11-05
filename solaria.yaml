@@ -13,7 +13,7 @@ format: 2
 face:
   id: 7eacd6b4-4002-419b-a30c-c657db09743c
   name: Solaria
-  version: 1.5.0
+  version: 1.6.2
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm]
@@ -36,6 +36,7 @@ resources:
     t9: { face: [RobotoCondensedBold], size: 9%r }
     t10: { face: [RobotoCondensedBold], size: 10%r }
     t11: { face: [RobotoCondensedBold], size: 11%r }
+    t12: { face: [RobotoCondensedBold], size: 12%r }
 
   hand_sets:
     main_minute:
@@ -131,7 +132,7 @@ static:
     at: { anchor: center }
     radius: 98%r
     filled: false
-    thickness: 5.5%r
+    thickness: 6%r
     color: color.grey
     lint: { allow: [off-screen],  reason: "To avoid black rim" }
   sun_rim_hours:
@@ -166,26 +167,11 @@ static:
       cal_ring:
         type: circle
         at: { anchor: center }
-        radius: 41%
+        radius: 43.5%
         filled: false
-        thickness: 8.5%r
+        thickness: 12%
         color: color.grey
-      cal_week_ring:
-        type: circle
-        at: { anchor: center }
-        radius: 50%
-        filled: false
-        thickness: 1px
-        color: color.dim
-        lint: { allow: [contrast], reason: "subdued by design: a night tone, not a reading" }
-      cal_week_marks:
-        type: pattern
-        pattern: radial
-        at: { anchor: center }
-        count: 12
-        color: color.green
-        parts:
-          tick: { type: line, at: { dy: -35%r }, to: { dy: -33.5%r }, thickness: 2px }
+
       cal_ticks:
         type: pattern
         pattern: radial
@@ -195,7 +181,7 @@ static:
         color: color.bg
         parts:
           #tick: { type: line, at: { dy: -33%r }, to: { dy: -31%r }, thickness: 1px }
-          dot: { type: circle, at: { dy: -28%r }, radius: 1.5%r }
+          dot: { type: circle, at: { dy: -31.5%r }, radius: 1.5%r }
         skip: [0,1,3,5,7,9,11,13,15,17,19,21,23,25,27,29]
       cal_numerals:
         type: pattern
@@ -207,27 +193,35 @@ static:
         color: color.bg
         lint: { allow: [contrast], reason: "black on the white ring beneath, which the lint does not see" }
         parts:
-          numeral: { type: text, text: "{copy}", font: font.t9, at: { dy: -28.5%r } }
+          numeral: { type: text, text: "{copy}", font: font.t9, at: { dy: -31.5%r } }
         skip_every: 2
       cal_one:
         type: text
         text: "31"
-        font: font.t8
-        at: { anchor: center, dy: -28%r }
+        font: font.t9
+        at: { anchor: center, dy: -31%r }
         color: color.red
         lint: { allow: [contrast], reason: "black on the white ring beneath, which the lint does not see" }
-    size: { width: 70%r, height: 70%r }
+    size: { width: 72%r, height: 72%r }
 
   # -- 3 o'clock: second time zone, 24 h, midnight at the top ------------------
   tz_static:
     type: group
     at: { anchor: center, dx: 55%r, dy: -10%r }
     children:
+      tz_ticks:
+        type: pattern
+        pattern: radial
+        at: { anchor: center}
+        count: 24
+        color: color.grey
+        parts:
+          tick: { type: line, at: { dy: -22%r }, to: { dy: -20%r }, thickness: 1px }
       tz_night:
         type: arc
         at: { anchor: center}
         radius: 50%
-        thickness: 15%
+        thickness: 14%
         start_angle: 270deg
         sweep: 180deg
         color: color.dim
@@ -236,18 +230,10 @@ static:
         type: arc
         at: { anchor: center}
         radius: 50%
-        thickness: 15%
+        thickness: 14%
         start_angle: 90deg
         sweep: 180deg
         color: color.grey
-      tz_ticks:
-        type: pattern
-        pattern: radial
-        at: { anchor: center}
-        count: 12
-        color: color.grey
-        parts:
-          tick: { type: line, at: { dy: -21.5%r }, to: { dy: -19%r }, thickness: 1px }
       tz_numerals:
         # even hours on the ring: white over the night half, black over the day half
         type: pattern
@@ -378,7 +364,7 @@ elements:
       numeral:
         type: text
         text: "{copy * 2}"
-        font: font.t7
+        font: font.t8
         at: { dy: -97.5%r }
         visible: "copy * 7200 < complication.sunrise or copy * 7200 >= complication.sunset"
   sunrise_pointer:
@@ -443,11 +429,11 @@ elements:
   # -- 12 o'clock: perpetual calendar ------------------------------------------
   calendar:
     type: group
-    at: { anchor: center, dy: -60%r }
+    at: { anchor: center, dy: -58%r }
     size: { width: 44%r, height: 44%r }
     on_hold: date
     children:
-      year: { type: text, text: "{date.year:d}", font: font.t11, at: { anchor: center, dy: -14%r }, color: color.white }
+      year: { type: text, text: "{date.year:d}", font: font.t12, at: { anchor: center, dy: -14%r }, color: color.white }
       leap:
         type: text
         text: "LY"
@@ -455,12 +441,12 @@ elements:
         at: { anchor: center, dx: 14%r, dy: -8.5%r }
         color: color.green
         visible: '((date.year % 4 == 0 and date.year % 100 != 0) or date.year % 400 == 0)'
-      weekday: { type: text, text: "{date.today:%a}", font: font.t11, at: { anchor: center, dx: -12%r }, color: color.white }
-      month: { type: text, text: "{date.today:%b}", font: font.t11, at: { anchor: center, dx: 12%r }, color: color.white }
+      weekday: { type: text, text: "{date.today:%a}", font: font.t12, at: { anchor: center, dx: -13%r }, color: color.white }
+      month: { type: text, text: "{date.today:%b}", font: font.t12, at: { anchor: center, dx: 13%r }, color: color.white }
       week_day:
         type: text
         text: 'W{(floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7) < 1 ? ((((1 + 5 * ((date.year - 1 - 1) % 4) + 4 * ((date.year - 1 - 1) % 100) + 6 * ((date.year - 1 - 1) % 400)) % 7) == 4 or ((((date.year - 1) % 4 == 0 and (date.year - 1) % 100 != 0) or (date.year - 1) % 400 == 0) and ((1 + 5 * ((date.year - 1 - 1) % 4) + 4 * ((date.year - 1 - 1) % 100) + 6 * ((date.year - 1 - 1) % 400)) % 7) == 3)) ? 53 : 52) : (floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7) == 53 and not (((1 + 5 * ((date.year - 1) % 4) + 4 * ((date.year - 1) % 100) + 6 * ((date.year - 1) % 400)) % 7) == 4 or ((((date.year) % 4 == 0 and (date.year) % 100 != 0) or (date.year) % 400 == 0) and ((1 + 5 * ((date.year - 1) % 4) + 4 * ((date.year - 1) % 100) + 6 * ((date.year - 1) % 400)) % 7) == 3))) ? 1 : floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7)):d} D{((date.weekday + 5) % 7 + 1):d}'
-        font: font.t11
+        font: font.t12
         at: { anchor: center, dy: 14%r }
         color: color.green
       date_hand:
@@ -469,24 +455,12 @@ elements:
         value: date.day - 1
         max: 30
         at: { anchor: center}
-        start_angle: 0deg
-        sweep: 348.387deg
+        start_angle: 11.6deg
+        sweep: 348.4deg
         color: color.red
         needle:
-          blade: { type: line, at: { dy: 4%r }, to: { dy: -26%r }, thickness: 2px }
+          blade: { type: line, at: { dy: 4%r }, to: { dy: -28%r }, thickness: 2px }
           hub: { type: circle, radius: 2%r }
-      week_hand:
-        type: gauge
-        style: needle
-        value: '(floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7) < 1 ? ((((1 + 5 * ((date.year - 1 - 1) % 4) + 4 * ((date.year - 1 - 1) % 100) + 6 * ((date.year - 1 - 1) % 400)) % 7) == 4 or ((((date.year - 1) % 4 == 0 and (date.year - 1) % 100 != 0) or (date.year - 1) % 400 == 0) and ((1 + 5 * ((date.year - 1 - 1) % 4) + 4 * ((date.year - 1 - 1) % 100) + 6 * ((date.year - 1 - 1) % 400)) % 7) == 3)) ? 53 : 52) : (floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7) == 53 and not (((1 + 5 * ((date.year - 1) % 4) + 4 * ((date.year - 1) % 100) + 6 * ((date.year - 1) % 400)) % 7) == 4 or ((((date.year) % 4 == 0 and (date.year) % 100 != 0) or (date.year) % 400 == 0) and ((1 + 5 * ((date.year - 1) % 4) + 4 * ((date.year - 1) % 100) + 6 * ((date.year - 1) % 400)) % 7) == 3))) ? 1 : floor((astro.day_of_year - ((date.weekday + 5) % 7 + 1) + 10) / 7)) - 1'
-        max: 52
-        at: { anchor: center }
-        start_angle: 0deg
-        sweep: 360deg
-        color: color.green_2
-        needle:
-          tip: { type: line, at: { dy: -32%r }, to: { dy: -36%r }, thickness: 3px }
-        lint: { allow: [safe-area], reason: "no drawables go outside the screen" }
 
 
   # -- 9 o'clock: moon phase and age, tide, spring/neap -----------------------
@@ -775,24 +749,9 @@ elements:
         color: color.grey
         absent: { text: "--" }
 
-  # -- the hands -------------------------------------------------------------
-  hands_min:
-    type: hands
-    set: main_minute
-    at: { anchor: center }
-    outline: { color: color.bg }
-    lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
-    aod: { visible: true }
-  hands_hr:
-    type: hands
-    set: main_hour
-    at: { anchor: center }
-    outline: { color: color.bg }
-    lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
-    aod: { visible: true }
-  hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
-  hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
-  hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
+# ----------------------------------------------------------------------------
+# The second time zone: one layout per city, each hand reading the zone's
+# clock from the watch's own UTC offset, picked on the Styles axis.
 
 # ----------------------------------------------------------------------------
 # The second time zone: one layout per city, each hand reading the zone's
@@ -819,6 +778,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_lax:
     label: "Los Angeles -8 (standard time)"
     elements:
@@ -840,6 +816,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_den:
     label: "Denver -7 (standard time)"
     elements:
@@ -861,6 +854,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_chi:
     label: "Chicago -6 (standard time)"
     elements:
@@ -882,6 +892,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_nyc:
     label: "New York -5 (standard time)"
     elements:
@@ -903,6 +930,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_sao:
     label: "São Paulo -3 (standard time)"
     elements:
@@ -924,6 +968,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_azo:
     label: "Azores -1 (standard time)"
     elements:
@@ -945,6 +1006,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_utc:
     label: "UTC +0 (standard time)"
     elements:
@@ -966,6 +1044,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -22%r }, thickness: 2px }
           hub: { type: circle, radius: 2%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_par:
     label: "Paris +1 (standard time)"
     elements:
@@ -987,6 +1082,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_cai:
     label: "Cairo +2 (standard time)"
     elements:
@@ -1008,6 +1120,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_mow:
     label: "Moscow +3 (standard time)"
     elements:
@@ -1029,6 +1158,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_dxb:
     label: "Dubai +4 (standard time)"
     elements:
@@ -1050,6 +1196,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_khi:
     label: "Karachi +5 (standard time)"
     elements:
@@ -1071,6 +1234,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_bom:
     label: "Mumbai +5:30 (standard time)"
     elements:
@@ -1092,6 +1272,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_dac:
     label: "Dhaka +6 (standard time)"
     elements:
@@ -1113,6 +1310,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_bkk:
     label: "Bangkok +7 (standard time)"
     elements:
@@ -1134,6 +1348,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_hkg:
     label: "Hong Kong +8 (standard time)"
     elements:
@@ -1155,6 +1386,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_tokyo:
     label: "Tokyo +9 (standard time)"
     elements:
@@ -1176,6 +1424,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_syd:
     label: "Sydney +10 (standard time)"
     elements:
@@ -1197,6 +1462,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
   tz_akl:
     label: "Auckland +12 (standard time)"
     elements:
@@ -1218,6 +1500,23 @@ layouts:
         needle:
           blade: { type: line, at: { dy: 3%r }, to: { dy: -18.5%r }, thickness: 2px }
           hub: { type: circle, radius: 1.5%r }
+      hands_min:
+        type: hands
+        set: main_minute
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hands_hr:
+        type: hands
+        set: main_hour
+        at: { anchor: center }
+        outline: { color: color.bg }
+        lint: { allow: [contrast], reason: "a background-coloured ring parts the hands from the white rings; the dark facet is the hands lume channel" }
+        aod: { visible: true }
+      hub: { type: circle, at: { anchor: center }, radius: 4.5%r, color: color.grey }
+      hub_ring: { type: circle, at: { anchor: center }, radius: 4.5%r, filled: false, thickness: 1px, color: color.white }
+      hub_pin: { type: circle, at: { anchor: center }, radius: 1.5%r, color: color.bg }
 
 config:
   style:
