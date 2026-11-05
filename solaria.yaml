@@ -13,7 +13,7 @@ format: 2
 face:
   id: 7eacd6b4-4002-419b-a30c-c657db09743c
   name: Solaria
-  version: 1.6.2
+  version: 1.6.3
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm]
@@ -763,7 +763,7 @@ layouts:
       tz_hnl_label:
         type: text
         text: "HNL"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_hnl_hand:
@@ -801,7 +801,7 @@ layouts:
       tz_lax_label:
         type: text
         text: "LA"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dy: 1%r }
         color: color.grey
       tz_lax_hand:
@@ -839,7 +839,7 @@ layouts:
       tz_den_label:
         type: text
         text: "DEN"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_den_hand:
@@ -877,7 +877,7 @@ layouts:
       tz_chi_label:
         type: text
         text: "CHI"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_chi_hand:
@@ -915,7 +915,7 @@ layouts:
       tz_nyc_label:
         type: text
         text: "NYC"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_nyc_hand:
@@ -953,7 +953,7 @@ layouts:
       tz_sao_label:
         type: text
         text: "SAO"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_sao_hand:
@@ -991,7 +991,7 @@ layouts:
       tz_azo_label:
         type: text
         text: "AZO"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_azo_hand:
@@ -1067,7 +1067,7 @@ layouts:
       tz_par_label:
         type: text
         text: "PAR"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_par_hand:
@@ -1105,7 +1105,7 @@ layouts:
       tz_cai_label:
         type: text
         text: "CAI"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_cai_hand:
@@ -1143,7 +1143,7 @@ layouts:
       tz_mow_label:
         type: text
         text: "MOW"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_mow_hand:
@@ -1181,7 +1181,7 @@ layouts:
       tz_dxb_label:
         type: text
         text: "DXB"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_dxb_hand:
@@ -1219,7 +1219,7 @@ layouts:
       tz_khi_label:
         type: text
         text: "KHI"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_khi_hand:
@@ -1257,7 +1257,7 @@ layouts:
       tz_bom_label:
         type: text
         text: "BOM"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_bom_hand:
@@ -1295,7 +1295,7 @@ layouts:
       tz_dac_label:
         type: text
         text: "DAC"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_dac_hand:
@@ -1333,7 +1333,7 @@ layouts:
       tz_bkk_label:
         type: text
         text: "BKK"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_bkk_hand:
@@ -1371,7 +1371,7 @@ layouts:
       tz_hkg_label:
         type: text
         text: "HKG"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_hkg_hand:
@@ -1409,7 +1409,7 @@ layouts:
       tz_tokyo_label:
         type: text
         text: "TOKYO"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_tokyo_hand:
@@ -1447,7 +1447,7 @@ layouts:
       tz_syd_label:
         type: text
         text: "SYD"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_syd_hand:
@@ -1485,7 +1485,7 @@ layouts:
       tz_akl_label:
         type: text
         text: "AKL"
-        font: font.t7
+        font: font.t11
         at: { anchor: center, dx: 55%r }
         color: color.grey
       tz_akl_hand:
