@@ -13,10 +13,10 @@ format: 2
 face:
   id: 7eacd6b4-4002-419b-a30c-c657db09743c
   name: Solaria
-  version: 1.6.3
+  version: 1.6.4
 
 build:
-  targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm]
+  targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm, fenix9prosolar47mm, fenix9prosolar51mm, fr955, fenix847mm, fenixe, fenix7x, fenix7xpro, fenix7pro, enduro3, enduro4, fenix7xpronowifi ]
 
 resources:
   palette:
@@ -330,7 +330,7 @@ elements:
     max: 86400
     at: { anchor: center }
     radius: 98%r
-    thickness: 6%r
+    thickness: 6.6%r
     start_angle: 180deg
     sweep: 360deg
     color: color.bg
@@ -343,7 +343,7 @@ elements:
     max: 86400
     at: { anchor: center }
     radius: 98%r
-    thickness: 6%r
+    thickness: 6.6%r
     start_angle: 180deg
     sweep: -360deg
     color: color.bg
