@@ -296,7 +296,7 @@ elements:
         at: { anchor: center, dx: 48%r, dy: 39%r }
         align: bottom_left
         color: color.line
-        sleep_update: false
+        # sleep_update: false
         visible: system.awake
 
   # The same clock in Roboto Condensed, which is wider than Bionic, so
@@ -330,7 +330,8 @@ elements:
         at: { anchor: center, dx: 50%r, dy: 36%r }
         align: bottom_left
         color: color.fg
-        sleep_update: true
+        # sleep_update: true
+        visible: system.awake
 
   # -- left and right slots with their edge arcs ----------------------------
   left_arc:
