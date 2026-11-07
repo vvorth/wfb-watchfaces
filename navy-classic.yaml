@@ -24,8 +24,8 @@ build:
   targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm, fr955, fr255]
 resources:
   fonts:
-    label: { face: [RobotoCondensedBold], size: 10%r, unsupported: hide }
-    notifications: { face: [RobotoCondensedBold], size: 20%r, unsupported: hide }
+    label: { face: [RobotoCondensedBold], size: 10%r, unsupported: hide, fallback: auto }
+    notifications: { face: [RobotoCondensedBold], size: 20%r, unsupported: hide, fallback: auto }
   palette:                          # every channel 00 / 55 / AA / FF
     dial: "#000055"
     flange: "#000055"

@@ -29,15 +29,15 @@ resources:
     orange: "#FFAA00"
     blue: "#00AAFF"
   fonts:
-    clock:   { face: [BionicSemiBold, RobotoBlack], size: 80%r, unsupported: hide }
-    seconds: { face: [BionicSemiBold, RobotoBlack], size: 41%r, unsupported: hide }
-    clock_narrow:   { face: [RobotoCondensedBold], size: 64%r }
-    seconds_narrow: { face: [RobotoCondensedBold], size: 32%r }
-    reading: { face: [RobotoCondensedBold], size: 16%r }
+    clock:   { face: [BionicSemiBold, RobotoBlack], size: 80%r, unsupported: hide, fallback: auto }
+    seconds: { face: [BionicSemiBold, RobotoBlack], size: 41%r, unsupported: hide, fallback: auto }
+    clock_narrow:   { face: [RobotoCondensedBold], size: 64%r, fallback: auto }
+    seconds_narrow: { face: [RobotoCondensedBold], size: 32%r, fallback: auto }
+    reading: { face: [RobotoCondensedBold], size: 16%r, fallback: auto }
     #enduro:  { face: [PridiSemiBoldGarmin], size: 20%r }
-    enduro:  { face: [NanumGothicExtraBold, BionicSemiBold, RobotoBlack], size: 18%r }
+    enduro:  { face: [NanumGothicExtraBold, BionicSemiBold, RobotoBlack], size: 18%r, fallback: auto }
     #enduro:  { face: [RobotoBlack], size: 20%r }
-    date:    { face: [RobotoCondensedBold], size: 16%r }
+    date:    { face: [RobotoCondensedBold], size: 16%r, fallback: auto }
 
 config:
   accent_color: { default: color.orange, choices: any }

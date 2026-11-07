@@ -14,9 +14,9 @@ resources:
     bg: "#000000"
     fg: "#FFFFFF"
   fonts:
-    clock: { face: [BionicBold, BionicSemiBold], size: 102%r }
-    reading: { face: [BionicBold, BionicSemiBold], size: 24%r }
-    top: { face: [BionicBold, BionicSemiBold], size: 20%r }
+    clock: { face: [BionicBold, BionicSemiBold], size: 102%r, fallback: auto }
+    reading: { face: [BionicBold, BionicSemiBold], size: 24%r, fallback: auto }
+    top: { face: [BionicBold, BionicSemiBold], size: 20%r, fallback: auto }
 
 config:
   slots:

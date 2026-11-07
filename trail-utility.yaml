@@ -32,10 +32,10 @@ build:
 
 resources:
   fonts:
-    clock: { face: [BionicSemiBold, BionicBold, RobotoCondensedBold], size: 66%r }
-    seconds: { face: [BionicSemiBold, BionicBold, RobotoCondensedBold], size: 20%r }
-    small: { face: [BionicSemiBold, RobotoCondensedBold], size: 18%r }
-    label: { face: [RobotoCondensedBold, BionicSemiBold, RobotoCondensedBold], size: 18%r }
+    clock: { face: [BionicSemiBold, BionicBold, RobotoCondensedBold], size: 66%r, fallback: auto }
+    seconds: { face: [BionicSemiBold, BionicBold, RobotoCondensedBold], size: 20%r, fallback: auto }
+    small: { face: [BionicSemiBold, RobotoCondensedBold], size: 18%r, fallback: auto }
+    label: { face: [RobotoCondensedBold, BionicSemiBold, RobotoCondensedBold], size: 18%r, fallback: auto }
   palette:                          # every channel 00 / 55 / AA / FF
     bg: "#000000"
     fg: "#FFFFFF"
