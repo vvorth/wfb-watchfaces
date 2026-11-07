@@ -29,8 +29,8 @@ resources:
     orange: "#FFAA00"
     blue: "#00AAFF"
   fonts:
-    clock:   { face: [BionicSemiBold, RobotoBlack], size: 80%r, unsupported: hide, fallback: auto }
-    seconds: { face: [BionicSemiBold, RobotoBlack], size: 41%r, unsupported: hide, fallback: auto }
+    clock:   { face: [BionicSemiBold, RobotoBlack], size: 80%r, unsupported: hide }
+    seconds: { face: [BionicSemiBold, RobotoBlack], size: 41%r, unsupported: hide }
     clock_narrow:   { face: [RobotoCondensedBold], size: 64%r, fallback: auto }
     seconds_narrow: { face: [RobotoCondensedBold], size: 32%r, fallback: auto }
     reading: { face: [RobotoCondensedBold], size: 16%r, fallback: auto }
