@@ -14,7 +14,7 @@ format: 2
 
 face:
   id: 792c1231-a2a1-4490-ab0a-bfbb062de150
-  name: Fenix Sectors
+  name: Sectors
   version: 1.2.6
 
 build:
@@ -127,8 +127,8 @@ static:
     at: { anchor: center, dx: 0px, dy: -38%r }
     size: { width: 52%r, height: 12%r }
     children:
-      label_wide_f: { type: text, text: "F E N I X", font: font.label, at: { anchor: center }, color: color.fg }
-  label_macron: { type: rectangle, at: { anchor: center, dx: -9%r, dy: -47%r }, size: { width: 7.8%r, height: 1.5%r }, color: color.fg }
+      label_wide_f: { type: text, text: "S E C T O R S", font: font.label, at: { anchor: center }, color: color.fg }
+  # label_macron: { type: rectangle, at: { anchor: center, dx: -9%r, dy: -47%r }, size: { width: 7.8%r, height: 1.5%r }, color: color.fg }
 
 layouts:
   digital:
