@@ -15,10 +15,21 @@ format: 2
 face:
   id: 792c1231-a2a1-4490-ab0a-bfbb062de150
   name: Fenix Sectors
-  version: 1.2.5
+  version: 1.2.6
 
 build:
-  targets: [fenix8solar47mm, fenix8solar51mm, fr955]
+  targets: [fenix8solar47mm,
+    # API 5.2.0 (28 devices)
+    ## mip round (13 devices)
+    fenix7, fenix7pro, fenix7pronowifi, fenix7s, fenix7spro, fenix7x, fenix7xpro,
+    fenix7xpronowifi, fr955,
+    # API 6.0.3 (30 devices)
+    ## mip round (6 devices)
+    enduro3, enduro4, fenix8solar51mm, fenix9prosolar47mm,
+    fenix9prosolar51mm
+  ]
+
+
 
 resources:
   palette:
