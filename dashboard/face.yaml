@@ -16,10 +16,10 @@ format: 2
 face:
   id: c47a1f36-8b25-4e09-a3d7-5f81904bc2e6
   name: Dashboard
-  version: 1.0.0
+  version: 1.1.1
 
 build:
-  targets: [fenix8solar47mm, fenix8solar51mm, fr955, fr255, fenix6]
+  targets: [fenix8solar47mm, fenix8solar51mm, fr955, fenix947mm ]
 resources:
   fonts:
     # clock:
@@ -37,6 +37,10 @@ resources:
     bionic:
       face: [BionicBold]
       size: 100%r
+      fallback: { source: auto, antialias: true }
+    data:
+      face: [RobotoCondensedBold]
+      size: 16%r
       fallback: { source: auto, antialias: true }
 
 
@@ -104,32 +108,10 @@ theme:
 config:
   accent_color:
     default: color.red
-    choices: # the editor's own full colour picker
-      - color.red
-      - color.maroon
-      - color.cyan
-      - color.light_blue
-      - color.green
-      - color.dark_green
-      - color.lime_green
-      - color.yellow
-      - color.orange
-      - color.amber
-      - color.magenta
+    choices: any # the editor's own full colour picker
   data_color:
     default: color.lime_green   # a palette reference, or a literal hex
-    choices: # or an explicit list
-      - color.red
-      - color.maroon
-      - color.cyan
-      - color.light_blue
-      - color.green
-      - color.dark_green
-      - color.lime_green
-      - color.yellow
-      - color.orange
-      - color.amber
-      - color.magenta
+    choices: any # or an explicit list
   style:
     default: chivo_dark # must be one of choices:
     choices:
@@ -149,6 +131,7 @@ static:
     at: { anchor: center }
     size: { width: 100%, height: 100% }
     color: color.bg
+    aod: { color: color.black }
 
   # A separator is a chord of a circle just inside the bezel. Both ends are
   # polar, so the line reaches the rim on any screen size.
@@ -212,7 +195,7 @@ elements:
   date:
     type: text
     text: "{date.today:%a %e %b}" # "Thu 3 Sep" -- %a and %b come back localised
-    font: FONT_XTINY
+    font: font.data
     at: { anchor: top, dy: 7% }
     color: color.green
     lint:
@@ -242,8 +225,8 @@ elements:
     type: data
     slot: top_left
     short: true
-    icon: { size: 14%r, position: left, color: color.dim }
-    font: FONT_XTINY
+    icon: { size: 14%r, position: left, color: color.dim, gap: 6%r }
+    font: font.data
     at: { anchor: top, dx: -28%, dy: 16% }
     align: left
     color: color.dim
@@ -252,9 +235,9 @@ elements:
   # the reference's temperature readings need only a "°" to be unambiguous.
   tr_value:
     type: data
-    font: FONT_XTINY
+    font: font.data
     slot: top_right
-    icon: { size: 14%r, position: right, color: color.dim }
+    icon: { size: 14%r, position: right, color: color.dim, gap: 6%r }
     short: true
     at: { anchor: top, dx: 28%, dy: 16% }
     align: right
@@ -272,7 +255,7 @@ elements:
   weather_now:
     type: text
     text: "{weather.feels_like_temperature:d}°"
-    font: FONT_XTINY
+    font: font.data
     at: { anchor: top, dy: 28%, dx: -32% }
     color: color.dim
     absent: {text: "--°"}
@@ -284,7 +267,7 @@ elements:
   precipitation:
     type: text
     text: "{weather.precipitation_chance_today:d}%"
-    font: FONT_XTINY
+    font: font.data
     at: { anchor: top, dy: 28%, dx: -15% }
     color: color.dim
     absent: {text: "--%"}
@@ -293,13 +276,13 @@ elements:
     type: icon
     icon: { for: weather.condition_today }
     size: 22%r
-    at: { anchor: top, dy: 28% }
+    at: { anchor: top, dy: 27.5% }
     color: color.fg
 
   weather_today_high:
     type: text
     text: "{weather.high_temperature_today:d}°"
-    font: FONT_XTINY
+    font: font.data
     at: { anchor: top, dy: 28%, dx: 15% }
     color: color.dim
     absent: {text: "--°"}
@@ -307,7 +290,7 @@ elements:
   weather_today_low:
     type: text
     text: "{weather.low_temperature_today:d}°"
-    font: FONT_XTINY
+    font: font.data
     at: { anchor: top, dy: 28%, dx: 32% }
     color: color.dim
     absent: {text: "--°"}
@@ -332,7 +315,7 @@ elements:
   #   type: text
   #   value: activity.floors_climbed
   #   format: "{:d}fl"
-  #   font: FONT_XTINY
+  #   font: font.data
   #   at: {anchor: top, dx: -25%, dy: 74%}
   #   color: config.colors.dim
   #   when_absent: placeholder
@@ -341,9 +324,9 @@ elements:
   bl_value:
     type: data
     slot: bottom_left
-    icon: { size: 14%r, position: left, color: color.dim }
+    icon: { size: 14%r, position: left, color: color.dim, gap: 6%r }
     short: true
-    font: FONT_XTINY
+    font: font.data
     at: { anchor: top, dx: -32%, dy: 74% }
     align: left
     color: color.dim
@@ -351,9 +334,9 @@ elements:
   br_value:
     type: data
     slot: bottom_right
-    icon: { size: 14%r, position: right, color: color.dim }
+    icon: { size: 14%r, position: right, color: color.dim, gap: 6%r }
     short: true
-    font: FONT_XTINY
+    font: font.data
     at: { anchor: top, dx: 32%, dy: 74% }
     align: right
     color: color.dim
@@ -375,7 +358,7 @@ elements:
   #   type: text
   #   value: system.battery_in_days
   #   format: "{:.0f}d"
-  #   font: FONT_XTINY
+  #   font: font.data
   #   at: {anchor: top, dx: -15%, dy: 88%}
   #   color: config.colors.dim
 
@@ -511,6 +494,7 @@ layouts:
         at: { anchor: center, dx: -1%, dy: 2% }
         align: right
         color: color.fg
+        aod: { color: color.black, outline: { color: color.white, width: 2 } }
 
       minutes:
         type: text
@@ -519,6 +503,8 @@ layouts:
         at: { anchor: center, dx: 1%, dy: 2% }
         align: left
         color: color.accent
+        aod: { outline: { color: color.accent, width: 2 }, color: color.black }
+
   chivo_font:
     elements:
       hours:
@@ -528,6 +514,7 @@ layouts:
         at: { anchor: center, dx: -1%, dy: 0.8% }
         align: right
         color: color.fg
+        aod: { color: color.black, outline: { color: color.white, width: 2 } }
 
       minutes:
         type: text
@@ -536,4 +523,5 @@ layouts:
         at: { anchor: center, dx: 1%, dy: 0.8% }
         align: left
         color: color.accent
+        aod: { outline: { color: color.accent, width: 2 }, color: color.black }
 
