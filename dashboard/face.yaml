@@ -137,6 +137,11 @@ config:
       chivo_light: { scheme: light, layout: chivo_font}
       bionic_dark: { scheme: dark, layout: bionic_font }
       bionic_light: { scheme: light, layout: bionic_font}
+  slots:
+    top_left: { label: "Top left", default: heart_rate, choices: &slots_shared [high_low_temperature, calories, floors_climbed, intensity_minutes, steps, weekly_bike_distance, weekly_run_distance, body_battery, heart_rate, pulse_ox, sleep_score, stress, respiration_rate, recovery_time, vo2max_run, vo2max_bike, altitude, current_temperature, sea_level_pressure, battery, notification_count, solar_input] }
+    top_right: { label: "Top right", default: weekly_run_distance, choices: *slots_shared }
+    bottom_left: { label: "Bottom left", default: body_battery, choices: *slots_shared }
+    bottom_right: { label: "Bottom right", default: steps, choices: *slots_shared }
 
 static:
   background:
@@ -232,58 +237,27 @@ elements:
   # kcal reading would crush the row to be unreadable for every plausible one.
   # Element overlap is not a build-time check (docs/limitations.md), so this
   # is a judgement call made once, here, rather than a gap left implicit.
-  hr_icon:
-    type: icon
-    # icon: heart
-    icon: { codepoint: "U+F21E" }
-    size: 11%r
-    at: { anchor: top, dx: -28%, dy: 16% }
-    color: color.dim
 
-  hr_value:
-    type: text
-    text: "{heart_rate.current:d}"
+  tl_value:
+    type: data
+    slot: top_left
+    short: true
+    icon: { size: 14%r, position: left, color: color.dim }
     font: FONT_XTINY
-    at: { anchor: top, dx: -24%, dy: 16% }
+    at: { anchor: top, dx: -28%, dy: 16% }
     align: left
     color: color.dim
-    absent: {text: "--"}
-
-  # calories_icon:
-  #   type: icon
-  #   icon: flame
-  #   size: 11%r
-  #   at: { anchor: top, dx: -8%, dy: 16% }
-  #   color: config.colors.dim
-  #
-  # calories_value:
-  #   type: text
-  #   value: "activity.calories / 10000.0"
-  #   format: "{:.1f}k"
-  #   font: FONT_XTINY
-  #   at: { anchor: top, dx: -4%, dy: 16% }
-  #   align: left
-  #   color: config.colors.dim
-  #   when_absent: placeholder
-  #   placeholder: "--"
 
   # No icon for distance -- a unit suffix is enough on its own, the same way
   # the reference's temperature readings need only a "°" to be unambiguous.
-  distance_value:
-    type: text
-    text: "{activity.distance / 100000.0:.1f}km" # centimetres -> kilometres
+  tr_value:
+    type: data
     font: FONT_XTINY
-    at: { anchor: top, dx: 24%, dy: 16% }
-    align: right
-    color: color.dim
-    absent: {text: "--"}
-
-  distance_icon:
-    type: icon
-    # icon: heart
-    icon: { codepoint: "U+F08F0" }
-    size: 11%r
+    slot: top_right
+    icon: { size: 14%r, position: right, color: color.dim }
+    short: true
     at: { anchor: top, dx: 28%, dy: 16% }
+    align: right
     color: color.dim
 
   # -- SEP_2
@@ -364,49 +338,25 @@ elements:
   #   when_absent: placeholder
   #   placeholder: "--"
 
-  body_battery_icon:
-    type: icon
-    icon: { codepoint: "U+F064C" }
-    size: 14%r
-    at: { anchor: top, dx: -30%, dy: 74% }
-    color: color.dim
-
-
-  body_batter_value:
-    type: text
-    text: "{complication.body_battery:d}"
+  bl_value:
+    type: data
+    slot: bottom_left
+    icon: { size: 14%r, position: left, color: color.dim }
+    short: true
     font: FONT_XTINY
-    at: { anchor: top, dx: -25%, dy: 74% }
+    at: { anchor: top, dx: -32%, dy: 74% }
     align: left
     color: color.dim
-    absent: {text: "--"}
-    lint:
-      allow: [api-gated]
-      reason: "fenix6 has no Complications; the value shows its placeholder
-        there"
 
-  # dnd_icon:
-  #   type: icon
-  #   icon: dnd
-  #   size: 14%r
-  #   at: {anchor: top, dx: -12%, dy: 74%}
-  #   color: "device.do_not_disturb ? palette.dnd_on : config.colors.dark"
-
-  steps_icon:
-    type: icon
-    icon: { codepoint: "U+E241" }
-    size: 14%r
-    at: { anchor: top, dx: 30%, dy: 74% }
-    color: color.dim
-
-  steps_value:
-    type: text
-    text: "{activity.steps / 1000.0:.1f}k" # always one decimal, so the width holds still
+  br_value:
+    type: data
+    slot: bottom_right
+    icon: { size: 14%r, position: right, color: color.dim }
+    short: true
     font: FONT_XTINY
-    at: { anchor: top, dx: 25%, dy: 74% }
+    at: { anchor: top, dx: 32%, dy: 74% }
     align: right
     color: color.dim
-    absent: {text: "--"}
 
   # -- SEP_5
 
@@ -470,11 +420,10 @@ elements:
   # read against how long the track is.
   #
   # Angles are clockwise from 12 o'clock, so 180deg is the bottom of the screen.
-  arc_body_battery:
+  bl_arc:
     type: gauge
     style: arc
-    value: complication.body_battery
-    max: 100
+    slot: bottom_left
     at: { anchor: center }
     radius: 97%r
     thickness: 4%r
@@ -523,11 +472,10 @@ elements:
       reason: "hugs the bezel on purpose; stays inside the physical disc, only
         past the 2% margin"
 
-  arc_steps:
+  br_arc:
     type: gauge
     style: arc
-    value: activity.steps
-    max: activity.step_goal
+    slot: bottom_right
     at: { anchor: center }
     radius: 97%r
     thickness: 4%r
