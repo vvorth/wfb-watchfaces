@@ -30,12 +30,15 @@ resources:
       # 'glyphs' is omitted on purpose: the compiler derives the set from every
       # format spec and literal this design can render, so the sheet carries the
       # handful of digits the clock actually draws rather than a character set.
-    test:
+    chivo:
       source: assets/ChivoMono-Bold.ttf
-      # source: custom-fonts/SairaStencilOne-Regular.ttf
-      # source: assets/intro_inline.otf
       size: 70%r
       antialias: true
+    bionic:
+      face: [BionicBold]
+      size: 100%r
+      fallback: { source: auto, antialias: true }
+
 
   palette:
     # old directly used
@@ -128,10 +131,12 @@ config:
       - color.amber
       - color.magenta
   style:
-    default: dark # must be one of choices:
+    default: chivo_dark # must be one of choices:
     choices:
-      dark: { scheme: dark }
-      light: { scheme: light }
+      chivo_dark: { scheme: dark, layout: chivo_font }
+      chivo_light: { scheme: light, layout: chivo_font}
+      bionic_dark: { scheme: dark, layout: bionic_font }
+      bionic_light: { scheme: light, layout: bionic_font}
 
 static:
   background:
@@ -337,33 +342,6 @@ elements:
       reason: "only the text box's empty corner crosses the 2% bezel margin;
         the glyphs stay on screen"
 
-  # -- SEP_3
-
-  # -- row center: the clock, in two colours -------------------------------------
-  # Hours and minutes are separate elements so each can take its own colour --
-  # a single text element draws in exactly one colour, because a bitmap font
-  # carries one channel.
-  #
-  # FONT_NUMBER_MEDIUM rather than FONT_NUMBER_HOT: at 99px the larger face
-  # leaves no room for five rows and four rules on a 260px screen. A face that
-  # wants a clock that dominates the dial declares a custom font cut to size --
-  # see `fonts:` in docs/format.md -- which is how the reference does it.
-  hours:
-    type: text
-    text: "{time.hour:02d}"
-    font: font.test
-    at: { anchor: center, dx: -1%, dy: 0.8% }
-    align: right
-    color: color.fg
-
-  minutes:
-    type: text
-    text: "{time.minute:02d}"
-    font: font.test
-    at: { anchor: center, dx: 1%, dy: 0.8% }
-    align: left
-    color: color.accent
-
   # -- SEP_4
 
   # -- row 4: status ---------------------------------------------------------
@@ -562,4 +540,52 @@ elements:
       allow: [safe-area]
       reason: "hugs the bezel on purpose; stays inside the physical disc, only
         past the 2% margin"
+
+layouts:
+  bionic_font:
+    elements:
+
+      # -- SEP_3
+
+      # -- row center: the clock, in two colours -------------------------------------
+      # Hours and minutes are separate elements so each can take its own colour --
+      # a single text element draws in exactly one colour, because a bitmap font
+      # carries one channel.
+      #
+      # FONT_NUMBER_MEDIUM rather than FONT_NUMBER_HOT: at 99px the larger face
+      # leaves no room for five rows and four rules on a 260px screen. A face that
+      # wants a clock that dominates the dial declares a custom font cut to size --
+      # see `fonts:` in docs/format.md -- which is how the reference does it.
+      hours:
+        type: text
+        text: "{time.hour:02d}"
+        font: font.bionic
+        at: { anchor: center, dx: -1%, dy: 2% }
+        align: right
+        color: color.fg
+
+      minutes:
+        type: text
+        text: "{time.minute:02d}"
+        font: font.bionic
+        at: { anchor: center, dx: 1%, dy: 2% }
+        align: left
+        color: color.accent
+  chivo_font:
+    elements:
+      hours:
+        type: text
+        text: "{time.hour:02d}"
+        font: font.chivo
+        at: { anchor: center, dx: -1%, dy: 0.8% }
+        align: right
+        color: color.fg
+
+      minutes:
+        type: text
+        text: "{time.minute:02d}"
+        font: font.chivo
+        at: { anchor: center, dx: 1%, dy: 0.8% }
+        align: left
+        color: color.accent
 
