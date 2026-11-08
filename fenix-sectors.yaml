@@ -15,7 +15,7 @@ format: 2
 face:
   id: 792c1231-a2a1-4490-ab0a-bfbb062de150
   name: Fenix Sectors
-  version: 1.2.4
+  version: 1.2.5
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955]
@@ -27,11 +27,11 @@ resources:
     orange: "#FF5500"
   fonts:
     rim:     { face: [RobotoCondensedBold], size: 18%r }
-    small:   { face: [RobotoCondensedBold, FONT_TINY], size: 21.5%r }
-    pocket:  { face: [RobotoCondensedBold, FONT_TINY], size: 20%r }
-    label:   { face: [RobotoCondensedBold, BionicSemiBold, FONT_XTINY], size: 16%r }
-    clock:   { face: [BionicSemiBold], size: 92%r, unsupported: hide }
-    clock_bold: { face: [BionicBold], size: 90%r, unsupported: hide }
+    small:   { face: [RobotoCondensedBold, FONT_TINY], size: 21.5%r, fallback: auto }
+    pocket:  { face: [RobotoCondensedBold, FONT_TINY], size: 20%r, fallback: auto }
+    label:   { face: [RobotoCondensedBold, BionicSemiBold, FONT_XTINY], size: 16%r, fallback: auto }
+    clock:   { face: [BionicSemiBold], size: 92%r, fallback: auto }
+    # clock_bold: { face: [BionicBold], size: 90%r, unsupported: hide }
   hand_sets:
     sword:
       hour:
@@ -127,19 +127,8 @@ layouts:
         type: group
         at: { anchor: center }
         size: { width: 100%, height: 100% }
-        overrides:
-          fr955: { visible: false }        # no Bionic SemiBold there: clock_bold below
         children:
           hours:   { type: text, text: "{time.clock:%h%M}", font: font.clock, at: { anchor: center, dx: 0%r, dy: 0%r }, align: center, color: color.fg, outline: { color: color.fg, width: 1 } }
-      clock_bold:
-        type: group
-        at: { anchor: center }
-        size: { width: 100%, height: 100% }
-        overrides:
-          fenix8solar47mm: { visible: false }
-          fenix8solar51mm: { visible: false }
-        children:
-          hours_bold:   { type: text, text: "{time.clock:%h%M}", font: font.clock_bold, at: { anchor: center, dx: 0.9%r, dy: -0.3%r }, align: center, color: color.fg }
       seconds:
         type: text
         text: "{time.clock:%S}"

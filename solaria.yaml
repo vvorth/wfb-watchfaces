@@ -13,7 +13,7 @@ format: 2
 face:
   id: 7eacd6b4-4002-419b-a30c-c657db09743c
   name: Solaria
-  version: 1.6.4
+  version: 1.6.6
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fenix947mm, fenix9prosolar47mm, fenix9prosolar51mm, fr955, fenix847mm, fenixe, fenix7x, fenix7xpro, fenix7pro, enduro3, enduro4, fenix7xpronowifi ]
@@ -31,12 +31,12 @@ resources:
     green_2: { value: "#00FF00", label: Green }
 
   fonts:
-    t7: { face: [RobotoCondensedBold], size: 7%r }
-    t8: { face: [RobotoCondensedBold], size: 8%r }
-    t9: { face: [RobotoCondensedBold], size: 9%r }
-    t10: { face: [RobotoCondensedBold], size: 10%r }
-    t11: { face: [RobotoCondensedBold], size: 11%r }
-    t12: { face: [RobotoCondensedBold], size: 12%r }
+    t7: { face: [RobotoCondensedBold], size: 7%r, fallback: auto }
+    t8: { face: [RobotoCondensedBold], size: 8%r, fallback: auto }
+    t9: { face: [RobotoCondensedBold], size: 9%r, fallback: auto }
+    t10: { face: [RobotoCondensedBold], size: 10%r, fallback: auto }
+    t11: { face: [RobotoCondensedBold], size: 11%r, fallback: auto }
+    t12: { face: [RobotoCondensedBold], size: 12%r, fallback: auto }
 
   hand_sets:
     main_minute:

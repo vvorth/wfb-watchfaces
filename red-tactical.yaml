@@ -29,7 +29,7 @@ format: 2
 face:
   id: 4daede36-300e-45d7-839e-a562422ae5ae
   name: Red Tactical
-  version: 1.4.3
+  version: 1.4.4
 
 defaults:
   aod:

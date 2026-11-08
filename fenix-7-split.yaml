@@ -4,7 +4,7 @@ face:
   id: 11008A9A-8413-45C6-8B39-BF91B664835E
   # id: e6390983-5f1c-4f57-ad95-d203f1c55cf5
   name: Horizontal Split
-  version: 1.5.0
+  version: 1.5.1
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955]
@@ -60,6 +60,7 @@ elements:
     font: font.clock
     at: { anchor: center, dx: 0%r, dy: -38%r }
     color: color.fg
+    aod: { visible: true, color: color.bg, outline: { color: color.fg, width: 2 } }
     lint: { allow: [safe-area, text-overflow], reason: "the line box reaches the rim; the digits' ink fits on every target, checked at 23:59" }
 
   minute:
@@ -68,6 +69,7 @@ elements:
     font: font.clock
     at: { anchor: center, dx: 0%r, dy: 42%r }
     color: color.bg
+    aod: { visible: true, color: color.bg, outline: { color: color.fg, width: 2 } }
     lint: { allow: [safe-area, text-overflow, contrast], reason: "drawn on the white minute box, not the background; the ink fits the box at 59" }
 
   top_left:
@@ -89,7 +91,8 @@ elements:
         at: { anchor: center, dx: 0.0%r, dy: 10%r }
         color: color.fg
         short: true
-        absent: { text: "--" }
+        # absent: { text: "--" }
+        unsupported: error
         lint: { allow: [off-screen, safe-area], reason: "sized for the widest seven-character pick; typical readings fit, as the picture shows" }
 
   top_right:
@@ -111,7 +114,8 @@ elements:
         at: { anchor: center, dx: 0.0%r, dy: 10%r }
         color: color.fg
         short: true
-        absent: { text: "--" }
+        # absent: { text: "--" }
+        unsupported: error
         lint: { allow: [off-screen, safe-area], reason: "sized for the widest seven-character pick; typical readings fit, as the picture shows" }
 
   bottom_left:
@@ -133,7 +137,8 @@ elements:
         at: { anchor: center, dx: 0%r, dy: -10%r }
         color: color.fg
         short: true
-        absent: { text: "--" }
+        # absent: { text: "--" }
+        unsupported: error
         lint: { allow: [off-screen, safe-area], reason: "sized for the widest seven-character pick; typical readings fit, as the picture shows" }
 
   bottom_right:
@@ -155,7 +160,8 @@ elements:
         at: { anchor: center, dx: 0%r, dy: -10%r }
         color: color.fg
         short: true
-        absent: { text: "--" }
+        # absent: { text: "--" }
+        unsupported: error
         lint: { allow: [off-screen, safe-area], reason: "sized for the widest seven-character pick; typical readings fit, as the picture shows" }
 
   bottom:
@@ -174,6 +180,7 @@ elements:
         unit: false
         color: color.fg
         short: true
-        absent: { text: "--" }
+        # absent: { text: "--" }
+        unsupported: error
         lint: { allow: [off-screen, safe-area], reason: "sized for the widest seven-character pick; typical readings fit, as the picture shows" }
 
