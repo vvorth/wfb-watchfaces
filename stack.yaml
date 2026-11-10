@@ -14,9 +14,6 @@ build:
     ## mip round (13 devices)
     fenix7, fenix7pro, fenix7pronowifi, fenix7s, fenix7spro, fenix7x, fenix7xpro,
     fenix7xpronowifi, fr255, fr255m, fr255s, fr255sm, fr955,
-    # API 6.0.2 (3 devices)
-    ## mip semi-octagon (3 devices)
-    instinct3solar45mm, instincte40mm, instincte45mm,
     # API 6.0.3 (6 devices)
     ## mip round (6 devices)
     enduro3, enduro4, fenix8solar47mm, fenix8solar51mm, fenix9prosolar47mm,
