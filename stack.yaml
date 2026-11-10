@@ -1,0 +1,237 @@
+# Stack: hours over minutes in heavy condensed digits on a white dial, with a
+# column of date, weather and three readings with thin progress bars.
+
+format: 2
+
+face:
+  id: 35be01f3-b763-4c17-b991-58b6312d96da
+  name: Stack
+  version: 1.2.0
+
+build:
+  targets: [
+    # API 5.2.0 (13 devices)
+    ## mip round (13 devices)
+    fenix7, fenix7pro, fenix7pronowifi, fenix7s, fenix7spro, fenix7x, fenix7xpro,
+    fenix7xpronowifi, fr255, fr255m, fr255s, fr255sm, fr955,
+    # API 6.0.2 (3 devices)
+    ## mip semi-octagon (3 devices)
+    instinct3solar45mm, instincte40mm, instincte45mm,
+    # API 6.0.3 (6 devices)
+    ## mip round (6 devices)
+    enduro3, enduro4, fenix8solar47mm, fenix8solar51mm, fenix9prosolar47mm,
+    fenix9prosolar51mm]
+
+config:
+  accent_color: { default: color.orange, choices: any }
+
+resources:
+  palette:
+    bg: "#FFFFFF"
+    ink: "#000000"
+    orange: "#FF5500"
+    grey: "#555555"
+    track: "#AAAAAA"
+  fonts:
+    digits: { source: assets/Anton-Regular.ttf, size: 80%r, monospace: true, antialias: true }
+    big:    { source: assets/BarlowCondensed-Bold.ttf, size: 22%r, antialias: true }
+    value:  { source: assets/BarlowCondensed-Bold.ttf, size: 13.6%r, antialias: true }
+    day:    { source: assets/BarlowCondensed-Bold.ttf, size: 16%r, antialias: true, }
+    cond:   { source: assets/BarlowCondensed-Bold.ttf, size: 11%r, antialias: true }
+    label:  { source: assets/BarlowCondensed-Bold.ttf, size: 11%r, antialias: true }
+
+static:
+  background:
+    type: rectangle
+    at: { anchor: center }
+    size: { width: 100%, height: 100% }
+    color: color.bg
+  divider:
+    type: line
+    at: { anchor: center, dx: 10.4%r, dy: -62%r }
+    to: { anchor: center, dx: 10.4%r, dy: 66%r }
+    thickness: 1.8%r
+    color: color.ink
+  steps_label: { type: text, text: "STEPS", font: font.label, at: { anchor: center, dx: 18%r, dy: 20%r }, align: left, color: color.grey }
+  body_label:  { type: text, text: "BODY",  font: font.label, at: { anchor: center, dx: 18%r, dy: 36.8%r }, align: left, color: color.grey }
+  hr_label:    { type: text, text: "HR",    font: font.label, at: { anchor: center, dx: 18%r, dy: 53.9%r }, align: left, color: color.grey }
+
+elements:
+  hours:
+    type: text
+    text: "{time.clock:%h}"
+    font: font.digits
+    at: { anchor: center, dx: 2.1%r, dy: -28%r }
+    align: right
+    color: color.ink
+    lint: { allow: [safe-area, text-overflow], reason: "only the corners of the tall line box leave the dial; the rounded digits stay inside it, as in the design (checked at 23:59 and 08:26 on every target)" }
+  minutes:
+    type: text
+    text: "{time.clock:%M}"
+    font: font.digits
+    at: { anchor: center, dx: 2.1%r, dy: 32%r }
+    align: right
+    color: color.accent
+    lint: { allow: [safe-area, text-overflow], reason: "only the corners of the tall line box leave the dial; the rounded digits stay inside it, as in the design (checked at 23:59 and 08:26 on every target)" }
+  battery_days:
+    type: text
+    text: "BAT {system.battery_in_days:d}d"
+    font: font.day
+    at: { anchor: center, dy: -82%r }
+    color: color.grey
+  date:
+    type: group
+    at: { anchor: center, dx: 18%r, dy: -30%r }
+    size: { width: 45%r, height: 40%r }
+    align: bottom_left
+    children:
+      weekday:
+        type: text
+        text: "{date.today:%a}"
+        at: { anchor: left, dy: -8%r }
+        align: left
+        color: color.grey
+        font: font.day
+      date:
+        type: text
+        at: { anchor: left, dy: 8%r}
+        text: "{date.today:%e %b}"
+        font: font.big
+        align: left
+        color: color.ink
+
+  weather_icon:
+    type: icon
+    icon: { for: weather.condition }
+    size: 18%r
+    at: { anchor: center, dx: 25.7%r, dy: -18%r }
+    color: color.ink
+    absent: hide
+  temperature:
+    type: text
+    text: "{weather.temperature:d}°"
+    units: auto
+    font: font.big
+    at: { anchor: center, dx: 37.9%r, dy: -19%r }
+    align: left
+    color: color.ink
+    absent: { text: "--" }
+  # One line per precipitation kind: the watch gives only today's chance, so the
+  # word follows today's forecast condition (RAIN unless it says snow, hail or sleet).
+  forecast_rain:
+    type: text
+    text: "{clamp(weather.high_temperature_today, -99, 99):d}°/{clamp(weather.low_temperature_today, -99, 99):d}° RAIN {weather.precipitation_chance_today:d}%"
+    font: font.label
+    at: { anchor: center, dx: 18%r, dy: 0%r }
+    align: left
+    color: color.grey
+    absent: hide
+    lint: { allow: [text-overflow, off-screen], reason: "the widest estimate assumes 5-digit temperatures; a real high/low is at most 3 characters and the line fits" }
+    visible: "weather.condition_today != 4 and weather.condition_today != 16 and weather.condition_today != 17 and weather.condition_today != 43 and weather.condition_today != 46 and weather.condition_today != 48 and weather.condition_today != 10 and weather.condition_today != 7 and weather.condition_today != 18 and weather.condition_today != 19 and weather.condition_today != 21 and weather.condition_today != 34 and weather.condition_today != 44 and weather.condition_today != 47 and weather.condition_today != 49 and weather.condition_today != 50 and weather.condition_today != 51"
+  forecast_snow:
+    type: text
+    text: "{clamp(weather.high_temperature_today, -99, 99):d}°/{clamp(weather.low_temperature_today, -99, 99):d}° SNOW {weather.precipitation_chance_today:d}%"
+    font: font.label
+    at: { anchor: center, dx: 18%r, dy: 0%r }
+    align: left
+    color: color.grey
+    absent: hide
+    lint: { allow: [text-overflow, off-screen], reason: "the widest estimate assumes 5-digit temperatures; a real high/low is at most 3 characters and the line fits" }
+    visible: "weather.condition_today == 4 or weather.condition_today == 16 or weather.condition_today == 17 or weather.condition_today == 43 or weather.condition_today == 46 or weather.condition_today == 48"
+  forecast_hail:
+    type: text
+    text: "{clamp(weather.high_temperature_today, -99, 99):d}°/{clamp(weather.low_temperature_today, -99, 99):d}° HAIL {weather.precipitation_chance_today:d}%"
+    font: font.label
+    at: { anchor: center, dx: 18%r, dy: 0%r }
+    align: left
+    color: color.grey
+    absent: hide
+    lint: { allow: [text-overflow, off-screen], reason: "the widest estimate assumes 5-digit temperatures; a real high/low is at most 3 characters and the line fits" }
+    visible: "weather.condition_today == 10"
+  forecast_sleet:
+    type: text
+    text: "{clamp(weather.high_temperature_today, -99, 99):d}°/{clamp(weather.low_temperature_today, -99, 99):d}° SLEET {weather.precipitation_chance_today:d}%"
+    font: font.label
+    at: { anchor: center, dx: 18%r, dy: 0%r }
+    align: left
+    color: color.grey
+    absent: hide
+    lint: { allow: [text-overflow, off-screen], reason: "the widest estimate assumes 5-digit temperatures; a real high/low is at most 3 characters and the line fits" }
+    visible: "weather.condition_today == 7 or weather.condition_today == 18 or weather.condition_today == 19 or weather.condition_today == 21 or weather.condition_today == 34 or weather.condition_today == 44 or weather.condition_today == 47 or weather.condition_today == 49 or weather.condition_today == 50 or weather.condition_today == 51"
+
+  steps_value_k:
+    type: text
+    text: "{(activity.steps / 1000.0):01f}K"
+    font: font.value
+    at: { anchor: center, dx: 75%r, dy: 18.2%r }
+    align: right
+    color: color.ink
+    visible: "activity.steps >= 1000"
+    absent: hide
+  steps_value:
+    type: text
+    visible: "activity.steps < 1000"
+    text: "{activity.steps:d}"
+    font: font.value
+    at: { anchor: center, dx: 75%r, dy: 18.2%r }
+    align: right
+    color: color.ink
+    absent: hide
+  steps_bar:
+    type: gauge
+    style: bar
+    value: activity.steps
+    max: activity.step_goal
+    at: { anchor: center, dx: 18%r, dy: 27.3%r }
+    align: left
+    size: { width: 56.4%r, height: 3.2%r }
+    color: color.accent
+    track_color: color.track
+    absent: hide
+  body_value:
+    type: text
+    text: "{complication.body_battery:d}"
+    font: font.value
+    at: { anchor: center, dx: 75%r, dy: 35%r }
+    align: right
+    color: color.ink
+    absent: { text: "--" }
+  body_bar:
+    type: gauge
+    style: bar
+    value: complication.body_battery
+    max: 100
+    at: { anchor: center, dx: 18%r, dy: 44.3%r }
+    align: left
+    size: { width: 56.4%r, height: 3.2%r }
+    color: color.ink
+    track_color: color.track
+    absent: hide
+  hr_value:
+    type: text
+    text: "{heart_rate.current:d}"
+    font: font.value
+    at: { anchor: center, dx: 75%r, dy: 52%r }
+    align: right
+    color: color.ink
+    absent: { text: "--" }
+  hr_bar:
+    type: gauge
+    style: bar
+    value: heart_rate.current
+    max: 200
+    at: { anchor: center, dx: 18%r, dy: 61.2%r }
+    align: left
+    size: { width: 56.4%r, height: 3.2%r }
+    color: color.ink
+    track_color: color.track
+    absent: hide
+
+  notifications:
+    type: icon
+    icon: { for: device.notification_count }
+    at:
+      anchor: center
+      dy: 84%r
+    size: 18%r
+    color: color.grey
