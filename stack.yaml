@@ -6,7 +6,7 @@ format: 2
 face:
   id: 35be01f3-b763-4c17-b991-58b6312d96da
   name: Stack
-  version: 1.2.0
+  version: 1.2.1
 
 build:
   targets: [
@@ -117,7 +117,7 @@ elements:
   # word follows today's forecast condition (RAIN unless it says snow, hail or sleet).
   forecast_rain:
     type: text
-    text: "{clamp(weather.high_temperature_today, -99, 99):d}°/{clamp(weather.low_temperature_today, -99, 99):d}° RAIN {weather.precipitation_chance_today:d}%"
+    text: "{clamp(weather.high_temperature_today, -99, 99):d}°/{clamp(weather.low_temperature_today, -99, 99):d}° RAIN {weather.daily_forecast[0].precipitation_chance:d}%"
     font: font.label
     at: { anchor: center, dx: 18%r, dy: 0%r }
     align: left
