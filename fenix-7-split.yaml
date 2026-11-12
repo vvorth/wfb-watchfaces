@@ -4,7 +4,7 @@ face:
   id: 11008A9A-8413-45C6-8B39-BF91B664835E
   # id: e6390983-5f1c-4f57-ad95-d203f1c55cf5
   name: Horizontal Split
-  version: 1.5.1
+  version: 1.5.2
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955]

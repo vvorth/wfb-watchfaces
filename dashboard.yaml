@@ -16,7 +16,7 @@ format: 2
 face:
   id: c47a1f36-8b25-4e09-a3d7-5f81904bc2e6
   name: Dashboard
-  version: 1.1.1
+  version: 1.1.2
 
 build:
   targets: [fenix8solar47mm, fenix8solar51mm, fr955, fenix947mm ]

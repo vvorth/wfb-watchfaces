@@ -15,7 +15,7 @@ format: 2
 face:
   id: 792c1231-a2a1-4490-ab0a-bfbb062de150
   name: Sectors
-  version: 1.2.6
+  version: 1.2.7
 
 build:
   targets: [fenix8solar47mm,
