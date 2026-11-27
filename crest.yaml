@@ -1,0 +1,164 @@
+# Crest: a big monospaced digital clock on black. The date sits above it with
+# the day number in the accent colour, a pair of readings split by an accent
+# rule, three readings in columns (icons over values) and one reading at the
+# bottom. The six readings are slots the wearer picks, so each icon follows
+# the pick. The accent colour drives the day number, the rule and the slot
+# icons. The data colour drives the slot values.
+
+format: 2
+
+face:
+  id: 083d8a5f-429f-4a91-be62-f4a7f66e9377
+  name: Crest
+  version: 1.0.0
+
+build:
+  targets: [
+    # API 5.2.0 (13 devices)
+    ## mip round (13 devices)
+    fenix7, fenix7pro, fenix7pronowifi, fenix7s, fenix7spro, fenix7x, fenix7xpro,
+    fenix7xpronowifi, fr255, fr255m, fr255s, fr255sm, fr955,
+    # API 6.0.3 (6 devices)
+    ## mip round (6 devices)
+    enduro3, enduro4, fenix8solar47mm, fenix8solar51mm, fenix9prosolar47mm,
+    fenix9prosolar51mm]
+
+config:
+  accent_color: { default: color.red, choices: any }
+  data_color: { default: color.white, choices: any }
+  slots:
+    top_left:     { label: "Top left",     default: battery,             choices: &choices [{ type: battery, variant: classic }, body_battery, heart_rate, steps, calories, current_temperature, high_low_temperature, floors_climbed, intensity_minutes, stress, pulse_ox, respiration_rate, recovery_time, altitude, sea_level_pressure, notification_count, solar_input, sunrise, sunset, weekly_run_distance] }
+    top_right:    { label: "Top right",    default: body_battery,        choices: *choices }
+    left:         { label: "Left",         default: heart_rate,          choices: *choices }
+    middle:       { label: "Middle",       default: steps,               choices: *choices }
+    right:        { label: "Right",        default: calories,            choices: *choices }
+    bottom:       { label: "Bottom",       default: current_temperature, choices: *choices }
+
+resources:
+  palette:
+    black: "#000000"
+    white: "#FFFFFF"
+    red: "#FF0055"
+  fonts:
+    clock: { source: assets/ChivoMono-SemiBold.ttf, size: 62%r, monospace: true, antialias: true }
+    date:  { source: assets/ChivoMono-Bold.ttf, size: 15%r, antialias: true }
+    value: { source: assets/ChivoMono-Bold.ttf, size: 12%r, antialias: true }
+
+static:
+  background:
+    type: rectangle
+    at: { anchor: center }
+    size: { width: 100%, height: 100% }
+    color: color.black
+  rule:
+    type: line
+    at: { anchor: center, dy: -40%r }
+    to: { anchor: center, dy: -27%r }
+    thickness: 2px
+    color: color.accent
+
+elements:
+  weekday:
+    type: text
+    text: "{(date.weekday == 1 ? \"SUN\" : date.weekday == 2 ? \"MON\" : date.weekday == 3 ? \"TUE\" : date.weekday == 4 ? \"WED\" : date.weekday == 5 ? \"THU\" : date.weekday == 6 ? \"FRI\" : \"SAT\")}"
+    font: font.date
+    at: { anchor: center, dx: -17%r, dy: -54%r }
+    align: right
+    color: color.white
+  day:
+    type: text
+    text: "{date.today:%e}"
+    font: font.date
+    at: { anchor: center, dy: -54%r }
+    color: color.accent
+  month:
+    type: text
+    text: "{(date.month_number == 1 ? \"JAN\" : date.month_number == 2 ? \"FEB\" : date.month_number == 3 ? \"MAR\" : date.month_number == 4 ? \"APR\" : date.month_number == 5 ? \"MAY\" : date.month_number == 6 ? \"JUN\" : date.month_number == 7 ? \"JUL\" : date.month_number == 8 ? \"AUG\" : date.month_number == 9 ? \"SEP\" : date.month_number == 10 ? \"OCT\" : date.month_number == 11 ? \"NOV\" : \"DEC\")}"
+    font: font.date
+    at: { anchor: center, dx: 17%r, dy: -54%r }
+    align: left
+    color: color.white
+
+  top_left_value:
+    type: data
+    slot: top_left
+    unit: true
+    short: true
+    icon: { size: 11%r, position: left, color: color.white, gap: 6%r }
+    font: font.value
+    at: { anchor: center, dx: -12%r, dy: -33%r }
+    align: right
+    color: color.data
+    absent: { text: "--" }
+  top_right_value:
+    type: data
+    slot: top_right
+    unit: true
+    short: true
+    icon: { size: 11%r, position: left, color: color.white, gap: 3%r }
+    font: font.value
+    at: { anchor: center, dx: 9%r, dy: -33%r }
+    align: left
+    color: color.data
+    absent: { text: "--" }
+
+  # Hours and minutes either side of a separate colon, so the colon takes
+  # less room than a monospaced cell and the digits can be taller.
+  hours:
+    type: text
+    text: "{time.clock:%h}"
+    font: font.clock
+    at: { anchor: center, dx: -6%r, dy: 6%r }
+    align: right
+    color: color.white
+  colon:
+    type: text
+    text: ":"
+    font: font.clock
+    at: { anchor: center, dy: 6%r }
+    color: color.white
+  minutes:
+    type: text
+    text: "{time.clock:%M}"
+    font: font.clock
+    at: { anchor: center, dx: 6%r, dy: 6%r }
+    align: left
+    color: color.white
+
+  left_value:
+    type: data
+    slot: left
+    short: true
+    icon: { size: 12%r, position: top, color: color.accent, gap: 1%r }
+    font: font.value
+    at: { anchor: center, dx: -38%r, dy: 46%r }
+    color: color.data
+    absent: { text: "--" }
+  middle_value:
+    type: data
+    slot: middle
+    icon: { size: 12%r, position: top, color: color.accent, gap: 1%r }
+    font: font.value
+    at: { anchor: center, dy: 46%r }
+    color: color.data
+    absent: { text: "--" }
+  right_value:
+    type: data
+    slot: right
+    short: true
+    icon: { size: 12%r, position: top, color: color.accent, gap: 1%r }
+    font: font.value
+    at: { anchor: center, dx: 38%r, dy: 46%r }
+    color: color.data
+    absent: { text: "--" }
+
+  bottom_value:
+    type: data
+    slot: bottom
+    unit: true
+    short: true
+    icon: { size: 11%r, position: left, color: color.accent, gap: 2%r }
+    font: font.value
+    at: { anchor: center, dy: 74%r }
+    color: color.data
+    absent: { text: "--" }
